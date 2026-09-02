@@ -3,7 +3,7 @@
 " ---------------------------
 
 " Colorscheme (after plug#end)
-silent! colorscheme gruvbox
+silent! exe 'colorscheme ' . get(g:, 'vimx_theme_active', 'gruvbox')
 " silent! colorscheme seoul256   " alternative: uncomment to try seoul256
 
 " Airline configuration

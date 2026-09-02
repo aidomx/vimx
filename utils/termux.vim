@@ -20,7 +20,8 @@ set ttimeoutlen=50
 " Terminal colors for Termux
 if $TERM_PROGRAM =~ "Termux"
   set termguicolors
-  colorscheme gruvbox
+  " Colorscheme is applied in utils/ui.vim — no override here
+  silent! exe 'colorscheme ' . get(g:, 'vimx_theme_active', 'gruvbox')
 
   " Fix arrow keys in insert mode
   imap <Esc>OA <Esc>ki

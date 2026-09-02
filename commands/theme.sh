@@ -209,13 +209,19 @@ _apply_theme() {
   backup_config_file "$UI_FILE" > /dev/null 2>&1 || true
 
   if [ -f "$THEME_FILE" ]; then
-    sed -i "s/^let g:vimx_theme_active=.*/let g:vimx_theme_active=\"${target}\"/" "$THEME_FILE"
+    sed -i "s/^let g:vimx_theme_active *= *.*/let g:vimx_theme_active = \"${target}\"/" "$THEME_FILE"
   else
     echo "let g:vimx_theme_active=\"${target}\"" > "$THEME_FILE"
   fi
 
   if [ -f "$UI_FILE" ]; then
-    sed -i "s/^silent! colorscheme .*/silent! colorscheme ${target}/" "$UI_FILE"
+    # Support both static and dynamic colorscheme formats
+    if grep -q "^silent! colorscheme " "$UI_FILE" 2>/dev/null; then
+      sed -i "s/^silent! colorscheme .*/silent! colorscheme ${target}/" "$UI_FILE"
+    elif grep -q "silent! exe 'colorscheme '" "$UI_FILE" 2>/dev/null; then
+      # Dynamic format - colorscheme reads from g:vimx_theme_active, no change needed
+      true
+    fi
     local airline_theme
     airline_theme=$(_resolve_airline_theme "${target}")
     sed -i "s/^let g:airline_theme = .*/let g:airline_theme = '${airline_theme}'/" "$UI_FILE"
