@@ -1,0 +1,56 @@
+name: Lint & Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  shellcheck:
+    name: ShellCheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install ShellCheck
+        run: sudo apt-get install -y shellcheck
+
+      - name: Run ShellCheck on core scripts
+        run: |
+          shellcheck -x -s bash \
+            vimx.sh \
+            install.sh \
+            commands/*.sh \
+            lib/*.sh \
+            2>&1 || true
+
+  bash-syntax:
+    name: Bash Syntax Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check bash syntax
+        run: |
+          errors=0
+          for f in vimx.sh install.sh commands/*.sh lib/*.sh; do
+            if [ -f "$f" ]; then
+              echo "Checking $f..."
+              bash -n "$f" || { echo "FAIL: $f"; errors=$((errors + 1)); }
+            fi
+          done
+          if [ $errors -gt 0 ]; then
+            echo "Found $errors files with syntax errors"
+            exit 1
+          fi
+          echo "All scripts pass syntax check"
+
+  vimx-help:
+    name: vimx help
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run vimx help
+        run: bash vimx.sh help

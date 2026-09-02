@@ -8,8 +8,8 @@ let mapleader = " "
 " File navigation
 nnoremap <silent>tt :NERDTreeToggle<CR>
 nnoremap <silent>ff :NERDTreeFind<CR>
-nnoremap <silent>nn :NERDTreeFocus<CR>
-nnoremap <silent>pp :Files<CR>
+nnoremap <silent>nf :NERDTreeFocus<CR>
+nnoremap <silent>pf :Files<CR>
 nnoremap <silent>bb :Buffers<CR>
 nnoremap <silent>gg :Rg<CR>
 

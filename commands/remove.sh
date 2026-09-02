@@ -1,9 +1,9 @@
-vcfg_cmd_remove() {
+vimx_cmd_remove() {
   local plugin=$1
 
   if [ -z "$plugin" ]; then
     print_error "Please specify a plugin to remove"
-    echo "Usage: vcfg remove <plugin-name>"
+    echo "Usage: vimx remove <plugin-name>"
     return 1
   fi
 
@@ -53,7 +53,7 @@ vcfg_cmd_remove() {
   fi
 
   # Clean unused plugins
-  vcfg_cmd_clean "$plugin_manager"
+  vimx_cmd_clean "$plugin_manager"
 
   # Remove backup if successful
   rm -f "$backup_file"

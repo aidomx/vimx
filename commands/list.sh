@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-vcfg_cmd_list() {
+vimx_cmd_list() {
   local plugin_manager=$(detect_plugin_manager)
 
   case "$plugin_manager" in
@@ -257,7 +257,7 @@ check_vimplug_orphaned() {
   if [ $orphaned -gt 0 ]; then
     echo ""
     print_warning "Found ${orphaned} orphaned plugin(s)"
-    print_info "Run '${CYAN}vcfg clean${NC}' to remove them"
+    print_info "Run '${CYAN}vimx clean${NC}' to remove them"
   fi
 }
 
@@ -289,7 +289,7 @@ check_packer_orphaned() {
   if [ $orphaned -gt 0 ]; then
     echo ""
     print_warning "Found ${orphaned} orphaned plugin(s)"
-    print_info "Run '${CYAN}vcfg clean${NC}' to remove them"
+    print_info "Run '${CYAN}vimx clean${NC}' to remove them"
   fi
 }
 
@@ -316,6 +316,6 @@ check_lazy_orphaned() {
   if [ $orphaned -gt 0 ]; then
     echo ""
     print_warning "Found ${orphaned} orphaned plugin(s)"
-    print_info "Run '${CYAN}vcfg clean${NC}' to remove them"
+    print_info "Run '${CYAN}vimx clean${NC}' to remove them"
   fi
 }

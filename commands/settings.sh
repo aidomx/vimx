@@ -1,24 +1,24 @@
 #!/usr/bin/env bash
 
-vcfg_cmd_set() {
+vimx_cmd_set() {
   if [ $# -eq 0 ]; then
-    print_error "Usage: vcfg set <setting> [value]"
+    print_error "Usage: vimx set <setting> [value]"
     echo ""
     echo "Examples:"
-    echo "  vcfg set number                  # Enable line numbers"
-    echo "  vcfg set nonumber               # Disable line numbers"
-    echo "  vcfg set tabstop 4              # Set tab to 4 spaces"
-    echo "  vcfg set syntax on              # Enable syntax highlighting"
-    echo "  vcfg set -e                     # Open settings in editor"
-    echo "  vcfg set list                   # Show available settings"
+    echo "  vimx set number                  # Enable line numbers"
+    echo "  vimx set nonumber               # Disable line numbers"
+    echo "  vimx set tabstop 4              # Set tab to 4 spaces"
+    echo "  vimx set syntax on              # Enable syntax highlighting"
+    echo "  vimx set -e                     # Open settings in editor"
+    echo "  vimx set list                   # Show available settings"
     echo ""
-    echo "Run 'vcfg set list' to see all available settings"
+    echo "Run 'vimx set list' to see all available settings"
     return 1
   fi
 
   local setting=$1
   local value=${2:-}
-  local settings_file="${VCFG_ROOT:-$HOME/.config/vim}/core/settings.vim"
+  local settings_file="${VIMX_ROOT:-$HOME/.config/vim}/core/settings.vim"
 
   if [ ! -f "$settings_file" ]; then
     print_error "Settings file not found: $settings_file"
@@ -61,14 +61,14 @@ vcfg_cmd_set() {
       ;;
     "tabstop")
       if [ -z "$value" ] || ! [[ "$value" =~ ^[0-9]+$ ]]; then
-        print_error "Usage: vcfg set tabstop <number>"
+        print_error "Usage: vimx set tabstop <number>"
         return 1
       fi
       set_numeric_setting "tabstop" "$value" "$settings_file"
       ;;
     "shiftwidth")
       if [ -z "$value" ] || ! [[ "$value" =~ ^[0-9]+$ ]]; then
-        print_error "Usage: vcfg set shiftwidth <number>"
+        print_error "Usage: vimx set shiftwidth <number>"
         return 1
       fi
       set_numeric_setting "shiftwidth" "$value" "$settings_file"
@@ -78,7 +78,7 @@ vcfg_cmd_set() {
       ;;
     *)
       print_error "Unknown setting: $setting"
-      echo "Run 'vcfg set list' to see available settings"
+      echo "Run 'vimx set list' to see available settings"
       return 1
       ;;
   esac
@@ -98,7 +98,7 @@ edit_settings_file() {
   echo ""
 
   # Backup before editing
-  local backup_dir="${VCFG_ROOT:-$HOME/.config/vim}/backups"
+  local backup_dir="${VIMX_ROOT:-$HOME/.config/vim}/backups"
   mkdir -p "$backup_dir"
   local backup_file="${backup_dir}/settings.$(date +%Y%m%d_%H%M%S).vim"
   cp "$settings_file" "$backup_file"
@@ -115,7 +115,7 @@ edit_settings_file() {
   fi
 
   print_success "Settings updated successfully!"
-  echo -e "Run ${CYAN}vcfg set show${NC} to view current settings"
+  echo -e "Run ${CYAN}vimx set show${NC} to view current settings"
 }
 
 show_current_settings() {
@@ -176,8 +176,8 @@ show_available_settings() {
   echo ""
 
   echo -e "${WHITE}Indentation:${NC}"
-  echo "  tabstop <n>               - Spaces per tab (e.g., vcfg set tabstop 4)"
-  echo "  shiftwidth <n>            - Indent size (e.g., vcfg set shiftwidth 2)"
+  echo "  tabstop <n>               - Spaces per tab (e.g., vimx set tabstop 4)"
+  echo "  shiftwidth <n>            - Indent size (e.g., vimx set shiftwidth 2)"
   echo "  expandtab|noexpandtab     - Use spaces instead of tabs"
   echo ""
 
@@ -194,7 +194,7 @@ show_available_settings() {
   echo "  list                      - Show this help"
   echo ""
 
-  print_info "Usage: vcfg set <setting> [value]"
+  print_info "Usage: vimx set <setting> [value]"
 }
 
 toggle_setting() {

@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Plugin Reference
 
 Complete list of all included plugins and their purposes.
@@ -753,33 +757,33 @@ Plug 'ruanyl/coverage.vim'
 
 ## 🎯 Plugin Management Commands
 
-### Using vcfg
+### Using vimx
 
 ```bash
 # List all plugins
-vcfg list
+vimx list
 
 # Add plugin
-vcfg add tpope/vim-surround
+vimx add tpope/vim-surround
 
 # Remove plugin
-vcfg remove copilot.vim
+vimx remove copilot.vim
 
 # Enable/disable
-vcfg enable vim-airline
-vcfg disable copilot.vim
+vimx enable vim-airline
+vimx disable copilot.vim
 
 # Get plugin info
-vcfg info nerdtree
+vimx info nerdtree
 
 # Search for plugins
-vcfg search fuzzy finder
+vimx search fuzzy finder
 
 # Update all
-vcfg update
+vimx update
 
 # Clean unused
-vcfg clean
+vimx clean
 ```
 
 ### Using vim-plug
@@ -876,4 +880,4 @@ Planned additions:
 
 ---
 
-[← Back to Main README](../README.md) | [Customization →](customization.md)
+[← Home](/) | [Customization →](customization.md)

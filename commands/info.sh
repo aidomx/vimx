@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-vcfg_cmd_info() {
+vimx_cmd_info() {
   local plugin=$1
 
   if [ -z "$plugin" ]; then
     print_error "Please specify a plugin name"
-    echo "Usage: vcfg info <plugin-name>"
+    echo "Usage: vimx info <plugin-name>"
     return 1
   fi
 

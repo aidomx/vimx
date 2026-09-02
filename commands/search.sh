@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-vcfg_cmd_search() {
+vimx_cmd_search() {
   if [ $# -eq 0 ]; then
     print_error "Please specify a search query"
-    echo "Usage: vcfg search <query> [page] [per_page]"
+    echo "Usage: vimx search <query> [page] [per_page]"
     echo ""
     echo "Examples:"
-    echo "  vcfg search fuzzy finder"
-    echo "  vcfg search fuzzy finder 2"
-    echo "  vcfg search fuzzy finder 2 30"
+    echo "  vimx search fuzzy finder"
+    echo "  vimx search fuzzy finder 2"
+    echo "  vimx search fuzzy finder 2 30"
     return 1
   fi
 
@@ -86,7 +86,7 @@ vcfg_cmd_search() {
 
   # Coba setiap variant query sampai dapat hasil
   for api_url in "${api_urls[@]}"; do
-    if [ "${VCFG_DEBUG:-false}" = "true" ]; then
+    if [ "${VIMX_DEBUG:-false}" = "true" ]; then
       echo "DEBUG: Trying API URL: $api_url" >&2
     fi
 
@@ -96,7 +96,7 @@ vcfg_cmd_search() {
       # Check for API errors
       if echo "$response" | grep -q '"message"' && ! echo "$response" | grep -q '"items"'; then
         local error_msg=$(echo "$response" | sed -n 's/.*"message": "\([^"]*\)".*/\1/p')
-        if [ "${VCFG_DEBUG:-false}" = "true" ]; then
+        if [ "${VIMX_DEBUG:-false}" = "true" ]; then
           echo "DEBUG: API Error: $error_msg" >&2
         fi
         continue
@@ -122,7 +122,7 @@ vcfg_cmd_search() {
     response=""
   done
 
-  if [ "${VCFG_DEBUG:-false}" = "true" ] && [ -n "$used_url" ]; then
+  if [ "${VIMX_DEBUG:-false}" = "true" ] && [ -n "$used_url" ]; then
     echo "DEBUG: Used API URL: $used_url" >&2
   fi
 
@@ -130,8 +130,8 @@ vcfg_cmd_search() {
     print_warning "No results found for '${query}'"
     echo ""
     print_info "Search tips:"
-    echo -e "  - Try: ${CYAN}vcfg search 'username/repository'${NC} (exact match)"
-    echo -e "  - Try: ${CYAN}vcfg search 'plugin-name vim'${NC}"
+    echo -e "  - Try: ${CYAN}vimx search 'username/repository'${NC} (exact match)"
+    echo -e "  - Try: ${CYAN}vimx search 'plugin-name vim'${NC}"
     echo "  - Use specific terms like 'theme', 'colorscheme', 'lsp'"
     echo "  - Check spelling or use different keywords"
     return 0
@@ -151,30 +151,6 @@ vcfg_cmd_search() {
 
   # Tampilkan dengan less untuk interactive scrolling
   echo "$output" | less -R -X -F -K
-
-  # Show follow-up instructions after less exits
-  if [ $? -eq 0 ]; then
-    echo ""
-    print_info "Navigation tips:"
-    echo -e "  - Press ${CYAN}q${NC} to quit"
-    echo -e "  - Use ${CYAN}arrow keys${NC}, ${CYAN}Page Up/Down${NC} to scroll"
-    echo -e "  - Press ${CYAN}/${NC} to search within results"
-    echo ""
-
-    # Calculate next page info
-    local total_count=0
-    if command -v jq &> /dev/null; then
-      total_count=$(echo "$response" | jq -r '.total_count // 0')
-    else
-      total_count=$(echo "$response" | grep -o '"total_count":[0-9]*' | head -1 | cut -d: -f2)
-      total_count=${total_count:-0}
-    fi
-
-    if [ $total_count -gt $((page * per_page)) ]; then
-      print_info "To see more results: ${CYAN}vcfg search '$query' $((page + 1)) $per_page${NC}"
-    fi
-    print_info "To install: ${CYAN}vcfg add <username/repository>${NC}"
-  fi
 }
 
 # Update juga format_search_results untuk handle per_page
@@ -274,23 +250,23 @@ format_search_results() {
 
   if [ $total_count -gt $((page * per_page)) ]; then
     output+="${BOLD}More results available!${NC}\n"
-    output+="Run: ${CYAN}vcfg search '$query' $((page + 1)) $per_page${NC}\n"
+    output+="Run: ${CYAN}vimx search '$query' $((page + 1)) $per_page${NC}\n"
   fi
 
-  output+="To install a plugin: ${CYAN}vcfg add username/repository${NC}\n"
+  output+="To install a plugin: ${CYAN}vimx add username/repository${NC}\n"
 
   echo -e "$output"
 }
 
 # Fungsi untuk search dengan interactive mode
-vcfg_search_interactive() {
+vimx_search_interactive() {
   local query=$1
   local page=1
   local per_page=20
 
   while true; do
     clear
-    vcfg_search "$query" "$page" "$per_page"
+    vimx_search "$query" "$page" "$per_page"
 
     echo ""
     read -p "Press: [n]ext page, [p]revious page, [q]uit, or enter page number: " choice

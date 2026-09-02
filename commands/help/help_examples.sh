@@ -2,9 +2,9 @@
 
 help_examples() {
   echo -e "${WHITE}EXAMPLES:${NC}"
-  echo "  vcfg add tpope/vim-fugitive"
-  echo "  vcfg set number"
-  echo "  vcfg editmap add '<leader>ff' ':Files<CR>'"
-  echo "  vcfg list"
-  echo "  vcfg doctor"
+  echo "  vimx add tpope/vim-fugitive"
+  echo "  vimx set number"
+  echo "  vimx editmap add '<leader>ff' ':Files<CR>'"
+  echo "  vimx list"
+  echo "  vimx doctor"
 }

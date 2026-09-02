@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 
-vcfg_cmd_install() {
-  # Hanya untuk first-time installation via vcfg command
+vimx_cmd_install() {
+  # Hanya untuk first-time installation via vimx command
   if [ -d "$INSTALL_DIR" ]; then
     print_error "Vim configuration already installed at: $INSTALL_DIR"
     echo ""
-    echo -e "It looks like you already have vcfg installed!"
+    echo -e "It looks like you already have vimx installed!"
     echo ""
     echo -e "If you want to:"
-    echo -e "  ${CYAN}• Update plugins:${NC}        vcfg update"
-    echo -e "  ${CYAN}• Reinstall completely:${NC}  vcfg reinstall"
-    echo -e "  ${CYAN}• Update system:${NC}         vcfg system-update"
-    echo -e "  ${CYAN}• Check system health:${NC}   vcfg doctor"
+    echo -e "  ${CYAN}• Update plugins:${NC}        vimx update"
+    echo -e "  ${CYAN}• Reinstall completely:${NC}  vimx reinstall"
+    echo -e "  ${CYAN}• Update system:${NC}         vimx system-update"
+    echo -e "  ${CYAN}• Check system health:${NC}   vimx doctor"
     echo ""
     echo -e "For fresh installation on a new system, use:"
     echo -e "  ${CYAN}curl -fsSL https://raw.githubusercontent.com/aidomx/vimconfig/main/install.sh | bash${NC}"
@@ -19,9 +19,9 @@ vcfg_cmd_install() {
     return 1
   fi
 
-  # Jika sampai sini, berarti first-time installation via vcfg command
+  # Jika sampai sini, berarti first-time installation via vimx command
   # (jarang terjadi, tapi handle untuk completeness)
-  print_header "First-time Vim Configuration Installation via vcfg"
+  print_header "First-time Vim Configuration Installation via vimx"
 
   # Pre-installation checks
   check_dependencies
@@ -31,7 +31,7 @@ vcfg_cmd_install() {
   setup_vimrc
   install_plugin_manager
   install_plugins
-  install_vcfg
+  install_vimx
 
   # Optional setup
   setup_optional_tools
@@ -139,13 +139,13 @@ install_plugins() {
   echo ""
 }
 
-install_vcfg() {
-  print_header "Installing vcfg Tool"
+install_vimx() {
+  print_header "Installing vimx Tool"
 
-  local vcfg_source="${INSTALL_DIR}/vcfg.sh"
+  local vimx_source="${INSTALL_DIR}/vimx.sh"
 
-  if [ ! -f "$vcfg_source" ]; then
-    print_error "vcfg.sh not found in repository"
+  if [ ! -f "$vimx_source" ]; then
+    print_error "vimx.sh not found in repository"
     return 1
   fi
 
@@ -153,30 +153,30 @@ install_vcfg() {
 
   case "${OS}" in
   "Android")
-    VCFG_BIN="$PREFIX/bin/vcfg"
-    print_info "Installing vcfg to ${VCFG_BIN}..."
+    VIMX_BIN="$PREFIX/bin/vimx"
+    print_info "Installing vimx to ${VIMX_BIN}..."
 
     if [ -w "$PREFIX/bin" ]; then
-      cp "$vcfg_source" "$VCFG_BIN"
-      chmod +x "$VCFG_BIN"
+      cp "$vimx_source" "$VIMX_BIN"
+      chmod +x "$VIMX_BIN"
     fi
 
     ;;
   "GNU/Linux")
-    print_info "Installing vcfg to ${VCFG_BIN}..."
+    print_info "Installing vimx to ${VIMX_BIN}..."
 
     # Check if we can write to /usr/bin
     if [ -w "/usr/bin" ]; then
-      cp "$vcfg_source" "$VCFG_BIN"
-      chmod +x "$VCFG_BIN"
+      cp "$vimx_source" "$VIMX_BIN"
+      chmod +x "$VIMX_BIN"
     else
       # Need sudo
       if command -v sudo &>/dev/null; then
-        sudo cp "$vcfg_source" "$VCFG_BIN"
-        sudo chmod +x "$VCFG_BIN"
+        sudo cp "$vimx_source" "$VIMX_BIN"
+        sudo chmod +x "$VIMX_BIN"
       else
         print_warning "Cannot install to /usr/bin (no sudo available)"
-        print_info "You can manually copy: cp $vcfg_source $VCFG_BIN"
+        print_info "You can manually copy: cp $vimx_source $VIMX_BIN"
         return 1
       fi
     fi
@@ -184,12 +184,12 @@ install_vcfg() {
   esac
 
   # Verify installation
-  if command -v vcfg >/dev/null 2>&1; then
+  if command -v vimx >/dev/null 2>&1; then
     cp -f "$INSTALL_DIR/coc-settings.json" "$HOME/.vim/"
-    print_success "vcfg installed successfully"
-    vcfg --version
+    print_success "vimx installed successfully"
+    vimx --version
   else
-    print_error "vcfg installation failed"
+    print_error "vimx installation failed"
     return 1
   fi
 
@@ -248,10 +248,10 @@ show_next_steps() {
   echo -e "  ${YELLOW}vim${NC} (or ${YELLOW}nvim${NC}) - Start with new configuration"
   echo ""
   echo -e "${WHITE}Management Commands:${NC}"
-  echo -e "  ${CYAN}vcfg update${NC}        - Update plugins"
-  echo -e "  ${CYAN}vcfg system-update${NC} - Update configuration"
-  echo -e "  ${CYAN}vcfg doctor${NC}        - Check system health"
-  echo -e "  ${CYAN}vcfg help${NC}          - Show all commands"
+  echo -e "  ${CYAN}vimx update${NC}        - Update plugins"
+  echo -e "  ${CYAN}vimx system-update${NC} - Update configuration"
+  echo -e "  ${CYAN}vimx doctor${NC}        - Check system health"
+  echo -e "  ${CYAN}vimx help${NC}          - Show all commands"
   echo ""
 
   echo -e "${WHITE}Enjoy coding! 🚀${NC}"

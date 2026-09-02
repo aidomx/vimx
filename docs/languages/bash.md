@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Bash/Shell Scripting Guide
 
 Quick guide for Bash shell scripting.
@@ -425,4 +429,4 @@ fi
 
 ---
 
-[← Back to Languages](../README.md#language-support)
+[← Languages](/)

@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Quick Start Guide
 
 Get started quickly with specific languages and workflows.
@@ -609,4 +613,4 @@ After this quick start:
 
 ---
 
-[← Back to Main README](../README.md) | [Key Mappings →](keymappings.md)
+[← Home](/) | [Key Mappings →](keymappings.md)

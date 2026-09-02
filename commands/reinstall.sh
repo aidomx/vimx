@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-vcfg_cmd_reinstall() {
+vimx_cmd_reinstall() {
   print_header "Reinstalling Vim Configuration"
 
   if [ ! -d "$INSTALL_DIR" ]; then
-    print_error "Vim configuration not found. Run 'vcfg install' first."
+    print_error "Vim configuration not found. Run 'vimx install' first."
     return 1
   fi
 
@@ -35,7 +35,7 @@ vcfg_cmd_reinstall() {
   setup_vimrc
   install_plugin_manager
   install_plugins
-  install_vcfg
+  install_vimx
 
   print_success "Reinstall completed successfully!"
   echo ""

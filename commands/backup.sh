@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 # Load backup modules
-for backup_file in "${VCFG_ROOT}/commands/backup"/*.sh; do
+for backup_file in "${VIMX_ROOT}/commands/backup"/*.sh; do
   source "$backup_file"
 done
 
-vcfg_cmd_backup() {
+vimx_cmd_backup() {
   local output_file="${1:-${HOME}/.vim-backup-$(date +%Y%m%d_%H%M%S).tar.gz}"
   local output_dir=$(dirname "$output_file")
   mkdir -p "$output_dir"
@@ -26,15 +26,15 @@ vcfg_cmd_backup() {
   fi
 }
 
-vcfg_cmd_restore() {
+vimx_cmd_restore() {
   local backup_file=$1
 
   if [ -z "$backup_file" ]; then
-    print_error "Usage: vcfg restore <backup-file>"
+    print_error "Usage: vimx restore <backup-file>"
     echo ""
     echo "Examples:"
-    echo "  vcfg restore ~/.vim-backup.tar.gz"
-    echo "  vcfg restore ./my-backup-20231201.tar.gz"
+    echo "  vimx restore ~/.vim-backup.tar.gz"
+    echo "  vimx restore ./my-backup-20231201.tar.gz"
     return 1
   fi
 

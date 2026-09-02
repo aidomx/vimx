@@ -1,6 +1,6 @@
 #!/use/bin/env bash
 
-vcfg_banner() {
+vimx_banner() {
   echo -e "${CYAN}"
   cat << "EOF"
  _   ___            ____             __ _

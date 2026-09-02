@@ -2,6 +2,16 @@
 " Universal Formatting Configuration
 " ---------------------------
 
+" Check if coc-prettier extension is available
+function! s:HasPrettier()
+  try
+    let l:extensions = CocAction('listExtensions')
+    return index(l:extensions, 'coc-prettier') >= 0
+  catch
+    return 0
+  endtry
+endfunction
+
 function! FormatFile()
   let l:filetype = &filetype
   let l:filename = expand('%')
@@ -9,7 +19,11 @@ function! FormatFile()
   " Prettier supported filetypes
   if index(['javascript', 'typescript', 'javascriptreact', 'typescriptreact', 
            \'html', 'css', 'json', 'markdown', 'yaml', 'yml'], l:filetype) >= 0
-    call CocAction('runCommand', 'prettier.formatFile')
+    if s:HasPrettier()
+      call CocAction('runCommand', 'prettier.formatFile')
+    else
+      echo "coc-prettier not installed. Run: :CocInstall coc-prettier"
+    endif
   
   " Shell scripts menggunakan shfmt
   elseif index(['sh', 'bash'], l:filetype) >= 0

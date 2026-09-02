@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Project Structure
 
 Understanding the Vim configuration directory structure and organization.
@@ -30,7 +34,7 @@ Understanding the Vim configuration directory structure and organization.
 ├── docs/                    # Documentation
 │   ├── installation.md
 │   ├── keymappings.md
-│   ├── vcfg.md
+│   ├── vimx.md
 │   └── ...
 ├── coc-settings.json       # Coc.nvim configuration
 ├── .gitignore              # Git ignore rules
@@ -378,11 +382,11 @@ Git ignore patterns.
 
 ## 📦 Binary Directory
 
-### bin/vcfg
+### bin/vimx
 
 Configuration management tool.
 
-**Location:** `~/.config/vim/bin/vcfg`
+**Location:** `~/.config/vim/bin/vimx`
 
 **Features:**
 
@@ -395,10 +399,10 @@ Configuration management tool.
 **Usage:**
 
 ```bash
-vcfg install
-vcfg update
-vcfg add <plugin>
-vcfg doctor
+vimx install
+vimx update
+vimx add <plugin>
+vimx doctor
 ```
 
 ## 📚 Documentation Directory
@@ -411,7 +415,7 @@ Comprehensive documentation files.
 
 - `installation.md` - Installation guide
 - `keymappings.md` - Keyboard shortcuts
-- `vcfg.md` - vcfg tool documentation
+- `vimx.md` - vimx tool documentation
 - `prerequisites.md` - Required packages
 - `troubleshooting.md` - Problem solving
 - `structure.md` - This file
@@ -566,4 +570,4 @@ vim ~/.config/vim/core/settings.vim
 
 ---
 
-[← Back to Main README](../README.md) | [Customization Guide →](customization.md)
+[← Home](/) | [Customization Guide →](customization.md)

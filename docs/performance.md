@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Performance Optimization Guide
 
 Tips and tricks to make Vim blazingly fast.
@@ -58,11 +62,11 @@ time vim +qall
 :echo len(g:plugs)
 ```
 
-### Using vcfg Doctor
+### Using vimx Doctor
 
 ```bash
 # Comprehensive health and performance check
-vcfg doctor
+vimx doctor
 
 # Output includes:
 # - Startup time
@@ -99,18 +103,18 @@ Plug 'github/copilot.vim', { 'on': [], 'do': ':Copilot setup' }
 
 ```bash
 # List all plugins
-vcfg list
+vimx list
 
 # Disable unused plugins
-vcfg disable <plugin-name>
+vimx disable <plugin-name>
 
 # Disable all slow plugins
-vcfg disable slow_plugins
+vimx disable slow_plugins
 
 # Plugins commonly safe to disable:
-vcfg disable copilot.vim        # If not using AI completion
-vcfg disable vim-gitgutter       # If not using git features
-vcfg disable nerdcommenter       # If using built-in commenting
+vimx disable copilot.vim        # If not using AI completion
+vimx disable vim-gitgutter       # If not using git features
+vimx disable nerdcommenter       # If using built-in commenting
 ```
 
 ### Optimize Plugin Loading Order
@@ -167,7 +171,7 @@ Plug 'preservim/nerdtree'
 
 ```bash
 # Current plugin count
-vcfg list | wc -l
+vimx list | wc -l
 
 # Target: < 30 plugins for best performance
 # Recommended: 15-25 plugins
@@ -323,7 +327,7 @@ autocmd BufAdd * if len(getbufinfo({'buflisted':1})) > 10 | execute 'bdelete' ge
 
 ```bash
 # Clean plugin cache
-vcfg clean
+vimx clean
 
 # Remove unused plugins
 rm -rf ~/.vim/plugged/unused-plugin
@@ -442,9 +446,9 @@ inoremap { {}<Left>
 
 ```bash
 # Weekly optimization routine
-vcfg doctor                    # Health check
-vcfg clean                     # Remove unused
-vcfg disable slow_plugins      # Disable heavy plugins
+vimx doctor                    # Health check
+vimx clean                     # Remove unused
+vimx disable slow_plugins      # Disable heavy plugins
 vim --startuptime startup.log  # Measure impact
 ```
 
@@ -483,7 +487,7 @@ vim --startuptime startup.log  # Measure impact
 
 Before asking "Why is Vim slow?", check:
 
-- [ ] Run `vcfg doctor`
+- [ ] Run `vimx doctor`
 - [ ] Profile startup time
 - [ ] Count plugins (< 30 recommended)
 - [ ] Check for slow plugins
@@ -500,7 +504,7 @@ Before asking "Why is Vim slow?", check:
 
 ```bash
 # 1. Disable slow plugins
-vcfg disable slow_plugins
+vimx disable slow_plugins
 
 # 2. Reduce Coc completions
 # In :CocConfig
@@ -517,7 +521,7 @@ Plug 'plugin/name', { 'on': 'Command' }
 # Disable unused ones
 
 # 5. Clean up
-vcfg clean
+vimx clean
 ```
 
 ### Emergency Performance Mode
@@ -568,4 +572,4 @@ Memory: 90 MB (-50%)
 
 ---
 
-[← Back to Main README](../README.md) | [Termux Guide →](termux.md)
+[← Home](/) | [Termux Guide →](termux.md)

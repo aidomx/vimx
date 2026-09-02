@@ -17,7 +17,7 @@ EDITOR=vim
 REPO_URL="https://github.com/aidomx/vimconfig.git"
 INSTALL_DIR="${VIM_CONFIG_DIR}"
 VIMRC_PATH="${HOME}/.vimrc"
-VCFG_BIN="/usr/bin/vcfg"
+VIMX_BIN="/usr/bin/vimx"
 TERMUX_VERSION="0.119.0-beta.3"
 
 check_vim_config() {

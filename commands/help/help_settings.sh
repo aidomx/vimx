@@ -9,20 +9,20 @@ help_settings_commands() {
 help_settings_detailed() {
   case "$1" in
   set)
-    echo -e "${CYAN}vcfg set${NC} - Configure editor settings"
+    echo -e "${CYAN}vimx set${NC} - Configure editor settings"
     echo ""
     echo -e "${WHITE}USAGE:${NC}"
-    echo "  vcfg set <setting> [value]"
+    echo "  vimx set <setting> [value]"
     echo ""
     echo -e "${WHITE}DESCRIPTION:${NC}"
     echo "  Configure Vim settings without editing config files manually."
     echo "  Changes are applied to core/settings.vim"
     echo ""
     echo -e "${WHITE}EXAMPLES:${NC}"
-    echo "  vcfg set number                  # Enable line numbers"
-    echo "  vcfg set tabstop 4              # Set tab to 4 spaces"
-    echo "  vcfg set syntax on              # Enable syntax highlighting"
-    echo "  vcfg set list                   # Show available settings"
+    echo "  vimx set number                  # Enable line numbers"
+    echo "  vimx set tabstop 4              # Set tab to 4 spaces"
+    echo "  vimx set syntax on              # Enable syntax highlighting"
+    echo "  vimx set list                   # Show available settings"
     echo ""
     echo -e "${WHITE}SUPPORTED SETTINGS:${NC}"
     echo "  • number|nonumber              - Line numbers"
@@ -34,23 +34,23 @@ help_settings_detailed() {
     ;;
 
   reset)
-    echo -e "${CYAN}vcfg reset${NC} - Reset configuration to defaults"
+    echo -e "${CYAN}vimx reset${NC} - Reset configuration to defaults"
     echo ""
     echo -e "${WHITE}USAGE:${NC}"
-    echo "  vcfg reset [settings|plugins|mappings|all]"
+    echo "  vimx reset [settings|plugins|mappings|all]"
     echo ""
     echo -e "${WHITE}DESCRIPTION:${NC}"
     echo "  Reset configuration files to their default state."
     echo "  Creates backups before resetting."
     echo ""
     echo -e "${WHITE}EXAMPLES:${NC}"
-    echo "  vcfg reset                      # Reset everything"
-    echo "  vcfg reset settings            # Reset only settings"
-    echo "  vcfg reset plugins             # Reset only plugins"
-    echo "  vcfg reset mappings            # Reset only key mappings"
+    echo "  vimx reset                      # Reset everything"
+    echo "  vimx reset settings            # Reset only settings"
+    echo "  vimx reset plugins             # Reset only plugins"
+    echo "  vimx reset mappings            # Reset only key mappings"
     echo ""
     echo -e "${WHITE}NOTE:${NC}"
-    echo "  Backups are stored in ~/.local/share/vcfg/backups/"
+    echo "  Backups are stored in ~/.local/share/vimx/backups/"
     ;;
   esac
 }

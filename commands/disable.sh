@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-vcfg_cmd_disable() {
+vimx_cmd_disable() {
   local plugin=$1
 
   if [ -z "$plugin" ]; then
     print_error "Please specify a plugin to disable"
-    echo "Usage: vcfg disable <plugin-name>"
-    echo "       vcfg disable slow_plugins"
+    echo "Usage: vimx disable <plugin-name>"
+    echo "       vimx disable slow_plugins"
     return 1
   fi
 
@@ -134,7 +134,7 @@ disable_slow_plugins() {
   if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
     print_info "No plugins were disabled."
     echo ""
-    print_info "You can disable individual plugins with: ${CYAN}vcfg disable <plugin-name>${NC}"
+    print_info "You can disable individual plugins with: ${CYAN}vimx disable <plugin-name>${NC}"
     return 0
   fi
 
@@ -159,7 +159,7 @@ disable_slow_plugins() {
   echo ""
   print_info "Restart Vim/Neovim to see the improvement in startup time."
   echo ""
-  print_info "You can re-enable plugins later with: ${CYAN}vcfg enable <plugin-name>${NC}"
+  print_info "You can re-enable plugins later with: ${CYAN}vimx enable <plugin-name>${NC}"
 }
 
 # Fungsi disable yang sudah ada (tetap dipertahankan)

@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Troubleshooting Guide
 
 Solutions to common problems and issues.
@@ -36,10 +40,10 @@ Solutions to common problems and issues.
 ```
 
 ```bash
-# Or using vcfg
-vcfg update
-vcfg clean
-vcfg doctor
+# Or using vimx
+vimx update
+vimx clean
+vimx doctor
 ```
 
 ### vim-plug Not Found
@@ -67,10 +71,10 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 # Fix permissions
 chmod -R u+w ~/.vim
 chmod -R u+w ~/.config/vim
-chmod +x ~/.config/vim/bin/vcfg
+chmod +x ~/.config/vim/bin/vimx
 
-# For system-wide vcfg
-sudo chown $USER /usr/sbin/vcfg
+# For system-wide vimx
+sudo chown $USER /usr/sbin/vimx
 ```
 
 ### Git Clone Failed
@@ -112,10 +116,10 @@ git clone https://github.com/aidomx/vimconfig.git ~/.config/vim
 
 ```bash
 # Update the problematic plugin
-vcfg update <plugin-name>
+vimx update <plugin-name>
 
 # Or disable temporarily
-vcfg disable <plugin-name>
+vimx disable <plugin-name>
 ```
 
 ### NERDTree Not Opening
@@ -135,10 +139,12 @@ vcfg disable <plugin-name>
 :verbose map tt
 ```
 
+> **Note:** The `tt` mapping is for NERDTreeToggle, `ff` for NERDTreeFind, `nf` for NERDTreeFocus.
+
 ```bash
 # Reinstall NERDTree
-vcfg remove nerdtree
-vcfg add preservim/nerdtree
+vimx remove nerdtree
+vimx add preservim/nerdtree
 ```
 
 ### FZF Not Working
@@ -162,7 +168,7 @@ sudo apt install fzf
 which fzf
 
 # 3. Reinstall fzf.vim
-vcfg update fzf.vim
+vimx update fzf.vim
 ```
 
 ### Copilot Not Suggesting
@@ -302,7 +308,7 @@ less startup.log
 
 ```bash
 # 1. Disable slow plugins
-vcfg disable slow_plugins
+vimx disable slow_plugins
 
 # 2. Use lazy loading
 # Edit ~/.config/vim/core/plugins.vim
@@ -310,8 +316,8 @@ vcfg disable slow_plugins
 # To: Plug 'plugin/name', { 'on': 'Command' }
 
 # 3. Reduce number of plugins
-vcfg list
-vcfg remove unused-plugin
+vimx list
+vimx remove unused-plugin
 ```
 
 ### Vim Lags When Typing
@@ -338,11 +344,11 @@ vcfg remove unused-plugin
 
 ```bash
 # Optimize configuration
-vcfg doctor
+vimx doctor
 
 # Disable heavy plugins
-vcfg disable copilot.vim
-vcfg disable coc.nvim
+vimx disable copilot.vim
+vimx disable coc.nvim
 ```
 
 ### High Memory Usage
@@ -583,11 +589,11 @@ tail -f ~/.vim/log
 vim -u NONE file.txt
 
 # 3. Disable plugins one by one
-vcfg disable <plugin-name>
+vimx disable <plugin-name>
 
 # 4. Check for updates
-vcfg update
-vcfg system-update
+vimx update
+vimx system-update
 ```
 
 ### Configuration Not Loading
@@ -750,8 +756,8 @@ echo 'set undodir=~/.vim/undo' >> ~/.vimrc
 ### Health Check
 
 ```bash
-# Using vcfg
-vcfg doctor
+# Using vimx
+vimx doctor
 
 # Output includes:
 # - System information
@@ -836,8 +842,8 @@ vim -c 'PlugInstall' -c 'qa!'
 rm -rf ~/.config/coc
 vim -c 'CocInstall coc-tsserver coc-json' -c 'qa!'
 
-# Reset vcfg
-vcfg reinstall
+# Reset vimx
+vimx reinstall
 ```
 
 ## 🆘 Getting Help
@@ -875,8 +881,8 @@ When reporting issues, include:
 uname -a
 vim --version
 
-# 2. vcfg doctor output
-vcfg doctor > debug-info.txt
+# 2. vimx doctor output
+vimx doctor > debug-info.txt
 
 # 3. Plugin status
 vim -c 'PlugStatus' -c 'wq plugins.txt'
@@ -894,13 +900,13 @@ Before asking for help, try:
 
 - [ ] Restart Vim
 - [ ] Run `:PlugUpdate`
-- [ ] Run `vcfg doctor`
+- [ ] Run `vimx doctor`
 - [ ] Check error messages (`:messages`)
 - [ ] Try with minimal config (`vim -u NONE`)
 - [ ] Update system packages
 - [ ] Check documentation
 - [ ] Search existing issues
-- [ ] Clear cache (`vcfg clean`)
+- [ ] Clear cache (`vimx clean`)
 
 ## 🔍 Common Error Messages
 
@@ -922,7 +928,7 @@ Before asking for help, try:
 **Solution:**
 
 ```bash
-vcfg add morhetz/gruvbox
+vimx add morhetz/gruvbox
 vim -c 'PlugInstall' -c 'qa!'
 ```
 
@@ -983,7 +989,7 @@ If experiencing slowness:
 2. **Disable unused plugins:**
 
    ```bash
-   vcfg disable slow_plugins
+   vimx disable slow_plugins
    ```
 
 3. **Reduce Coc completion:**
@@ -1012,7 +1018,7 @@ If experiencing slowness:
 
 | Problem            | Quick Fix                     |
 | ------------------ | ----------------------------- |
-| Slow startup       | `vcfg disable slow_plugins`   |
+| Slow startup       | `vimx disable slow_plugins`   |
 | No completion      | `:CocRestart`                 |
 | Wrong colors       | `:set termguicolors`          |
 | Plugin not working | `:PlugUpdate`                 |
@@ -1023,4 +1029,4 @@ If experiencing slowness:
 
 ---
 
-[← Back to Main README](../README.md) | [Performance Guide →](performance.md)
+[← Home](/) | [Performance Guide →](performance.md)

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 interactive_language() {
-  local lang_dir="${VCFG_LANGS_DIR}"
+  local lang_dir="${VIMX_LANGS_DIR}"
   local languages=($(find $lang_dir -name "*.vim"))
 
   for lang in "${languages[@]}"; do
@@ -36,7 +36,7 @@ interactive_language() {
     *)
       # Try to execute as direct command
       if [[ "$command" =~ ^(add|disable|edit|enable|info|list|remove) ]]; then
-        eval "vcfg_cmd_language $command"
+        eval "vimx_cmd_language $command"
       else
         print_error "Unknown command: $command"
         echo "Type 'help' for available commands"
@@ -47,7 +47,7 @@ interactive_language() {
 }
 
 edit_language_file() {
-  local language_file="${VCFG_LANGS_DIR}/${1:-*}"
+  local language_file="${VIMX_LANGS_DIR}/${1:-*}"
   if [ -f "$language_file" ]; then
     :
   elif [ -f "$language_file.vim" ]; then

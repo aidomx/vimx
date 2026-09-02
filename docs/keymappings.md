@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Key Mappings Reference
 
 Complete keyboard shortcuts reference for the Vim configuration.
@@ -27,9 +31,10 @@ All shortcuts using `<leader>` mean pressing Space first, then the key combinati
 | ------------ | --------------------- | --------------------------- |
 | `tt`         | Toggle NERDTree       | Open/close file explorer    |
 | `ff`         | Find file in NERDTree | Locate current file in tree |
-| `pp`         | Fuzzy file finder     | Quick file search (fzf)     |
-| `bb`         | Buffer list           | Show all open buffers       |
-| `gg`         | Live grep search      | Search text in all files    |
+| `nf`         | NERDTree focus        | Focus NERDTree panel        |
+| `pf`         | Pick file (fzf)       | Quick file search (fzf)     |
+| `bb`         | Buffer bits           | Show all open buffers       |
+| `gg`         | Grep (Rg)             | Search text in all files    |
 | `<leader>pf` | Project files         | Search files in git repo    |
 | `<leader>pb` | Project buffers       | Search open buffers         |
 
@@ -371,14 +376,14 @@ A      - Append at block end
 
 ## 🔧 Customizing Mappings
 
-To add your own mappings, edit `~/.config/vim/core/mappings.vim` or use vcfg:
+To add your own mappings, edit `~/.config/vim/core/mappings.vim` or use vimx:
 
 ```bash
 # Add custom mapping
-vcfg editmap add '<leader>custom' ':YourCommand<CR>'
+vimx editmap add '<leader>custom' ':YourCommand<CR>'
 
 # Edit mappings interactively
-vcfg editmap
+vimx editmap
 ```
 
 ## 📝 Mapping Conventions
@@ -405,7 +410,7 @@ Print this quick reference for easy access:
 ```
 Leader: <Space>
 
-Files:     tt pp bb gg
+Files:     tt ff nf pf bb gg
 Windows:   C-hjkl <leader>s <leader>m
 Tabs:      <leader>to/tc/tn/tp
 Code:      gd gy gi gr K <leader>rn
@@ -415,4 +420,4 @@ Save/Quit: <leader>w/q/wq/x
 
 ---
 
-[← Back to Main README](../README.md) | [Customization Guide →](customization.md)
+[← Home](/) | [Customization Guide →](customization.md)

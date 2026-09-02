@@ -106,10 +106,10 @@ update_existing() {
 
   print_success "Configuration updated successfully!"
 
-  # Update vcfg jika needed
-  if [ -f "$INSTALL_DIR/vcfg.sh" ]; then
-    print_info "Updating vcfg..."
-    install_vcfg
+  # Update vimx jika needed
+  if [ -f "$INSTALL_DIR/vimx.sh" ]; then
+    print_info "Updating vimx..."
+    install_vimx
   fi
 
   # Update .vimrc jika itu milik kita

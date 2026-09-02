@@ -82,7 +82,7 @@ list_coc_extensions() {
   print_info "Total size extensions : $total_size_human"
 
   echo ""
-  echo -e "Run ${CYAN}vcfg help coc${NC} for detail information"
+  echo -e "Run ${CYAN}vimx help coc${NC} for detail information"
 }
 
 show_coc_extensions() {
@@ -192,5 +192,5 @@ show_coc_extensions() {
   print_info "Total size extensions  : $total_size_human"
   echo ""
 
-  print_info "Run ${CYAN}vcfg help coc${NC} for detail information"
+  print_info "Run ${CYAN}vimx help coc${NC} for detail information"
 }

@@ -11,7 +11,7 @@ Thank you for considering contributing to this Vim configuration project!
    - Clear title and description
    - Steps to reproduce
    - Expected vs actual behavior
-   - System information (`vcfg doctor` output)
+   - System information (`vimx doctor` output)
    - Screenshots if applicable
 
 ### Suggesting Features
@@ -129,7 +129,7 @@ vim -u ~/.vimrc -c "quit"
 vim -u ~/.vimrc -c "messages"
 
 # Run health check
-vcfg doctor
+vimx doctor
 
 # Test on clean install
 rm -rf ~/.vim/plugged
@@ -154,7 +154,7 @@ vim -c "PlugInstall" -c "quit"
 
 ### Advanced Issues
 
-- vcfg tool enhancements
+- vimx tool enhancements
 - Plugin management improvements
 - LSP configuration optimization
 - Cross-platform compatibility

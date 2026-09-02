@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Termux Optimization Guide
 
 Complete guide for using Vim on Termux (Android).
@@ -270,9 +274,9 @@ set diffopt+=internal,algorithm:patience
 
 ```bash
 # Disable heavy plugins for mobile
-vcfg disable copilot.vim
-vcfg disable vim-gitgutter
-vcfg disable nerdcommenter
+vimx disable copilot.vim
+vimx disable vim-gitgutter
+vimx disable nerdcommenter
 
 # Use lighter alternatives
 # Instead of coc.nvim, consider vim-lsp (lighter)
@@ -491,10 +495,10 @@ Solution:
 
 ```bash
 # Run doctor
-vcfg doctor
+vimx doctor
 
 # Disable heavy plugins
-vcfg disable slow_plugins
+vimx disable slow_plugins
 
 # Use performance mode
 vim -c "let g:performance_mode=1" file.txt
@@ -683,4 +687,4 @@ tmux attach -t work
 
 ---
 
-[← Back to Main README](../README.md) | [Performance Guide →](performance.md)
+[← Home](/) | [Performance Guide →](performance.md)

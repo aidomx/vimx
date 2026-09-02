@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-vcfg_cmd_enable() {
+vimx_cmd_enable() {
   local plugin=$1
 
   if [ -z "$plugin" ]; then
     print_error "Please specify a plugin to enable"
-    echo "Usage: vcfg enable <plugin-name>"
+    echo "Usage: vimx enable <plugin-name>"
     return 1
   fi
 

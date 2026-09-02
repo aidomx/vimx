@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-vcfg_cmd_clean() {
+vimx_cmd_clean() {
   local plugin_manager=$(detect_plugin_manager)
 
   print_header "Cleaning Unused Plugins"

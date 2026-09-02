@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Customization Guide
 
 Learn how to customize and personalize your Vim configuration.
@@ -90,11 +94,11 @@ set background=dark  " or light
 **1. Add theme plugin:**
 
 ```bash
-vcfg add dracula/vim
+vimx add dracula/vim
 # or
-vcfg add joshdick/onedark.vim
+vimx add joshdick/onedark.vim
 # or
-vcfg add arcticicestudio/nord-vim
+vimx add arcticicestudio/nord-vim
 ```
 
 **2. Activate theme:**
@@ -137,17 +141,17 @@ highlight Comment guifg=#928374 gui=italic
 
 ## ⌨️ Custom Key Mappings
 
-### Using vcfg editmap
+### Using vimx editmap
 
 ```bash
 # Interactive editor
-vcfg editmap
+vimx editmap
 
 # Add specific mapping
-vcfg editmap add '<leader>custom' ':YourCommand<CR>'
+vimx editmap add '<leader>custom' ':YourCommand<CR>'
 
 # List all mappings
-vcfg editmap list
+vimx editmap list
 ```
 
 ### Manual Mapping Configuration
@@ -221,22 +225,22 @@ nnoremap <silent> <leader>w :w<CR>
 
 ## 🔌 Adding Plugins
 
-### Using vcfg
+### Using vimx
 
 ```bash
 # Search for plugins
-vcfg search "file explorer"
-vcfg search "git integration"
+vimx search "file explorer"
+vimx search "git integration"
 
 # Add plugin
-vcfg add tpope/vim-fugitive
-vcfg add preservim/nerdcommenter
+vimx add tpope/vim-fugitive
+vimx add preservim/nerdcommenter
 
 # Get plugin info
-vcfg info nerdtree
+vimx info nerdtree
 
 # Update plugins
-vcfg update
+vimx update
 ```
 
 ### Manual Plugin Addition
@@ -718,7 +722,7 @@ nnoremap <leader>note :call QuickNote()<CR>
 ✅ **Use version control** for your custom configs
 ✅ **Keep it modular** - separate concerns
 ✅ **Backup before major changes**
-✅ **Use vcfg** for plugin management
+✅ **Use vimx** for plugin management
 ✅ **Check performance** with `:profile`
 
 ### Don'ts
@@ -832,4 +836,4 @@ endif
 
 ---
 
-[← Back to Main README](../README.md) | [Troubleshooting →](troubleshooting.md)
+[← Home](/) | [Troubleshooting →](troubleshooting.md)

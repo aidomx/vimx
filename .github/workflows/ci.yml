@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify scripts are executable
+        run: |
+          chmod +x vimx.sh install.sh
+          ls -la vimx.sh install.sh
+
+      - name: Test vimx commands
+        run: |
+          bash vimx.sh help
+          bash vimx.sh version
+
+      - name: Check docs exist
+        run: |
+          for f in getting-started.md installation.md keymappings.md vimx.md plugins.md troubleshooting.md; do
+            if [ ! -f "docs/$f" ]; then
+              echo "Missing docs/$f"
+              exit 1
+            fi
+          done
+          echo "All required docs present"

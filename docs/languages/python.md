@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Python Development Guide
 
 Complete guide for Python development with Django, Flask, and data science tools.
@@ -564,4 +568,4 @@ def function(param: str) -> int:
 
 ---
 
-[← Back to Languages](../README.md#language-support) | [C/C++ Guide →](c-cpp.md)
+[← Languages](/) | [C/C++ Guide →](c-cpp.md)

@@ -45,18 +45,18 @@ if [[ $IS_REMOTE -eq 1 ]]; then
 fi
 
 # Load libs (adjust path if script installed elsewhere)
-VCFG_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+VIMX_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Source libs
-source "${VCFG_ROOT}/lib/paths.sh"
-source "${VCFG_ROOT}/lib/fs.sh"
-source "${VCFG_ROOT}/lib/colors.sh"
-source "${VCFG_ROOT}/lib/logging.sh"
-source "${VCFG_ROOT}/lib/execs.sh"
-source "${VCFG_ROOT}/lib/progress.sh"
+source "${VIMX_ROOT}/lib/paths.sh"
+source "${VIMX_ROOT}/lib/fs.sh"
+source "${VIMX_ROOT}/lib/colors.sh"
+source "${VIMX_ROOT}/lib/logging.sh"
+source "${VIMX_ROOT}/lib/execs.sh"
+source "${VIMX_ROOT}/lib/progress.sh"
 
 # Source command implementations
-for f in "${VCFG_ROOT}/commands"/*.sh; do
+for f in "${VIMX_ROOT}/commands"/*.sh; do
   source "$f"
 done
 
@@ -66,7 +66,7 @@ done
 
 main() {
   clear
-  vcfg_banner
+  vimx_banner
 
   # Pre-installation checks
   check_dependencies
@@ -81,7 +81,7 @@ main() {
   setup_vimrc
   install_plugin_manager
   install_plugins
-  install_vcfg
+  install_vimx
 
   # Optional setup
   setup_optional_tools

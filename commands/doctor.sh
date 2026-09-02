@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-vcfg_cmd_doctor() {
+vimx_cmd_doctor() {
   print_header "Vim Configuration Doctor"
   echo -e "${WHITE}Checking your Vim/Neovim setup for potential issues...${NC}"
   echo ""
@@ -217,7 +217,7 @@ check_vim_syntax() {
 
     # Untuk file config modular, check syntax dengan method yang lebih safe
     local syntax_check
-    syntax_check=$(vim -u NONE -i NONE -N -c "
+    syntax_check=$(timeout 5 vim -u NONE -i NONE -N -es -c "
       try
         source $file
         echo 'VALID'
@@ -225,7 +225,7 @@ check_vim_syntax() {
         echo 'ERROR: ' . v:exception
       endtry
       quit
-    " 2>&1 | grep -E "(VALID|ERROR:)")
+    " 2>&1 | grep -E "(VALID|ERROR:)") || true
 
     if echo "$syntax_check" | grep -q "VALID"; then
       print_success "Syntax: $filename valid"
@@ -340,7 +340,7 @@ check_performance() {
   total_checks=$((total_checks + 1))
   if command -v vim &> /dev/null; then
     local start_time=$(date +%s%3N)
-    vim --startuptime /tmp/vim_startup.log +q 2> /dev/null
+    timeout 10 vim --startuptime /tmp/vim_startup.log +q 2> /dev/null || true
     local end_time=$(date +%s%3N)
     local startup_time=$((end_time - start_time))
 
@@ -396,7 +396,7 @@ show_recommendations() {
   fi
 
   if [ ! -f "${HOME}/.vim/autoload/plug.vim" ] && [ ! -f "${HOME}/.local/share/nvim/site/autoload/plug.vim" ]; then
-    echo -e "  ${YELLOW}•${NC} Install a plugin manager: ${CYAN}vcfg install${NC}"
+    echo -e "  ${YELLOW}•${NC} Install a plugin manager: ${CYAN}vimx install${NC}"
   fi
 
   if ! command -v git &> /dev/null; then
@@ -410,12 +410,12 @@ show_recommendations() {
   # Check if using slow startup time
   if command -v vim &> /dev/null; then
     local start_time=$(date +%s%3N)
-    vim --startuptime /tmp/vim_startup.log +q 2> /dev/null
+    timeout 10 vim --startuptime /tmp/vim_startup.log +q 2> /dev/null || true
     local end_time=$(date +%s%3N)
     local startup_time=$((end_time - start_time))
 
     if [ $startup_time -gt 2000 ]; then
-      echo -e "  ${YELLOW}•${NC} Optimize startup time: ${CYAN}vcfg disable slow_plugins${NC}"
+      echo -e "  ${YELLOW}•${NC} Optimize startup time: ${CYAN}vimx disable slow_plugins${NC}"
       echo -e "  ${YELLOW}•${NC} Check startup profile: ${CYAN}vim --startuptime startup.log${NC}"
     fi
     rm -f /tmp/vim_startup.log
@@ -423,8 +423,8 @@ show_recommendations() {
 
   echo ""
   print_info "Run specific commands to fix issues:"
-  echo -e "  ${CYAN}vcfg install${NC}    - Install missing components"
-  echo -e "  ${CYAN}vcfg update${NC}     - Update plugins and manager"
-  echo -e "  ${CYAN}vcfg clean${NC}      - Remove unused plugins"
-  echo -e "  ${CYAN}vcfg doctor${NC}     - Run this check again"
+  echo -e "  ${CYAN}vimx install${NC}    - Install missing components"
+  echo -e "  ${CYAN}vimx update${NC}     - Update plugins and manager"
+  echo -e "  ${CYAN}vimx clean${NC}      - Remove unused plugins"
+  echo -e "  ${CYAN}vimx doctor${NC}     - Run this check again"
 }

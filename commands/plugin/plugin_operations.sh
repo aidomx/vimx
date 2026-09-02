@@ -43,8 +43,8 @@ plugin_exists() {
   local manager=$(detect_plugin_manager)
 
   # Load add modules untuk normalization functions
-  if [ -f "${VCFG_ROOT}/commands/add/add_detection.sh" ]; then
-    source "${VCFG_ROOT}/commands/add/add_detection.sh"
+  if [ -f "${VIMX_ROOT}/commands/add/add_detection.sh" ]; then
+    source "${VIMX_ROOT}/commands/add/add_detection.sh"
   fi
 
   # Normalize plugin untuk comparison konsisten

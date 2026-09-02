@@ -58,7 +58,7 @@ show_backup_success() {
   echo -e "${WHITE}Size:${NC} $backup_size"
   echo -e "${WHITE}Items:${NC} $total_items"
   echo ""
-  echo -e "To restore, run: ${CYAN}vcfg restore $output_file${NC}"
+  echo -e "To restore, run: ${CYAN}vimx restore $output_file${NC}"
 }
 
 show_restore_success() {
@@ -70,6 +70,6 @@ show_restore_success() {
     echo -e "${WHITE}Pre-restore backup:${NC} $restore_backup"
     echo ""
   fi
-  echo -e "Run ${CYAN}vcfg doctor${NC} to verify the restore"
-  echo -e "Run ${CYAN}vcfg install${NC} to reinstall plugins if needed"
+  echo -e "Run ${CYAN}vimx doctor${NC} to verify the restore"
+  echo -e "Run ${CYAN}vimx install${NC} to reinstall plugins if needed"
 }

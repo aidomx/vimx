@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Installation Guide
 
 Complete installation instructions for Vim Configuration.
@@ -21,7 +25,7 @@ The script will automatically:
 3. Set up configuration files
 4. Install vim-plug
 5. Install all plugins
-6. Set up vcfg tool
+6. Set up vimx tool
 
 ## ⚙️ Manual Installation
 
@@ -88,24 +92,24 @@ Install language server extensions:
 :CocInstall coc-snippets coc-git coc-lists
 ```
 
-### 7. Install vcfg Tool (Optional)
+### 7. Install vimx Tool (Optional)
 
-The vcfg tool provides easy configuration management:
+The vimx tool provides easy configuration management:
 
 ```bash
-# Copy vcfg to your PATH
-sudo cp ~/.config/vim/vcfg.sh /usr/sbin/vcfg
-sudo chmod +x /usr/sbin/vcfg
+# Copy vimx to your PATH
+sudo cp ~/.config/vim/vimx.sh /usr/sbin/vimx
+sudo chmod +x /usr/sbin/vimx
 ```
 
 ## 🔄 Updating
 
 ### Update All Plugins
 
-Using vcfg:
+Using vimx:
 
 ```bash
-vcfg update
+vimx update
 ```
 
 Or manually in Vim:
@@ -116,10 +120,10 @@ Or manually in Vim:
 
 ### Update Configuration
 
-Using vcfg:
+Using vimx:
 
 ```bash
-vcfg system-update
+vimx system-update
 ```
 
 Or manually:
@@ -141,8 +145,8 @@ rm -rf ~/.config/vim
 rm -rf ~/.vim/autoload/plug.vim
 rm -rf ~/.vim/plugged
 
-# Remove vcfg tool (if installed)
-sudo rm /usr.config/bin/vcfg
+# Remove vimx tool (if installed)
+sudo rm /usr.config/bin/vimx
 
 # Remove or edit ~/.vimrc
 # Comment out or remove the lines that source the configuration
@@ -247,11 +251,11 @@ curl -fsSL https://raw.githubusercontent.com/aidomx/vimconfig/main/install.sh | 
 After installation, verify everything is working:
 
 ```bash
-# Check vcfg
-vcfg version
+# Check vimx
+vimx version
 
 # Check health
-vcfg doctor
+vimx doctor
 
 # Open Vim and check plugins
 vim
@@ -265,9 +269,9 @@ After successful installation:
 
 1. Read the [Quick Start Guide](quick-start.md)
 2. Learn [Key Mappings](keymappings.md)
-3. Explore [Language-Specific Guides](languages/)
+3. Explore [Language-Specific Guides](/languages/web)
 4. Customize your setup following [Customization Guide](customization.md)
 
 ---
 
-[← Back to Main README](../README.md)
+[← Home](/)

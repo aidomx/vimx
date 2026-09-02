@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-vcfg_cmd_reset() {
+vimx_cmd_reset() {
   if [ $# -gt 0 ]; then
     case "$1" in
       "-h" | "--help")
-        echo "Usage: vcfg reset [option]"
+        echo "Usage: vimx reset [option]"
         echo ""
         echo "Options:"
         echo "  settings    - Reset only settings to defaults"
@@ -13,9 +13,9 @@ vcfg_cmd_reset() {
         echo "  all         - Reset everything (default)"
         echo ""
         echo "Examples:"
-        echo "  vcfg reset              # Reset everything"
-        echo "  vcfg reset settings     # Reset only settings"
-        echo "  vcfg reset plugins      # Reset only plugins"
+        echo "  vimx reset              # Reset everything"
+        echo "  vimx reset settings     # Reset only settings"
+        echo "  vimx reset plugins      # Reset only plugins"
         return 0
         ;;
     esac
@@ -42,7 +42,7 @@ vcfg_cmd_reset() {
       ;;
     *)
       print_error "Invalid reset type: $reset_type"
-      echo "Run 'vcfg reset --help' for usage information"
+      echo "Run 'vimx reset --help' for usage information"
       return 1
       ;;
   esac
@@ -51,9 +51,9 @@ vcfg_cmd_reset() {
 reset_settings() {
   print_info "Resetting settings to defaults..."
 
-  if [ -f "${VCFG_SETTINGS_DEFAULT}" ]; then
-    backup_config_file "${VCFG_SETTINGS_FILE}"
-    cp "${VCFG_SETTINGS_DEFAULT}" "${VCFG_SETTINGS_FILE}"
+  if [ -f "${VIMX_SETTINGS_DEFAULT}" ]; then
+    backup_config_file "${VIMX_SETTINGS_FILE}"
+    cp "${VIMX_SETTINGS_DEFAULT}" "${VIMX_SETTINGS_FILE}"
     print_success "Settings reset to defaults"
   else
     print_warning "Default settings file not found, keeping current settings"
@@ -63,9 +63,9 @@ reset_settings() {
 reset_plugins() {
   print_info "Resetting plugins to defaults..."
 
-  if [ -f "${VCFG_PLUGINS_DEFAULT}" ]; then
-    backup_config_file "${VCFG_PLUGINS_FILE}"
-    cp "${VCFG_PLUGINS_DEFAULT}" "${VCFG_PLUGINS_FILE}"
+  if [ -f "${VIMX_PLUGINS_DEFAULT}" ]; then
+    backup_config_file "${VIMX_PLUGINS_FILE}"
+    cp "${VIMX_PLUGINS_DEFAULT}" "${VIMX_PLUGINS_FILE}"
     print_success "Plugins reset to defaults"
   else
     print_warning "Default plugins file not found, keeping current plugins"
@@ -75,9 +75,9 @@ reset_plugins() {
 reset_mappings() {
   print_info "Resetting key mappings to defaults..."
 
-  if [ -f "${VCFG_MAPPINGS_DEFAULT}" ]; then
-    backup_config_file "${VCFG_MAPPINGS_FILE}"
-    cp "${VCFG_MAPPINGS_DEFAULT}" "${VCFG_MAPPINGS_FILE}"
+  if [ -f "${VIMX_MAPPINGS_DEFAULT}" ]; then
+    backup_config_file "${VIMX_MAPPINGS_FILE}"
+    cp "${VIMX_MAPPINGS_DEFAULT}" "${VIMX_MAPPINGS_FILE}"
     print_success "Key mappings reset to defaults"
   else
     print_warning "Default mappings file not found, keeping current mappings"

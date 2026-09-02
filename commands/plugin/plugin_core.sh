@@ -16,7 +16,7 @@ get_plugin_config_file() {
   local manager=$1
   case "$manager" in
     "vim-plug")
-      echo "$VCFG_PLUGINS_FILE"
+      echo "$VIMX_PLUGINS_FILE"
       ;;
     "packer.nvim")
       echo "${HOME}/.config/nvim/lua/plugins.lua"

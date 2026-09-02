@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Prerequisites
 
 Required packages and dependencies for the Vim configuration.
@@ -415,8 +419,8 @@ clang-format --version
 After installing the Vim configuration:
 
 ```bash
-# Using vcfg
-vcfg doctor
+# Using vimx
+vimx doctor
 
 # Or in Vim
 :checkhealth
@@ -525,4 +529,4 @@ After installing all prerequisites:
 
 ---
 
-[← Back to Main README](../README.md) | [Installation Guide →](installation.md)
+[← Home](/) | [Installation Guide →](installation.md)

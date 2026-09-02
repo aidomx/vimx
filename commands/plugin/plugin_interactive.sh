@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 interactive_plugin_manager() {
-  ! [ -f "$VCFG_PLUGINS_FILE" ] && print_error "Plugins file not found: ${VCFG_PLUGINS_FILE}" | return 1
+  ! [ -f "$VIMX_PLUGINS_FILE" ] && print_error "Plugins file not found: ${VIMX_PLUGINS_FILE}" | return 1
 
   print_header "Interactive Plugin Manager"
-  echo -e "${WHITE}Editing: ${CYAN}${VCFG_PLUGINS_FILE}${NC}"
+  echo -e "${WHITE}Editing: ${CYAN}${VIMX_PLUGINS_FILE}${NC}"
   echo ""
   echo -e "${YELLOW}Available commands:${NC}"
   echo -e "  ${GREEN}add${NC}     <plugin>  - Add new plugin"
@@ -26,14 +26,14 @@ interactive_plugin_manager() {
     local args=$(echo "$command" | awk -F' ' {'print $2'})
 
     case "$cmd" in
-    list | -l) vcfg_cmd_list ;;
-    add | -a) vcfg_cmd_add "$args" ;;
-    disable) vcfg_cmd_disable "$args" ;;
-    enable) vcfg_cmd_enable "$args" ;;
-    info) vcfg_cmd_info "$args" ;;
-    remove | -r) vcfg_cmd_remove "$args" ;;
-    search | -s) vcfg_cmd_search "$args" ;;
-    update | -u) vcfg_cmd_update ;;
+    list | -l) vimx_cmd_list ;;
+    add | -a) vimx_cmd_add "$args" ;;
+    disable) vimx_cmd_disable "$args" ;;
+    enable) vimx_cmd_enable "$args" ;;
+    info) vimx_cmd_info "$args" ;;
+    remove | -r) vimx_cmd_remove "$args" ;;
+    search | -s) vimx_cmd_search "$args" ;;
+    update | -u) vimx_cmd_update ;;
     edit | -e) edit_plugin_file ;;
     quit | q)
       print_info "Goodbye!"
@@ -48,7 +48,7 @@ interactive_plugin_manager() {
     *)
       # Try to execute as direct command
       if [[ "$command" =~ ^(add|disable|edit|enable|info|list|remove|search|update) ]]; then
-        eval "vcfg_cmd_plugins $command"
+        eval "vimx_cmd_plugins $command"
       else
         print_error "Unknown command: $command"
         echo "Type 'help' for available commands"
@@ -59,7 +59,7 @@ interactive_plugin_manager() {
 }
 
 edit_plugin_file() {
-  local plugins_file="${VCFG_PLUGINS_FILE}"
+  local plugins_file="${VIMX_PLUGINS_FILE}"
 
   print_info "Opening plugins file in editor..."
 

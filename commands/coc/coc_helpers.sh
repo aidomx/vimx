@@ -46,7 +46,7 @@ extract_coc_extensions() {
 
 is_coc_extension_installed() {
   local extension=$1
-  local coc_extensions_dir="${VCFG_COC_EXTENSIONS:-${HOME}/.config/coc/extensions}"
+  local coc_extensions_dir="${VIMX_COC_EXTENSIONS:-${HOME}/.config/coc/extensions}"
   local ext_dir="${coc_extensions_dir}/node_modules/${extension}"
 
   [ -d "$ext_dir" ]

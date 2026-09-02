@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # C/C++ Development Guide
 
 Complete guide for C and C++ development with modern features and best practices.
@@ -967,4 +971,4 @@ const int* const ptr;  // Const pointer to const int
 
 ---
 
-[← Back to Languages](../README.md#language-support) | [Go Guide →](go.md)
+[← Languages](/) | [Go Guide →](go.md)

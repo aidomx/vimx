@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Go Development Guide
 
 Complete guide for Go (Golang) development with modern practices.
@@ -933,4 +937,4 @@ type Writer interface {}
 
 ---
 
-[← Back to Languages](../README.md#language-support) | [PHP/Laravel Guide →](php-laravel.md)
+[← Languages](/) | [PHP/Laravel Guide →](php-laravel.md)

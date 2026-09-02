@@ -2,10 +2,10 @@
 
 add_language() {
   local lang="${1}"
-  local lang_file="${VCFG_LANGS_DIR}/${lang}.vim"
+  local lang_file="${VIMX_LANGS_DIR}/${lang}.vim"
 
-  if grep -q "#define LANGUAGE" "$VCFG_INIT" && grep -q "#enddef LANGUAGE" "$VCFG_INIT"; then
-    if grep -q "runtime! langs/$lang.vim" "$VCFG_INIT"; then
+  if grep -q "#define LANGUAGE" "$VIMX_INIT" && grep -q "#enddef LANGUAGE" "$VIMX_INIT"; then
+    if grep -q "runtime! langs/$lang.vim" "$VIMX_INIT"; then
       print_warning "Configuration ${CYAN}$lang${NC} is already exists"
       return 0
     fi
@@ -17,7 +17,7 @@ add_language() {
     added=1
   }
 { print }
-    ' "$VCFG_INIT" >"$tmp_file" && mv "$tmp_file" "$VCFG_INIT"
+    ' "$VIMX_INIT" >"$tmp_file" && mv "$tmp_file" "$VIMX_INIT"
 
     if [ -f "$lang_file" ]; then
       print_warning "Added to configuration is successfully but language file: ${CYAN}$lang_file${NC} is already exists"
@@ -26,7 +26,7 @@ add_language() {
       print_success "Added new language ${CYAN}$lang_file${NC} is successfully"
     fi
   else
-    cat >>"$VCFG_INIT" <<EOF
+    cat >>"$VIMX_INIT" <<EOF
 " Load language configurations
 " Don't remove 'define LANGUAGE' and 'enddef LANGUAGE' from comment
 " #define LANGUAGE
@@ -43,24 +43,24 @@ disable_language() {
   local lang="${1}"
   local lang_pattern="runtime! langs/${lang}.vim"
 
-  if [[ ! -f "$VCFG_INIT" ]]; then
-    print_error "Configuration file $VCFG_INIT not found"
+  if [[ ! -f "$VIMX_INIT" ]]; then
+    print_error "Configuration file $VIMX_INIT not found"
     return 1
   fi
 
-  if ! grep -q "$lang_pattern" "$VCFG_INIT"; then
+  if ! grep -q "$lang_pattern" "$VIMX_INIT"; then
     print_warning "Language ${CYAN}$lang${NC} not found"
     return 0
   fi
 
-  if grep -q "$lang_pattern" "$VCFG_INIT" || grep -q "^[^\"].*$lang_pattern" "$VCFG_INIT"; then
+  if grep -q "$lang_pattern" "$VIMX_INIT" || grep -q "^[^\"].*$lang_pattern" "$VIMX_INIT"; then
     tmp_file=$(mktemp)
     awk -v pattern="$lang_pattern" '
       $0 ~ pattern && !/^"/ {
         $0 = "\" " $0
       }
       { print }
-    ' "$VCFG_INIT" >"$tmp_file" && mv "$tmp_file" "$VCFG_INIT"
+    ' "$VIMX_INIT" >"$tmp_file" && mv "$tmp_file" "$VIMX_INIT"
 
     print_success "Language ${CYAN}$lang${NC} disabled successfully"
   else
@@ -71,12 +71,12 @@ disable_language() {
 enable_language() {
   local lang="${1}"
 
-  if [[ ! -f "$VCFG_INIT" ]]; then
-    print_error "Configuration file $VCFG_INIT not found"
+  if [[ ! -f "$VIMX_INIT" ]]; then
+    print_error "Configuration file $VIMX_INIT not found"
     return 1
   fi
 
-  if grep -q "^\" *runtime! langs/${lang}.vim" "$VCFG_INIT"; then
+  if grep -q "^\" *runtime! langs/${lang}.vim" "$VIMX_INIT"; then
     tmp_file=$(mktemp)
     awk -v lang="$lang" '
       /^" *runtime! langs\/.*\.vim/ {
@@ -85,10 +85,10 @@ enable_language() {
         }
       }
       { print }
-    ' "$VCFG_INIT" >"$tmp_file" && mv "$tmp_file" "$VCFG_INIT"
+    ' "$VIMX_INIT" >"$tmp_file" && mv "$tmp_file" "$VIMX_INIT"
 
     print_success "Language ${CYAN}$lang${NC} enabled successfully"
-  elif grep -q "^runtime! langs/${lang}.vim" "$VCFG_INIT"; then
+  elif grep -q "^runtime! langs/${lang}.vim" "$VIMX_INIT"; then
     print_warning "Language ${CYAN}$lang${NC} is already enabled"
   else
     print_error "Language ${CYAN}$lang${NC} not found in configuration"
@@ -98,7 +98,7 @@ enable_language() {
 
 info_language() {
   local lang="${1}"
-  local lang_file="${VCFG_LANGS_DIR}/${lang}.vim"
+  local lang_file="${VIMX_LANGS_DIR}/${lang}.vim"
 
   if [[ ! -f "$lang_file" ]]; then
     print_error "Language ${CYAN}$lang${NC} not found"
@@ -106,9 +106,9 @@ info_language() {
   fi
 
   local status="Disabled"
-  if grep -q "^runtime! langs/${lang}.vim" "$VCFG_INIT"; then
+  if grep -q "^runtime! langs/${lang}.vim" "$VIMX_INIT"; then
     status="${GREEN}Enabled${NC}"
-  elif grep -q "^\" *runtime! langs/${lang}.vim" "$VCFG_INIT"; then
+  elif grep -q "^\" *runtime! langs/${lang}.vim" "$VIMX_INIT"; then
     status="${YELLOW}Disabled${NC}"
   else
     status="${RED}Not in config${NC}"
@@ -145,38 +145,47 @@ info_language() {
 }
 
 list_language() {
-  local languages=($(find "${VCFG_LANGS_DIR}" -name "*.vim"))
+  local languages=()
+  while IFS= read -r f; do [ -n "$f" ] && languages+=("$f"); done < <(find "${VIMX_LANGS_DIR}" -name "*.vim" 2>/dev/null | sort)
   local current=0
   local table_data=()
 
-  print_header "List language of supported"
+  print_header "Supported Languages"
   echo ""
+
+  if [ ${#languages[@]} -eq 0 ]; then
+    print_warning "No language configurations found"
+    return 1
+  fi
 
   for lang in "${languages[@]}"; do
     current=$((current + 1))
-    table_data+=("$current|$(basename $lang)")
+    local lang_name
+    lang_name=$(basename "$lang" .vim)
+    table_data+=("$current|$lang_name")
   done
 
   create_simple_table "No,Language" "${table_data[@]}"
   echo ""
-  echo -e "For edit with editor : ${CYAN}edit python${NC}"
+  echo -e "Edit: ${CYAN}vimx lang edit <name>${NC}"
+  echo -e "Add:  ${CYAN}vimx lang add <name>${NC}"
 }
 
 remove_language() {
   local lang="${1}"
-  local lang_file="${VCFG_LANGS_DIR}/${lang}.vim"
+  local lang_file="${VIMX_LANGS_DIR}/${lang}.vim"
   local lang_pattern="runtime! langs/${lang}.vim"
 
-  if [[ ! -f "$VCFG_INIT" ]]; then
-    print_error "Configuration file $VCFG_INIT not found"
+  if [[ ! -f "$VIMX_INIT" ]]; then
+    print_error "Configuration file $VIMX_INIT not found"
     return 1
   fi
 
-  if grep -q "$lang_pattern" "$VCFG_INIT"; then
+  if grep -q "$lang_pattern" "$VIMX_INIT"; then
     tmp_file=$(mktemp)
     awk -v pattern="$lang_pattern" '
       $0 !~ pattern { print }
-    ' "$VCFG_INIT" >"$tmp_file" && mv "$tmp_file" "$VCFG_INIT"
+    ' "$VIMX_INIT" >"$tmp_file" && mv "$tmp_file" "$VIMX_INIT"
 
     print_success "Language ${CYAN}$lang${NC} removed from configuration"
   else

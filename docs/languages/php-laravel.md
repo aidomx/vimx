@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # PHP/Laravel Development Guide
 
 Quick guide for PHP and Laravel development.
@@ -269,4 +273,4 @@ In Vim, use `<leader>la` to run Artisan commands interactively.
 
 ---
 
-[← Back to Languages](../README.md#language-support) | [Bash Guide →](bash.md)
+[← Languages](/) | [Bash Guide →](bash.md)

@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Web Development Guide
 
 Complete guide for JavaScript, TypeScript, HTML, CSS, React, Vue, and Next.js development.
@@ -1056,4 +1060,4 @@ const handleClick = useCallback(() => {
 
 ---
 
-[← Back to Languages](../README.md#language-support) | [Python Guide →](python.md)
+[← Languages](/) | [Python Guide →](python.md)

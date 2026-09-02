@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 # Load coc modules
-for coc_file in "${VCFG_ROOT}/commands/coc"/*.sh; do
+for coc_file in "${VIMX_ROOT}/commands/coc"/*.sh; do
   source "$coc_file"
 done
 
-vcfg_cmd_coc() {
+vimx_cmd_coc() {
   if [ $# -eq 0 ]; then
-    print_error "Usage: vcfg coc <command> [extension]"
+    print_error "Usage: vimx coc <command> [extension]"
     echo ""
     echo "Commands:"
     echo "  list                      - List installed Coc extensions"
@@ -19,26 +19,26 @@ vcfg_cmd_coc() {
     echo "  show                      - Show current extensions"
     echo ""
     echo "Examples:"
-    echo "  vcfg coc add coc-eslint"
-    echo "  vcfg coc remove coc-python"
-    echo "  vcfg coc list"
+    echo "  vimx coc add coc-eslint"
+    echo "  vimx coc remove coc-python"
+    echo "  vimx coc list"
     return 1
   fi
 
   local command=$1
   local extension=${2:-}
-  local coc_file="${VCFG_ROOT:-$HOME/.config/vim}/core/coc.vim"
+  local coc_file="${VIMX_ROOT:-$HOME/.config/vim}/core/coc.vim"
 
   ensure_coc_file "$coc_file"
 
   case "$command" in
     "list") list_coc_extensions "$coc_file" ;;
     "add" | "install" | "-i")
-      [ -z "$extension" ] && print_error "Usage: vcfg coc add <extension>" && return 1
+      [ -z "$extension" ] && print_error "Usage: vimx coc add <extension>" && return 1
       add_coc_extension "$extension" "$coc_file"
       ;;
     "remove" | "rm")
-      [ -z "$extension" ] && print_error "Usage: vcfg coc remove <extension>" && return 1
+      [ -z "$extension" ] && print_error "Usage: vimx coc remove <extension>" && return 1
       remove_coc_extension "$extension" "$coc_file"
       ;;
     # "install") install_coc_extensions "$coc_file" ;;
@@ -79,7 +79,7 @@ vcfg_cmd_coc() {
 
     *)
       print_error "Unknown command: $command"
-      echo "Run 'vcfg coc' for usage information"
+      echo "Run 'vimx coc' for usage information"
       return 1
       ;;
   esac

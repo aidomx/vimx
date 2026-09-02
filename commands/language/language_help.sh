@@ -16,10 +16,10 @@ show_language_help() {
 }
 
 detail_language_help() {
-  echo -e "${CYAN}vcfg lang${NC} - Language manager and Interactive"
+  echo -e "${CYAN}vimx lang${NC} - Language manager and Interactive"
   echo ""
   echo -e "${WHITE}USAGE:${NC}"
-  echo "  vcfg lang <command>"
+  echo "  vimx lang <command>"
   echo ""
   echo -e "${WHITE}AVAILABLE COMMAND:${NC}"
   echo -e "  ${GREEN}add${NC}     <language>  - Add new language"

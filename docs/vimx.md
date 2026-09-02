@@ -1,8 +1,6 @@
-# vcfg - Configuration Management Tool
+# vimx - Configuration Management Tool
 
-vcfg is a powerful command-line tool for managing your Vim configuration, plugins, and key mappings.
-
-> **Note:** Certain commands are currently under development and may not be functional.
+vimx is a powerful command-line tool for managing your Vim configuration, plugins, and key mappings.
 
 ## 📚 Table of Contents
 
@@ -15,12 +13,12 @@ vcfg is a powerful command-line tool for managing your Vim configuration, plugin
 
 ## 🚀 Installation
 
-vcfg is automatically installed with the main configuration. To install manually:
+vimx is automatically installed with the main configuration. To install manually:
 
 ```bash
 # Copy to system PATH
-sudo cp ~/.config/vim/vcfg.sh /usr/sbin/vcfg
-sudo chmod +x /usr/sbin/vcfg
+sudo cp ~/.config/vim/vimx.sh /usr/sbin/vimx
+sudo chmod +x /usr/sbin/vimx
 ```
 
 ## 📖 Command Reference
@@ -29,40 +27,40 @@ sudo chmod +x /usr/sbin/vcfg
 
 | Command              | Description                      |
 | -------------------- | -------------------------------- |
-| `vcfg install`       | First-time installation via vcfg |
-| `vcfg update`        | Update all plugins               |
-| `vcfg system-update` | Update configuration system      |
-| `vcfg reinstall`     | Complete fresh reinstall         |
-| `vcfg doctor`        | System health check              |
-| `vcfg version`       | Show version information         |
-| `vcfg help`          | Show help                        |
+| `vimx install`       | First-time installation via vimx |
+| `vimx update`        | Update all plugins               |
+| `vimx system-update` | Update configuration system      |
+| `vimx reinstall`     | Complete fresh reinstall         |
+| `vimx doctor`        | System health check              |
+| `vimx version`       | Show version information         |
+| `vimx help`          | Show help                        |
 
 ### Plugin Management
 
 | Command                     | Description                |
 | --------------------------- | -------------------------- |
-| `vcfg add <plugin>`         | Add new plugin             |
-| `vcfg remove <plugin>`      | Remove plugin completely   |
-| `vcfg enable <plugin>`      | Enable disabled plugin     |
-| `vcfg disable <plugin>`     | Disable plugin             |
-| `vcfg disable slow_plugins` | Disable known slow plugins |
-| `vcfg list`                 | List all installed plugins |
-| `vcfg clean`                | Remove unused plugins      |
+| `vimx add <plugin>`         | Add new plugin             |
+| `vimx remove <plugin>`      | Remove plugin completely   |
+| `vimx enable <plugin>`      | Enable disabled plugin     |
+| `vimx disable <plugin>`     | Disable plugin             |
+| `vimx disable slow_plugins` | Disable known slow plugins |
+| `vimx list`                 | List all installed plugins |
+| `vimx clean`                | Remove unused plugins      |
 
 ### Plugin Discovery
 
 | Command               | Description              |
 | --------------------- | ------------------------ |
-| `vcfg search <query>` | Search plugins on GitHub |
-| `vcfg info <plugin>`  | Show plugin information  |
+| `vimx search <query>` | Search plugins on GitHub |
+| `vimx info <plugin>`  | Show plugin information  |
 
 ### Key Mapping Management
 
 | Command                        | Description                |
 | ------------------------------ | -------------------------- |
-| `vcfg editmap`                 | Interactive mapping editor |
-| `vcfg editmap add <key> <cmd>` | Add new mapping            |
-| `vcfg editmap list`            | List all mappings          |
+| `vimx editmap`                 | Interactive mapping editor |
+| `vimx editmap add <key> <cmd>` | Add new mapping            |
+| `vimx editmap list`            | List all mappings          |
 
 ## 💡 Usage Examples
 
@@ -72,44 +70,44 @@ sudo chmod +x /usr/sbin/vcfg
 
 ```bash
 # Add a plugin from GitHub
-vcfg add tpope/vim-fugitive
-vcfg add preservim/nerdtree
+vimx add tpope/vim-fugitive
+vimx add preservim/nerdtree
 
 # Add multiple plugins
-vcfg add tpope/vim-surround tpope/vim-repeat
+vimx add tpope/vim-surround tpope/vim-repeat
 ```
 
 #### Removing Plugins
 
 ```bash
 # Remove a single plugin
-vcfg remove coc.nvim
+vimx remove coc.nvim
 
 # Remove multiple plugins
-vcfg remove vim-airline vim-airline-themes
+vimx remove vim-airline vim-airline-themes
 ```
 
 #### Enabling/Disabling Plugins
 
 ```bash
 # Disable a plugin temporarily
-vcfg disable copilot.vim
+vimx disable copilot.vim
 
 # Enable it back
-vcfg enable copilot.vim
+vimx enable copilot.vim
 
 # Disable all slow plugins
-vcfg disable slow_plugins
+vimx disable slow_plugins
 ```
 
 #### Listing Plugins
 
 ```bash
 # List all installed plugins
-vcfg list
+vimx list
 
-# List with status (enabled/disabled) (not ready)
-vcfg list --status
+# List all plugins
+vimx list
 ```
 
 ### Plugin Discovery
@@ -118,21 +116,21 @@ vcfg list --status
 
 ```bash
 # Search for fuzzy finder plugins
-vcfg search fuzzy finder
+vimx search fuzzy finder
 
 # Search for syntax highlighting
-vcfg search "syntax highlight"
+vimx search "syntax highlight"
 
 # Search for specific language support
-vcfg search typescript
+vimx search typescript
 ```
 
 #### Getting Plugin Information
 
 ```bash
 # Get detailed information about a plugin
-vcfg info nerdtree
-vcfg info coc.nvim
+vimx info nerdtree
+vimx info coc.nvim
 
 # Shows: description, stars, last update, homepage
 ```
@@ -143,20 +141,20 @@ vcfg info coc.nvim
 
 ```bash
 # Update all plugins
-vcfg update
+vimx update
 
 # Update configuration system
-vcfg system-update
+vimx system-update
 
 # Update both
-vcfg update && vcfg system-update
+vimx update && vimx system-update
 ```
 
 #### Health Check
 
 ```bash
 # Run comprehensive health check
-vcfg doctor
+vimx doctor
 
 # Checks:
 # - Vim/Neovim installation
@@ -170,7 +168,7 @@ vcfg doctor
 
 ```bash
 # Remove unused plugins
-vcfg clean
+vimx clean
 
 # This will:
 # - Remove plugins not in configuration
@@ -182,7 +180,7 @@ vcfg clean
 
 ```bash
 # Fresh reinstall of everything
-vcfg reinstall
+vimx reinstall
 
 # Warning: This will:
 # - Backup current configuration
@@ -197,7 +195,7 @@ vcfg reinstall
 
 ```bash
 # Open interactive editor
-vcfg editmap
+vimx editmap
 
 # Features:
 # - Browse all mappings
@@ -210,34 +208,34 @@ vcfg editmap
 
 ```bash
 # Add a single mapping
-vcfg editmap add '<leader>ff' ':Files<CR>'
+vimx editmap add '<leader>ff' ':Files<CR>'
 
 # Add with description
-vcfg editmap add '<leader>gg' ':GFiles<CR>' 'Search git files'
+vimx editmap add '<leader>gg' ':GFiles<CR>' 'Search git files'
 
 # Add mapping to specific file
-vcfg editmap add '<leader>py' ':!python %<CR>' --file langs/python.vim
+vimx editmap add '<leader>py' ':!python %<CR>' --file langs/python.vim
 ```
 
 #### List Mappings
 
 ```bash
 # List all mappings
-vcfg editmap list
+vimx editmap list
 
 # List mappings for specific mode
-vcfg editmap list --mode normal
-vcfg editmap list --mode insert
+vimx editmap list --mode normal
+vimx editmap list --mode insert
 
 # List mappings with filter
-vcfg editmap list --filter leader
+vimx editmap list --filter leader
 ```
 
 ## 🔧 Advanced Usage
 
 ### Configuration Files
 
-vcfg manages these configuration files:
+vimx manages these configuration files:
 
 ```
 ~/.config/vim/
@@ -248,47 +246,40 @@ vcfg manages these configuration files:
 └── utils/               # Utility configs
 ```
 
-### Custom Plugin Sources (not ready)
+### Custom Plugin Sources
+
+> **Note:** Custom plugin sources and local plugins are not yet supported. Use `vimx add user/repo` format.
 
 ```bash
-# Add plugin from custom source
-vcfg add https://github.com/username/custom-plugin.git
-
-# Add local plugin
-vcfg add ~/projects/my-vim-plugin --local
+# Add plugin from GitHub
+vimx add tpope/vim-fugitive
 ```
 
-### Backup and Restore (not ready)
+### Backup and Restore
 
 ```bash
 # Backup current configuration
-vcfg backup --output ~/vim-backup.tar.gz
+vimx backup ~/vim-backup.tar.gz
 
 # Restore from backup
-vcfg restore ~/vim-backup.tar.gz
-
-# List available backups
-vcfg backup list
+vimx restore ~/vim-backup.tar.gz
 ```
 
-### Plugin Profiles (not ready)
+### Plugin Profiles
+
+> **Note:** Plugin profiles are planned for a future release.
 
 ```bash
-# Create plugin profile
-vcfg profile create minimal --plugins "nerdtree,fzf"
-
-# Switch to profile
-vcfg profile switch minimal
-
-# List profiles
-vcfg profile list
+# Planned commands
+vimx profile create minimal --plugins "nerdtree,fzf"
+vimx profile switch minimal
 ```
 
 ## 🐛 Troubleshooting
 
 ### Common Issues
 
-#### vcfg command not found
+#### vimx command not found
 
 ```bash
 # Add to PATH
@@ -300,32 +291,32 @@ source ~/.bashrc
 
 ```bash
 # Fix permissions
-chmod +x ~/.config/vim/vcfg.sh
+chmod +x ~/.config/vim/vimx.sh
 ```
 
 #### Plugin installation fails
 
 ```bash
 # Check network
-vcfg doctor
+vimx doctor
 
 # Retry installation
-vcfg update --force
+vimx update --force
 ```
 
 ### Debug Mode
 
 ```bash
 # Run with debug output
-vcfg --debug update
+vimx --debug update
 
 # Verbose mode
-vcfg -v doctor
+vimx -v doctor
 ```
 
 ## 📊 Status Codes
 
-vcfg uses standard exit codes:
+vimx uses standard exit codes:
 
 - `0` - Success
 - `1` - General error
@@ -336,40 +327,40 @@ vcfg uses standard exit codes:
 
 ## 🔌 Plugin Manager Support
 
-vcfg supports multiple plugin managers:
+vimx supports multiple plugin managers:
 
 ### vim-plug (Default)
 
 ```bash
 # Automatically detected and used
-vcfg add tpope/vim-fugitive
+vimx add tpope/vim-fugitive
 ```
 
 ### packer.nvim (Neovim)
 
 ```bash
 # Use with packer
-vcfg --manager packer add tpope/vim-fugitive
+vimx --manager packer add tpope/vim-fugitive
 ```
 
 ### lazy.nvim (Neovim)
 
 ```bash
 # Use with lazy
-vcfg --manager lazy add tpope/vim-fugitive
+vimx --manager lazy add tpope/vim-fugitive
 ```
 
 ## 🎯 Best Practices
 
-1. **Regular Updates**: Run `vcfg update` weekly
-2. **Health Checks**: Run `vcfg doctor` after major changes
-3. **Clean Up**: Run `vcfg clean` monthly
+1. **Regular Updates**: Run `vimx update` weekly
+2. **Health Checks**: Run `vimx doctor` after major changes
+3. **Clean Up**: Run `vimx clean` monthly
 4. **Backups**: Create backups before major changes
 5. **Test New Plugins**: Disable slow plugins if needed
 
 ## 📝 Configuration
 
-vcfg can be configured via `~/.config/vim/config.yaml`:
+vimx can be configured via `~/.config/vim/config.yaml`:
 
 ```yaml
 # Default plugin manager
@@ -382,7 +373,7 @@ auto_update: true
 check_frequency: 7
 
 # Backup location
-backup_dir: ~/.local/share/vcfg/backups
+backup_dir: ~/.local/share/vimx/backups
 
 # Enable debug mode
 debug: false
@@ -390,7 +381,7 @@ debug: false
 
 ## 🔜 Future Features
 
-Planned features for vcfg:
+Planned features for vimx:
 
 - [ ] Plugin dependency management
 - [ ] Automatic performance profiling
@@ -401,4 +392,4 @@ Planned features for vcfg:
 
 ---
 
-[← Back to Main README](../README.md)
+[← Home](/)

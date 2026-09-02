@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-vcfg_cmd_editmap() {
+vimx_cmd_editmap() {
   # Jika ada subcommand, langsung execute
   if [ $# -gt 0 ]; then
     case "$1" in
@@ -12,8 +12,8 @@ vcfg_cmd_editmap() {
       if [ $# -eq 2 ]; then
         add_mapping "$1" "$2"
       else
-        print_error "Usage: vcfg editmap add <key> <action>"
-        echo "Example: vcfg editmap add '<leader>ff' ':Files<CR>'"
+        print_error "Usage: vimx editmap add <key> <action>"
+        echo "Example: vimx editmap add '<leader>ff' ':Files<CR>'"
         return 1
       fi
       ;;
@@ -22,7 +22,7 @@ vcfg_cmd_editmap() {
       if [ $# -eq 1 ]; then
         remove_mapping "$1"
       else
-        print_error "Usage: vcfg editmap remove <key-pattern>"
+        print_error "Usage: vimx editmap remove <key-pattern>"
         return 1
       fi
       ;;
@@ -31,7 +31,7 @@ vcfg_cmd_editmap() {
       if [ $# -eq 1 ]; then
         search_mappings "$1"
       else
-        print_error "Usage: vcfg editmap search <pattern>"
+        print_error "Usage: vimx editmap search <pattern>"
         return 1
       fi
       ;;
@@ -43,7 +43,7 @@ vcfg_cmd_editmap() {
       ;;
     *)
       print_error "Unknown subcommand: $1"
-      echo "Usage: vcfg editmap <list|add|remove|search|edit|help>"
+      echo "Usage: vimx editmap <list|add|remove|search|edit|help>"
       return 1
       ;;
     esac
@@ -55,7 +55,7 @@ vcfg_cmd_editmap() {
 }
 
 interactive_mapping_editor() {
-  local mappings_file="${VCFG_MAPPINGS_FILE}"
+  local mappings_file="${VIMX_MAPPINGS_FILE}"
 
   if [ ! -f "$mappings_file" ]; then
     print_error "Mappings file not found: $mappings_file"
@@ -107,7 +107,7 @@ interactive_mapping_editor() {
     *)
       # Try to execute as direct command
       if [[ "$command" =~ ^(list|add|remove|search|edit) ]]; then
-        eval "vcfg_cmd_editmap $command"
+        eval "vimx_cmd_editmap $command"
       else
         print_error "Unknown command: $command"
         echo "Type 'help' for available commands"
@@ -324,11 +324,11 @@ show_mapping_help() {
   echo -e "  ${GREEN}<C-x>${NC}     - Ctrl+x"
   echo ""
   echo -e "${CYAN}Usage Examples:${NC}"
-  echo -e "  ${YELLOW}vcfg editmap list${NC}"
-  echo -e "  ${YELLOW}vcfg editmap add '<leader>ff' ':Files<CR>'${NC}"
-  echo -e "  ${YELLOW}vcfg editmap remove '<leader>ff'${NC}"
-  echo -e "  ${YELLOW}vcfg editmap search 'leader'${NC}"
+  echo -e "  ${YELLOW}vimx editmap list${NC}"
+  echo -e "  ${YELLOW}vimx editmap add '<leader>ff' ':Files<CR>'${NC}"
+  echo -e "  ${YELLOW}vimx editmap remove '<leader>ff'${NC}"
+  echo -e "  ${YELLOW}vimx editmap search 'leader'${NC}"
   echo ""
   echo -e "${CYAN}Interactive Mode:${NC}"
-  echo -e "  Just run ${YELLOW}vcfg editmap${NC} without arguments"
+  echo -e "  Just run ${YELLOW}vimx editmap${NC} without arguments"
 }

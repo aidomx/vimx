@@ -1,7 +1,7 @@
 backups
 undo
 swaps
-vcfg-dev.sh
+vimx-dev.sh
 lib/url.sh
 README-dev.md
 *.swp
@@ -9,3 +9,10 @@ README-dev.md
 *.backup
 1
 langs/*.vim
+ftdetect/rupa.*
+syntax/rupa.*
+
+# VitePress
+docs/.vitepress/cache
+docs/.vitepress/dist
+docs/node_modules

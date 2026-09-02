@@ -36,9 +36,9 @@ restore_backup_archive() {
   # Restore items to their original locations
   for item in *; do
     case "$item" in
-      "vcfg_config")
-        rm -rf "${VCFG_ROOT}"
-        cp -r "$item" "${VCFG_ROOT}"
+      "vimx_config")
+        rm -rf "${VIMX_ROOT}"
+        cp -r "$item" "${VIMX_ROOT}"
         ;;
       "vimrc")
         cp "$item" "${HOME}/.vimrc"

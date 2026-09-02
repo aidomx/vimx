@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
 # Load help modules
-for help_file in "${VCFG_ROOT}/commands/help"/*.sh; do
+for help_file in "${VIMX_ROOT}/commands/help"/*.sh; do
   source "$help_file"
 done
 
 show_general_help() {
   echo ""
   echo -e "${WHITE}USAGE:${NC}"
-  echo "  vcfg <command> [arguments]"
+  echo "  vimx <command> [arguments]"
   echo ""
   help_core_commands
   echo ""
@@ -20,7 +20,7 @@ show_general_help() {
   echo ""
   help_examples
   echo ""
-  echo -e "Run ${CYAN}vcfg help <command>${NC} for detailed help"
+  echo -e "Run ${CYAN}vimx help <command>${NC} for detailed help"
 }
 
 show_detailed_help() {
@@ -37,15 +37,15 @@ show_detailed_help() {
     # If no module handled it
     print_error "No detailed help available for: $command"
     echo ""
-    echo -e "Run ${CYAN}vcfg help${NC} to see all available commands."
+    echo -e "Run ${CYAN}vimx help${NC} to see all available commands."
     return 1
   fi
 }
 
-vcfg_cmd_help() {
+vimx_cmd_help() {
   if [ $# -eq 0 ]; then
     # General help (default)
-    echo -e "${CYAN}vcfg${NC} - Vim Configuration Manager"
+    echo -e "${CYAN}vimx${NC} - Vim Configuration Manager"
     show_general_help
     return 0
   fi

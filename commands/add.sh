@@ -1,22 +1,22 @@
 #!/usr/bin/env bash
 
 # Load add modules
-for add_file in "${VCFG_ROOT}/commands/add"/*.sh; do
+for add_file in "${VIMX_ROOT}/commands/add"/*.sh; do
   source "$add_file"
 done
 
-vcfg_cmd_add() {
+vimx_cmd_add() {
   local plugin=$1
   local option=${2:-}
 
   if [ -z "$plugin" ]; then
     print_error "Please specify a plugin to add"
-    echo "Usage: vcfg add <plugin> [--local]"
+    echo "Usage: vimx add <plugin> [--local]"
     echo ""
     echo "Examples:"
-    echo "  vcfg add tpope/vim-fugitive           # GitHub shorthand"
-    echo "  vcfg add https://github.com/user/repo.git  # Full Git URL"
-    echo "  vcfg add ~/projects/my-plugin --local # Local plugin"
+    echo "  vimx add tpope/vim-fugitive           # GitHub shorthand"
+    echo "  vimx add https://github.com/user/repo.git  # Full Git URL"
+    echo "  vimx add ~/projects/my-plugin --local # Local plugin"
     return 1
   fi
 
@@ -59,7 +59,7 @@ vcfg_cmd_add() {
 
     print_success "Plugin added successfully!"
     echo ""
-    echo -e "Run ${CYAN}vcfg list${NC} to see all plugins"
+    echo -e "Run ${CYAN}vimx list${NC} to see all plugins"
   else
     print_error "Failed to add plugin"
     return 1

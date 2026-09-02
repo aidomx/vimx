@@ -3,7 +3,7 @@
 # Configuration for backup items
 get_backup_items() {
   local items=(
-    "${VCFG_ROOT}"
+    "${VIMX_ROOT}"
     "${HOME}/.vimrc"
     "${HOME}/.vim/plugged"
     "${HOME}/.config/coc"
@@ -16,7 +16,7 @@ get_backup_items() {
 get_backup_item_name() {
   local item=$1
   case "$item" in
-    "${VCFG_ROOT}") echo "vcfg_config" ;;
+    "${VIMX_ROOT}") echo "vimx_config" ;;
     "${HOME}/.vimrc") echo "vimrc" ;;
     "${HOME}/.vim/"*) echo "vim_$(basename "$item")" ;;
     "${HOME}/.config/"*) echo "config_$(basename "$item")" ;;
@@ -43,11 +43,11 @@ get_backup_manifest() {
   local items=("$@")
 
   cat > "${temp_dir}/backup_manifest.txt" << EOF
-VCFG Backup Manifest
+VIMX Backup Manifest
 ===================
 
 Created: $(date)
-VCFG Version: ${VCFG_VERSION}
+VIMX Version: ${VIMX_VERSION}
 Backup ID: $(date +%Y%m%d_%H%M%S)
 
 Included Items:

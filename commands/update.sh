@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-vcfg_cmd_update() {
+vimx_cmd_update() {
   local plugin_manager=$(detect_plugin_manager)
 
   print_header "Updating Plugins"

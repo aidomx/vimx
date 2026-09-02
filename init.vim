@@ -20,9 +20,10 @@ else
 endif
 
 " Load core configurations
-runtime! core/coc.vim
 runtime! core/settings.vim
 runtime! core/fonts.vim
+runtime! core/coc.vim
+runtime! core/theme.vim
 runtime! utils/ui.vim
 
 " Load environment-specific configurations
@@ -50,7 +51,8 @@ runtime! frameworks/nextjs.vim
 
 " Load completion and mappings last
 runtime! utils/autopairs.vim
-runtime! utils/basic-completion.vim
+runtime! utils/formatting.vim
+runtime! utils/completion.vim
 runtime! core/mappings.vim
 
 " Load Neovim specific config TERAKHIR

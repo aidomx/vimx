@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-vcfg_cmd_version() {
+vimx_cmd_version() {
   local VERSION=$1
-  echo -e "${CYAN}vcfg${NC} version ${GREEN}${VERSION}${NC}"
+  echo -e "${CYAN}vimx${NC} version ${GREEN}${VERSION}${NC}"
 }

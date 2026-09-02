@@ -18,10 +18,10 @@ help_core_commands() {
 help_core_detailed() {
   case "$1" in
   add)
-    echo -e "${CYAN}vcfg add${NC} - Add new plugin"
+    echo -e "${CYAN}vimx add${NC} - Add new plugin"
     echo ""
     echo -e "${WHITE}USAGE:${NC}"
-    echo "  vcfg add <plugin> [--local]"
+    echo "  vimx add <plugin> [--local]"
     echo ""
     echo -e "${WHITE}DESCRIPTION:${NC}"
     echo "  Adds a new plugin to your configuration and installs it automatically."
@@ -33,10 +33,10 @@ help_core_detailed() {
     echo "  • Local path: ~/projects/my-plugin (use --local flag)"
     echo ""
     echo -e "${WHITE}EXAMPLES:${NC}"
-    echo "  vcfg add tpope/vim-fugitive                    # GitHub shorthand"
-    echo "  vcfg add https://gitlab.com/user/repo.git      # Git URL"
-    echo "  vcfg add ~/projects/my-vim-plugin --local      # Local plugin"
-    echo "  vcfg add git@github.com:user/private.git       # SSH URL"
+    echo "  vimx add tpope/vim-fugitive                    # GitHub shorthand"
+    echo "  vimx add https://gitlab.com/user/repo.git      # Git URL"
+    echo "  vimx add ~/projects/my-vim-plugin --local      # Local plugin"
+    echo "  vimx add git@github.com:user/private.git       # SSH URL"
     echo ""
     echo -e "${WHITE}SUPPORTED MANAGERS:${NC}"
     echo "  • vim-plug"
@@ -45,71 +45,71 @@ help_core_detailed() {
     ;;
 
   remove | rm)
-    echo -e "${CYAN}vcfg remove${NC} - Remove plugin completely"
+    echo -e "${CYAN}vimx remove${NC} - Remove plugin completely"
     echo ""
     echo -e "${WHITE}USAGE:${NC}"
-    echo "  vcfg remove <plugin-name>"
+    echo "  vimx remove <plugin-name>"
     echo ""
     echo -e "${WHITE}DESCRIPTION:${NC}"
     echo "  Removes a plugin from configuration and deletes its files."
     echo "  Also cleans up any orphaned plugin directories."
     echo ""
     echo -e "${WHITE}EXAMPLES:${NC}"
-    echo "  vcfg remove vim-airline"
-    echo "  vcfg remove coc.nvim"
-    echo "  vcfg remove nerdtree"
+    echo "  vimx remove vim-airline"
+    echo "  vimx remove coc.nvim"
+    echo "  vimx remove nerdtree"
     ;;
 
   enable)
-    echo -e "${CYAN}vcfg enable${NC} - Enable disabled plugin"
+    echo -e "${CYAN}vimx enable${NC} - Enable disabled plugin"
     echo ""
     echo -e "${WHITE}USAGE:${NC}"
-    echo "  vcfg enable <plugin-name>"
+    echo "  vimx enable <plugin-name>"
     echo ""
     echo -e "${WHITE}DESCRIPTION:${NC}"
     echo "  Enables a previously disabled plugin by uncommenting it in configuration."
     echo "  If the plugin is not installed, it will be installed automatically."
     echo ""
     echo -e "${WHITE}EXAMPLES:${NC}"
-    echo "  vcfg enable coc.nvim"
-    echo "  vcfg enable vim-airline"
+    echo "  vimx enable coc.nvim"
+    echo "  vimx enable vim-airline"
     echo ""
     echo -e "${WHITE}NOTE:${NC}"
-    echo "  Only works with commented plugins. Use 'vcfg add' for new plugins."
+    echo "  Only works with commented plugins. Use 'vimx add' for new plugins."
     ;;
 
-    # Di vcfg_cmd_help, bagian disable:
+    # Di vimx_cmd_help, bagian disable:
   disable)
-    echo -e "${CYAN}vcfg disable${NC} - Disable plugin"
+    echo -e "${CYAN}vimx disable${NC} - Disable plugin"
     echo ""
     echo -e "${WHITE}USAGE:${NC}"
-    echo "  vcfg disable <plugin-name>"
-    echo "  vcfg disable slow_plugins"
+    echo "  vimx disable <plugin-name>"
+    echo "  vimx disable slow_plugins"
     echo ""
     echo -e "${WHITE}DESCRIPTION:${NC}"
     echo "  Disables a plugin by commenting it out in configuration."
     echo "  The plugin files are kept intact, just not loaded."
     echo ""
     echo -e "${WHITE}SPECIAL COMMAND:${NC}"
-    echo "  vcfg disable slow_plugins - Disable known slow plugins to improve startup time"
+    echo "  vimx disable slow_plugins - Disable known slow plugins to improve startup time"
     echo ""
     echo -e "${WHITE}EXAMPLES:${NC}"
-    echo "  vcfg disable coc.nvim"
-    echo "  vcfg disable vim-airline"
-    echo "  vcfg disable slow_plugins"
+    echo "  vimx disable coc.nvim"
+    echo "  vimx disable vim-airline"
+    echo "  vimx disable slow_plugins"
     echo ""
     echo -e "${WHITE}NOTE:${NC}"
     echo "  Useful for temporarily disabling plugins without removing them."
     ;;
 
   install)
-    echo -e "${CYAN}vcfg install${NC} - First-time installation (via vcfg)"
+    echo -e "${CYAN}vimx install${NC} - First-time installation (via vimx)"
     echo ""
     echo -e "${WHITE}USAGE:${NC}"
-    echo "  vcfg install"
+    echo "  vimx install"
     echo ""
     echo -e "${WHITE}DESCRIPTION:${NC}"
-    echo "  First-time installation of Vim configuration using vcfg command."
+    echo "  First-time installation of Vim configuration using vimx command."
     echo "  Note: Most users should use the standalone installer instead."
     echo ""
     echo -e "${WHITE}STANDALONE INSTALLER:${NC}"
@@ -120,10 +120,10 @@ help_core_detailed() {
     ;;
 
   list | ls)
-    echo -e "${CYAN}vcfg list${NC} - List installed plugins"
+    echo -e "${CYAN}vimx list${NC} - List installed plugins"
     echo ""
     echo -e "${WHITE}USAGE:${NC}"
-    echo "  vcfg list"
+    echo "  vimx list"
     echo ""
     echo -e "${WHITE}DESCRIPTION:${NC}"
     echo "  Shows all plugins in your configuration with their current status."
@@ -138,10 +138,10 @@ help_core_detailed() {
     ;;
 
   info)
-    echo -e "${CYAN}vcfg info${NC} - Show plugin information"
+    echo -e "${CYAN}vimx info${NC} - Show plugin information"
     echo ""
     echo -e "${WHITE}USAGE:${NC}"
-    echo "  vcfg info <plugin-name>"
+    echo "  vimx info <plugin-name>"
     echo ""
     echo -e "${WHITE}DESCRIPTION:${NC}"
     echo "  Shows detailed information about a plugin including:"
@@ -151,16 +151,16 @@ help_core_detailed() {
     echo "  - Plugin manager specific info"
     echo ""
     echo -e "${WHITE}EXAMPLES:${NC}"
-    echo "  vcfg info coc.nvim"
-    echo "  vcfg info vim-airline"
-    echo "  vcfg info nerdtree"
+    echo "  vimx info coc.nvim"
+    echo "  vimx info vim-airline"
+    echo "  vimx info nerdtree"
     ;;
 
   update | up)
-    echo -e "${CYAN}vcfg update${NC} - Update all plugins"
+    echo -e "${CYAN}vimx update${NC} - Update all plugins"
     echo ""
     echo -e "${WHITE}USAGE:${NC}"
-    echo "  vcfg update"
+    echo "  vimx update"
     echo ""
     echo -e "${WHITE}DESCRIPTION:${NC}"
     echo "  Updates all installed plugins to their latest versions."
@@ -176,21 +176,21 @@ help_core_detailed() {
     ;;
 
   system-update)
-    echo -e "${CYAN}vcfg system-update${NC} - Update configuration system"
+    echo -e "${CYAN}vimx system-update${NC} - Update configuration system"
     echo ""
     echo -e "${WHITE}USAGE:${NC}"
-    echo "  vcfg system-update"
+    echo "  vimx system-update"
     echo ""
     echo -e "${WHITE}DESCRIPTION:${NC}"
-    echo "  Updates the vcfg system and configuration files."
+    echo "  Updates the vimx system and configuration files."
     echo "  Pulls latest changes from the repository."
     ;;
 
   plugin | -p)
-    echo -e "${CYAN}vcfg plugin${NC} - Plugin manager and Interactive"
+    echo -e "${CYAN}vimx plugin${NC} - Plugin manager and Interactive"
     echo ""
     echo -e "${WHITE}USAGE:${NC}"
-    echo "  vcfg plugin <command>"
+    echo "  vimx plugin <command>"
     echo ""
     echo -e "${WHITE}AVAILABLE COMMAND:${NC}"
     echo -e "  ${GREEN}add${NC}     <plugin>  - Add new plugin"
@@ -206,10 +206,10 @@ help_core_detailed() {
   lang) detail_language_help ;;
 
   reinstall)
-    echo -e "${CYAN}vcfg reinstall${NC} - Complete reinstall"
+    echo -e "${CYAN}vimx reinstall${NC} - Complete reinstall"
     echo ""
     echo -e "${WHITE}USAGE:${NC}"
-    echo "  vcfg reinstall"
+    echo "  vimx reinstall"
     echo ""
     echo -e "${WHITE}DESCRIPTION:${NC}"
     echo "  Completely reinstalls Vim configuration from scratch."
@@ -220,10 +220,10 @@ help_core_detailed() {
     ;;
 
   clean)
-    echo -e "${CYAN}vcfg clean${NC} - Clean unused plugins"
+    echo -e "${CYAN}vimx clean${NC} - Clean unused plugins"
     echo ""
     echo -e "${WHITE}USAGE:${NC}"
-    echo "  vcfg clean"
+    echo "  vimx clean"
     echo ""
     echo -e "${WHITE}DESCRIPTION:${NC}"
     echo "  Removes plugins that are no longer in your configuration."
@@ -236,32 +236,32 @@ help_core_detailed() {
     ;;
 
   search)
-    echo -e "${CYAN}vcfg search${NC} - Search for plugins on GitHub"
+    echo -e "${CYAN}vimx search${NC} - Search for plugins on GitHub"
     echo ""
     echo -e "${WHITE}USAGE:${NC}"
-    echo "  vcfg search <query>"
+    echo "  vimx search <query>"
     echo ""
     echo -e "${WHITE}DESCRIPTION:${NC}"
     echo "  Searches GitHub for Vim/Neovim plugins matching your query."
     echo "  Shows results with stars, description, and installation command."
     echo ""
     echo -e "${WHITE}EXAMPLES:${NC}"
-    echo "  vcfg search fuzzy finder"
-    echo "  vcfg search syntax highlight"
-    echo "  vcfg search lsp"
+    echo "  vimx search fuzzy finder"
+    echo "  vimx search syntax highlight"
+    echo "  vimx search lsp"
     echo ""
     echo -e "${WHITE}NOTE:${NC}"
     echo "  Requires internet connection and GitHub API access."
     ;;
 
   install)
-    echo -e "${CYAN}vcfg install${NC} - Install/update vcfg system"
+    echo -e "${CYAN}vimx install${NC} - Install/update vimx system"
     echo ""
     echo -e "${WHITE}USAGE:${NC}"
-    echo "  vcfg install"
+    echo "  vimx install"
     echo ""
     echo -e "${WHITE}DESCRIPTION:${NC}"
-    echo "  Installs or updates the vcfg system and dependencies."
+    echo "  Installs or updates the vimx system and dependencies."
     echo "  Sets up plugin manager and initial configuration."
     echo ""
     echo -e "${WHITE}FEATURES:${NC}"
@@ -272,10 +272,10 @@ help_core_detailed() {
     ;;
 
   doctor)
-    echo -e "${CYAN}vcfg doctor${NC} - System health check"
+    echo -e "${CYAN}vimx doctor${NC} - System health check"
     echo ""
     echo -e "${WHITE}USAGE:${NC}"
-    echo "  vcfg doctor"
+    echo "  vimx doctor"
     echo ""
     echo -e "${WHITE}DESCRIPTION:${NC}"
     echo "  Checks your system for potential issues and missing dependencies."
@@ -290,25 +290,25 @@ help_core_detailed() {
     ;;
 
   version | --version | -v)
-    echo -e "${CYAN}vcfg version${NC} - Show version information"
+    echo -e "${CYAN}vimx version${NC} - Show version information"
     echo ""
     echo -e "${WHITE}USAGE:${NC}"
-    echo "  vcfg version"
-    echo "  vcfg --version"
-    echo "  vcfg -v"
+    echo "  vimx version"
+    echo "  vimx --version"
+    echo "  vimx -v"
     echo ""
     echo -e "${WHITE}DESCRIPTION:${NC}"
-    echo "  Shows version information for vcfg and detected plugin managers."
+    echo "  Shows version information for vimx and detected plugin managers."
     ;;
 
   help | --help | -h)
-    echo -e "${CYAN}vcfg help${NC} - Show help information"
+    echo -e "${CYAN}vimx help${NC} - Show help information"
     echo ""
     echo -e "${WHITE}USAGE:${NC}"
-    echo "  vcfg help"
-    echo "  vcfg help <command>"
-    echo "  vcfg --help"
-    echo "  vcfg -h"
+    echo "  vimx help"
+    echo "  vimx help <command>"
+    echo "  vimx --help"
+    echo "  vimx -h"
     echo ""
     echo -e "${WHITE}DESCRIPTION:${NC}"
     echo "  Shows general help or detailed help for specific commands."

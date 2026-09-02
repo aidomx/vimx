@@ -12,7 +12,7 @@ check_coc_extensions() {
 }
 
 check_coc_extensions_access() {
-  local coc_extensions_dir="${VCFG_COC_EXTENSIONS:-${HOME}/.config/coc/extensions}"
+  local coc_extensions_dir="${VIMX_COC_EXTENSIONS:-${HOME}/.config/coc/extensions}"
   mkdir -p "$coc_extensions_dir"
 
   cd "$coc_extensions_dir" || {

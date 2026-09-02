@@ -12,15 +12,15 @@ help_mappings_commands() {
 help_mappings_detailed() {
   case "$1" in
     editmap)
-      echo -e "${CYAN}vcfg editmap${NC} - Manage Vim mappings"
+      echo -e "${CYAN}vimx editmap${NC} - Manage Vim mappings"
       echo ""
       echo -e "${WHITE}USAGE:${NC}"
-      echo "  vcfg editmap                    # Interactive mode"
-      echo "  vcfg editmap list               # Show all mappings"
-      echo "  vcfg editmap add <key> <action> # Add mapping"
-      echo "  vcfg editmap remove <pattern>   # Remove mapping"
-      echo "  vcfg editmap search <pattern>   # Search mappings"
-      echo "  vcfg editmap edit               # Open in editor"
+      echo "  vimx editmap                    # Interactive mode"
+      echo "  vimx editmap list               # Show all mappings"
+      echo "  vimx editmap add <key> <action> # Add mapping"
+      echo "  vimx editmap remove <pattern>   # Remove mapping"
+      echo "  vimx editmap search <pattern>   # Search mappings"
+      echo "  vimx editmap edit               # Open in editor"
       echo ""
       echo -e "${WHITE}DESCRIPTION:${NC}"
       echo "  Interactive tool for managing Vim/Neovim key mappings."

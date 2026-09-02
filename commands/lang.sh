@@ -1,22 +1,25 @@
 #!/usr/bin/env bash
 
 # Load language modules
-for lang_file in "${VCFG_ROOT}/commands/language"/*.sh; do
+for lang_file in "${VIMX_ROOT}/commands/language"/*.sh; do
   source "$lang_file"
 done
 
-vcfg_cmd_language() {
+vimx_cmd_language() {
   if [ $# -gt 0 ]; then
-    case "$1" in
-    list | -l) list_language "$2" ;;
-    add | -a) add_language "$2" ;;
-    disable) disable_language "$2" ;;
-    enable) enable_language "$2" ;;
-    info) info_language "$2" ;;
-    remove | -r) remove_language "$2" ;;
-    edit | -e) edit_language_file "$2" ;;
+    local subcmd="$1"
+    local arg="${2:-}"
+    case "$subcmd" in
+    list | -l) list_language ;;
+    add | -a) add_language "$arg" ;;
+    disable) disable_language "$arg" ;;
+    enable) enable_language "$arg" ;;
+    info) info_language "$arg" ;;
+    remove | -r) remove_language "$arg" ;;
+    edit | -e) edit_language_file "$arg" ;;
+    *) print_error "Unknown subcommand: $subcmd"; echo "Run 'vimx lang help' for usage"; return 1 ;;
     esac
-    return 1
+    return 0
   fi
   interactive_language
 }
