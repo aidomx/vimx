@@ -9,7 +9,7 @@ Get up and running with vimx in under 5 minutes.
 ## One-Line Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/aidomx/vimconfig/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/aidomx/vimx/main/install.sh | bash
 ```
 
 The installer will:

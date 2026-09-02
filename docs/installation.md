@@ -12,10 +12,10 @@ The easiest way to install is using our installation script:
 
 ```bash
 # Using curl
-curl -fsSL https://raw.githubusercontent.com/aidomx/vimconfig/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/aidomx/vimx/main/install.sh | bash
 
 # Or using wget
-wget -qO- https://raw.githubusercontent.com/aidomx/vimconfig/main/install.sh | bash
+wget -qO- https://raw.githubusercontent.com/aidomx/vimx/main/install.sh | bash
 ```
 
 The script will automatically:
@@ -38,7 +38,7 @@ First, ensure you have the required packages installed. See [Prerequisites Guide
 ### 2. Clone Repository
 
 ```bash
-git clone https://github.com/aidomx/vimconfig.git ~/.config/vim
+git clone https://github.com/aidomx/vimx.git ~/.config/vim
 ```
 
 ### 3. Create or Edit ~/.vimrc
@@ -217,7 +217,7 @@ pkg update && pkg upgrade
 pkg install vim-python nodejs git curl
 
 # Run installation script
-curl -fsSL https://raw.githubusercontent.com/aidomx/vimconfig/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/aidomx/vimx/main/install.sh | bash
 ```
 
 ### Arch Linux (proot-distro)
@@ -230,7 +230,7 @@ sudo pacman -Syu
 sudo pacman -S vim neovim nodejs npm git curl base-devel
 
 # Run installation script
-curl -fsSL https://raw.githubusercontent.com/aidomx/vimconfig/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/aidomx/vimx/main/install.sh | bash
 ```
 
 ### Ubuntu/Debian
@@ -243,7 +243,7 @@ sudo apt update && sudo apt upgrade
 sudo apt install vim neovim nodejs npm git curl build-essential
 
 # Run installation script
-curl -fsSL https://raw.githubusercontent.com/aidomx/vimconfig/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/aidomx/vimx/main/install.sh | bash
 ```
 
 ## ✅ Verify Installation

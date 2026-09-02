@@ -14,7 +14,7 @@ vimx_cmd_install() {
     echo -e "  ${CYAN}• Check system health:${NC}   vimx doctor"
     echo ""
     echo -e "For fresh installation on a new system, use:"
-    echo -e "  ${CYAN}curl -fsSL https://raw.githubusercontent.com/aidomx/vimconfig/main/install.sh | bash${NC}"
+    echo -e "  ${CYAN}curl -fsSL https://raw.githubusercontent.com/aidomx/vimx/main/install.sh | bash${NC}"
     echo ""
     return 1
   fi

@@ -92,7 +92,7 @@ git config --global url."https://github.com/".insteadOf git@github.com:
 git config --global url."https://".insteadOf git://
 
 # 3. Clone manually
-git clone https://github.com/aidomx/vimconfig.git ~/.config/vim
+git clone https://github.com/aidomx/vimx.git ~/.config/vim
 ```
 
 ## 🔌 Plugin Issues
@@ -828,7 +828,7 @@ rm -rf ~/.vim/plugged
 rm ~/.vimrc
 
 # 3. Reinstall
-curl -fsSL https://raw.githubusercontent.com/aidomx/vimconfig/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/aidomx/vimx/main/install.sh | bash
 ```
 
 ### Reset Specific Component
@@ -867,8 +867,8 @@ vimx reinstall
 
 ### Community Support
 
-- **GitHub Issues**: [Report bugs](https://github.com/aidomx/vimconfig/issues)
-- **Discussions**: [Ask questions](https://github.com/aidomx/vimconfig/discussions)
+- **GitHub Issues**: [Report bugs](https://github.com/aidomx/vimx/issues)
+- **Discussions**: [Ask questions](https://github.com/aidomx/vimx/discussions)
 - **Stack Overflow**: Tag `vim` or `neovim`
 - **Reddit**: r/vim, r/neovim
 

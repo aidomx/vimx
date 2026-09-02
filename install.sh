@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Vim Configuration Installer
-# Usage: curl -fsSL https://raw.githubusercontent.com/aidomx/vimconfig/main/install.sh | bash
+# Usage: curl -fsSL https://raw.githubusercontent.com/aidomx/vimx/main/install.sh | bash
 
 # Set strict-ish mode
 set -euo pipefail
@@ -34,7 +34,7 @@ if [[ $IS_REMOTE -eq 1 ]]; then
 
   # Download the entire repo
   echo "Cloning repository to temporary directory..."
-  if ! git clone -q https://github.com/aidomx/vimconfig.git "$temp_dir"; then
+  if ! git clone -q https://github.com/aidomx/vimx.git "$temp_dir"; then
     echo "Error: Failed to clone repository"
     exit 1
   fi

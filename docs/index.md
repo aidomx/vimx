@@ -11,7 +11,7 @@ hero:
       link: /getting-started
     - theme: alt
       text: View on GitHub
-      link: https://github.com/aidomx/vimconfig
+      link: https://github.com/aidomx/vimx
 
 features:
   - icon: 🧩

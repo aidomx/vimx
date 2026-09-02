@@ -6,7 +6,7 @@ Thank you for considering contributing to this Vim configuration project!
 
 ### Reporting Bugs
 
-1. Check if the bug is already reported in [Issues](https://github.com/aidomx/vimconfig/issues)
+1. Check if the bug is already reported in [Issues](https://github.com/aidomx/vimx/issues)
 2. If not, create a new issue with:
    - Clear title and description
    - Steps to reproduce
@@ -16,7 +16,7 @@ Thank you for considering contributing to this Vim configuration project!
 
 ### Suggesting Features
 
-1. Check [existing feature requests](https://github.com/aidomx/vimconfig/issues?q=is%3Aissue+label%3Aenhancement)
+1. Check [existing feature requests](https://github.com/aidomx/vimx/issues?q=is%3Aissue+label%3Aenhancement)
 2. Create a new issue with:
    - Clear description of the feature
    - Use case and benefits
@@ -28,9 +28,9 @@ Thank you for considering contributing to this Vim configuration project!
 
 ```bash
 # Fork the repository on GitHub
-git clone https://github.com/YOUR_USERNAME/vimconfig.git
-cd vimconfig
-git remote add upstream https://github.com/aidomx/vimconfig.git
+git clone https://github.com/YOUR_USERNAME/vimx.git
+cd vimx
+git remote add upstream https://github.com/aidomx/vimx.git
 ```
 
 #### 2. Create a Branch
@@ -174,7 +174,7 @@ vim -c "PlugInstall" -c "quit"
 pkg install vim-python nodejs git
 
 # Install Vim configuration
-git clone https://github.com/YOUR_USERNAME/vimconfig.git ~/.config/vim
+git clone https://github.com/YOUR_USERNAME/vimx.git ~/.config/vim
 # edit file .vimrc and insert:
 if filereadable(expand('~/.config/vim/init.vim'))
   source ~/.config/vim/init.vim

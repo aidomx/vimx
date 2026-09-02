@@ -113,7 +113,7 @@ help_core_detailed() {
     echo "  Note: Most users should use the standalone installer instead."
     echo ""
     echo -e "${WHITE}STANDALONE INSTALLER:${NC}"
-    echo "  curl -fsSL https://raw.githubusercontent.com/aidomx/vimconfig/main/install.sh | bash"
+    echo "  curl -fsSL https://raw.githubusercontent.com/aidomx/vimx/main/install.sh | bash"
     echo ""
     echo -e "${WHITE}NOTE:${NC}"
     echo "  This command is mainly for completeness. Use the curl command for new installations."

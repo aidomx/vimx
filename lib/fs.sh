@@ -14,7 +14,7 @@ EDITOR=vim
 : ${VIM_PLUGINS_DIR:="${HOME}/.vim/plugged"}
 
 # Other configuration (unchanged)
-REPO_URL="https://github.com/aidomx/vimconfig.git"
+REPO_URL="https://github.com/aidomx/vimx.git"
 INSTALL_DIR="${VIM_CONFIG_DIR}"
 VIMRC_PATH="${HOME}/.vimrc"
 VIMX_BIN="/usr/bin/vimx"

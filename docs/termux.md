@@ -41,11 +41,11 @@ pkg install vim-python nodejs git curl
 
 ```bash
 # Automated installation
-curl -fsSL https://raw.githubusercontent.com/aidomx/vimconfig/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/aidomx/vimx/main/install.sh | bash
 
 # Or manual
 pkg install vim-python nodejs git
-git clone https://github.com/aidomx/vimconfig.git ~/.config/vim
+git clone https://github.com/aidomx/vimx.git ~/.config/vim
 if filereadable(expand('~/.config/vim/init.vim'))
     source ~/.config/vim/init.vim
 endif

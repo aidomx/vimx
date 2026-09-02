@@ -525,7 +525,7 @@ brew install bat
 After installing all prerequisites:
 
 1. Proceed to [Installation Guide](installation.md)
-2. Or use quick install: `curl -fsSL https://raw.githubusercontent.com/aidomx/vimconfig/main/install.sh | bash`
+2. Or use quick install: `curl -fsSL https://raw.githubusercontent.com/aidomx/vimx/main/install.sh | bash`
 
 ---
 
