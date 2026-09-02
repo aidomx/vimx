@@ -63,6 +63,23 @@ pkg install valgrind  # Memory checker (Termux may not have this)
 :CocInstall coc-clangd
 ```
 
+
+### Vimx Language Setup
+
+```bash
+# Quick add with defaults
+vimx lang add c
+
+# Interactive scaffold (pick extensions, comment style)
+vimx lang scaffold c
+```
+
+This creates:
+- `langs/c.vim` — Indentation, keymaps
+- `ftdetect/c.vim` — Detects `.c`, `.h` files
+- `syntax/c.vim` — Syntax highlighting
+
+
 ### clangd Setup
 
 ```bash

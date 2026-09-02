@@ -31,6 +31,32 @@ KNOWN_THEME_PLUGINS=(
   "PaperColor|NLKNguyen/papercolor-theme|Light and dark color scheme"
 )
 
+# Airline theme mapping: colorscheme name -> airline theme name
+# Most colorschemes don't have matching airline themes.
+# This maps them to the closest available airline theme.
+AIRLINE_THEME_MAP=(
+  "gruvbox|base16_gruvbox_dark_medium"
+  "ghdark|base16_github"
+  "dracula|base16_dracula"
+  "catppuccin|deus"
+  "tokyonight|night_owl"
+  "onedark|onedark"
+  "nord|nord_minimal"
+  "solarized|solarized"
+  "rose-pine|deus"
+  "nightfox|deus"
+  "kanagawa|deus"
+  "monokai|molokai"
+  "habamax|base16_gruvbox_dark_medium"
+  "github|base16_github"
+  "embark|deus"
+  "sonokai|deus"
+  "everforest|deus"
+  "edge|deus"
+  "PaperColor|papercolor"
+  "seoul256|seoul256"
+)
+
 # ---- Main dispatcher ----
 vimx_cmd_theme() {
   local subcmd="${1:-}"
@@ -89,6 +115,88 @@ _find_theme_repo() {
   return 1
 }
 
+# ---- Check if an airline theme file exists ----
+_airline_theme_exists() {
+  local name="$1"
+  local airline_themes_dir="${HOME}/.vim/plugged/vim-airline-themes/autoload/airline/themes"
+  [ -f "${airline_themes_dir}/${name}.vim" ] && return 0
+  # Also check built-in airline themes
+  local airline_dir="${HOME}/.vim/plugged/vim-airline/autoload/airline/themes"
+  [ -f "${airline_dir}/${name}.vim" ] && return 0
+  return 1
+}
+
+# ---- Resolve airline theme for a given colorscheme ----
+_resolve_airline_theme() {
+  local colorscheme="$1"
+
+  # 1. Try explicit mapping first
+  for entry in "${AIRLINE_THEME_MAP[@]}"; do
+    IFS="|" read -r cs_name airline_name <<< "$entry"
+    if [ "$cs_name" = "$colorscheme" ]; then
+      if _airline_theme_exists "$airline_name"; then
+        echo "$airline_name"
+        return 0
+      fi
+    fi
+  done
+
+  # 2. Try exact name match (e.g. gruvbox -> gruvbox)
+  if _airline_theme_exists "$colorscheme"; then
+    echo "$colorscheme"
+    return 0
+  fi
+
+  # 3. Fallback: use "dark" for dark themes, "light" for light themes
+  case "$colorscheme" in
+    *light*|*bright*|*paper*|*solarized_light*)
+      _airline_theme_exists "light" && { echo "light"; return 0; }
+      ;;
+  esac
+  echo "dark"
+  return 0
+}
+
+# ---- Detect colorscheme names from a plugin directory ----
+_detect_colorschemes() {
+  local plugin_dir="$1"
+  local plugins_dir="${HOME}/.vim/plugged"
+
+  # Find the actual plugin directory under plugged/
+  local found_dir=""
+  for dir in "${plugins_dir}"/*/; do
+    local dir_name="${dir%/}"
+    dir_name="${dir_name##*/}"
+    if [ "$dir_name" = "$plugin_dir" ] || [ "$dir_name" = "${2:-}" ]; then
+      found_dir="$dir"
+      break
+    fi
+  done
+
+  [ -z "$found_dir" ] || [ ! -d "$found_dir" ] && return 1
+
+  # List available colorscheme files
+  find "$found_dir" -path "*/colors/*.vim" -type f 2>/dev/null | while read -r f; do
+    basename "$f" .vim
+  done
+}
+
+# ---- Detect colorscheme name from repo (before install) ----
+_detect_repo_colorschemes() {
+  local repo="$1"
+  # Try to fetch the colors/ directory listing from GitHub API
+  if command -v curl &>/dev/null; then
+    local api_url="https://api.github.com/repos/${repo}/contents/colors"
+    local response
+    response=$(curl -s --max-time 5 "$api_url" 2>/dev/null)
+    if [ -n "$response" ] && echo "$response" | grep -q '"name"'; then
+      echo "$response" | grep -o '"name": "[^"]*\.vim"' | sed 's/"name": "//;s/\.vim"//' | sort
+      return 0
+    fi
+  fi
+  return 1
+}
+
 # ---- Apply theme to config files ----
 _apply_theme() {
   local target="$1"
@@ -108,7 +216,9 @@ _apply_theme() {
 
   if [ -f "$UI_FILE" ]; then
     sed -i "s/^silent! colorscheme .*/silent! colorscheme ${target}/" "$UI_FILE"
-    sed -i "s/^let g:airline_theme = .*/let g:airline_theme = '${target}'/" "$UI_FILE"
+    local airline_theme
+    airline_theme=$(_resolve_airline_theme "${target}")
+    sed -i "s/^let g:airline_theme = .*/let g:airline_theme = '${airline_theme}'/" "$UI_FILE"
   fi
 
   echo -e "${GREEN}✓${NC} Theme switched: ${CYAN}${old}${NC} -> ${CYAN}${target}${NC}"
@@ -171,7 +281,7 @@ theme_show_current() {
   echo ""
   echo -e "  Active: ${CYAN}${active_theme}${NC}"
   echo ""
-  echo -e "  Files:"
+  echo "  Files:"
   echo -e "    theme.vim : ${THEME_FILE}"
   echo -e "    ui.vim    : ${UI_FILE}"
   echo ""
@@ -209,6 +319,7 @@ theme_add() {
   local name="$1"
   [ -z "$name" ] && { echo -e "${RED}✗${NC} Usage: vimx theme add <theme-name-or-repo>"; return 1; }
 
+  # Check if already installed
   while IFS= read -r t; do
     if [ "$t" = "$name" ]; then
       echo -e "${BLUE}ℹ${NC} Theme '$name' is already installed"
@@ -217,19 +328,87 @@ theme_add() {
     fi
   done < <(_get_installed_themes)
 
+  # Resolve repo
   local repo=""
+  local plugin_name=""
   if repo=$(_find_theme_repo "$name"); then
-    :
+    plugin_name="$name"
   elif echo "$name" | grep -q '/'; then
     repo="$name"
-    name="${name##*/}"
+    plugin_name="${name##*/}"
   else
+    # Try common theme repos before falling back
     echo -e "${BLUE}ℹ${NC} Searching for '$name'..."
-    repo="vim-scripts/${name}"
+    for try_repo in "vim-scripts/${name}" "${name}/${name}.vim" "${name}/vim-${name}"; do
+      if command -v curl &>/dev/null; then
+        local status
+        status=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 "https://api.github.com/repos/${try_repo}" 2>/dev/null)
+        if [ "$status" = "200" ]; then
+          repo="$try_repo"
+          plugin_name="${try_repo##*/}"
+          break
+        fi
+      fi
+    done
+    if [ -z "$repo" ]; then
+      echo -e "${RED}✗${NC} Could not find theme '${name}'"
+      echo -e "  Try: ${CYAN}vimx theme add user/repo${NC}"
+      echo -e "  Or:  ${CYAN}vimx theme search ${name}${NC}"
+      return 1
+    fi
   fi
 
+  # Detect available colorschemes BEFORE install (via GitHub API)
+  local available_colorschemes=()
+  while IFS= read -r cs; do
+    [ -n "$cs" ] && available_colorschemes+=("$cs")
+  done < <(_detect_repo_colorschemes "$repo")
+
+  # Install the plugin
   echo -e "${BLUE}ℹ${NC} Installing theme: ${repo}..."
   vimx_cmd_add "$repo"
+
+  # Detect colorschemes AFTER install (from local files)
+  local installed_colorschemes=()
+  while IFS= read -r cs; do
+    [ -n "$cs" ] && installed_colorschemes+=("$cs")
+  done < <(_detect_colorschemes "$plugin_name" "$plugin_name")
+
+  # If no colorschemes found via local scan, use pre-install detection
+  if [ ${#installed_colorschemes[@]} -eq 0 ] && [ ${#available_colorschemes[@]} -gt 0 ]; then
+    installed_colorschemes=("${available_colorschemes[@]}")
+  fi
+
+  if [ ${#installed_colorschemes[@]} -eq 0 ]; then
+    echo -e "${YELLOW}⚠${NC} Theme installed but no colorscheme files found"
+    echo -e "  Manual setup: ${CYAN}vimx theme set <colorscheme-name>${NC}"
+    return 0
+  fi
+
+  # If only one colorscheme, auto-apply it
+  if [ ${#installed_colorschemes[@]} -eq 1 ]; then
+    local detected_name="${installed_colorschemes[0]}"
+    echo -e "${BLUE}ℹ${NC} Detected colorscheme: ${CYAN}${detected_name}${NC}"
+    _apply_theme "$detected_name"
+    return 0
+  fi
+
+  # Multiple colorschemes found — let user pick
+  echo -e "${BLUE}ℹ${NC} Found ${#installed_colorschemes[@]} colorschemes:"
+  echo ""
+  local idx=1
+  for cs in "${installed_colorschemes[@]}"; do
+    echo -e "  ${GREEN}${idx}.${NC} ${cs}"
+    idx=$((idx + 1))
+  done
+  echo ""
+  read -p "$(echo -e "${CYAN}Select [1-${#installed_colorschemes[@]}]: ${NC}")" choice
+
+  if [[ "$choice" =~ ^[0-9]+$ ]] && [ "$choice" -ge 1 ] && [ "$choice" -le ${#installed_colorschemes[@]} ]; then
+    _apply_theme "${installed_colorschemes[$((choice - 1))]}"
+  else
+    echo -e "${BLUE}ℹ${NC} Skipped. Use ${CYAN}vimx theme set <name>${NC} to activate later"
+  fi
 }
 
 # ---- update: update a theme plugin ----

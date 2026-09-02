@@ -32,6 +32,8 @@ Before customizing, familiarize yourself with the structure:
 │   ├── mappings.vim     # Key mappings
 │   └── plugins.vim      # Plugin list
 ├── langs/                # Language configs
+├── ftdetect/             # Filetype detection
+├── syntax/               # Syntax highlighting
 ├── utils/                # Utility configs
 └── coc-settings.json    # LSP configuration
 ```
@@ -56,14 +58,94 @@ endif
 
 ## 🎨 Changing Themes
 
-### Available Themes
+### Using vimx Theme Manager (Recommended)
 
-The configuration includes:
+The `vimx theme` command provides a complete theme management system:
 
-- **Gruvbox** (default) - Retro groove color scheme
-- **Seoul256** - Low-contrast color scheme
+```bash
+# Browse well-known themes
+vimx theme available
 
-### Switch Theme
+# Install a new theme
+vimx theme add dracula
+
+# Switch theme
+vimx theme set dracula
+
+# List installed themes
+vimx theme list
+
+# Show current theme
+vimx theme current
+
+# Reset to default (gruvbox)
+vimx theme reset
+```
+
+### How Theme Manager Works
+
+When you run `vimx theme set <name>`:
+
+1. **Colorscheme** — Sets `silent! colorscheme <name>` in `utils/ui.vim`
+2. **Airline theme** — Automatically resolves a compatible airline theme
+3. **Theme tracking** — Updates `core/theme.vim` with active theme
+
+The airline theme is resolved automatically:
+
+| Colorscheme | Airline Theme |
+| --- | --- |
+| `gruvbox` | `base16_gruvbox_dark_medium` |
+| `ghdark` | `base16_github` |
+| `dracula` | `base16_dracula` |
+| `catppuccin` | `deus` |
+| `tokyonight` | `night_owl` |
+| `onedark` | `onedark` |
+| `nord` | `nord_minimal` |
+| `solarized` | `solarized` |
+| `monokai` | `molokai` |
+| (unknown) | `dark` (fallback) |
+
+### Installing Custom Themes
+
+For themes not in the built-in list:
+
+```bash
+# Install from GitHub repo
+vimx theme add user/repo
+
+# Example
+vimx theme add catppuccin/vim
+vimx theme add projekt0n/github-nvim-theme
+```
+
+The theme manager will:
+1. Detect available colorschemes via GitHub API
+2. Install the plugin
+3. Auto-apply if only one colorscheme found
+4. Prompt to select if multiple colorschemes available
+
+### Search Themes on GitHub
+
+```bash
+vimx theme search tokyonight
+```
+
+### Available Theme Commands
+
+| Command | Description |
+| --- | --- |
+| `vimx theme` | Interactive theme selector |
+| `vimx theme list` | List installed themes |
+| `vimx theme current` | Show active theme |
+| `vimx theme set <name>` | Switch theme |
+| `vimx theme add <name\|repo>` | Install new theme |
+| `vimx theme update [name]` | Update theme(s) |
+| `vimx theme reset` | Reset to default |
+| `vimx theme delete <name>` | Remove theme |
+| `vimx theme search <query>` | Search GitHub |
+| `vimx theme available` | Browse well-known themes |
+
+### Manual Theme Change
 
 **Method 1: Edit ui.vim**
 
@@ -76,9 +158,11 @@ Find and change:
 ```vim
 " Change from:
 colorscheme gruvbox
+let g:airline_theme = 'gruvbox'
 
 " To:
 colorscheme seoul256
+let g:airline_theme = 'seoul256'
 ```
 
 **Method 2: In custom.vim**
@@ -89,7 +173,7 @@ colorscheme seoul256
 set background=dark  " or light
 ```
 
-### Install New Theme
+### Install New Theme (Manual)
 
 **1. Add theme plugin:**
 
@@ -195,7 +279,7 @@ nnoremap <leader>3 3gt
 nnoremap <leader>rw :%s/\<<C-r><C-w>\>//g<Left><Left>
 
 " Toggle spell check
-nnoremap <leader>sp :se.config spell!<CR>
+nnoremap <leader>sp :se spell!<CR>
 
 " Copy entire file
 nnoremap <leader>ya ggVGy
@@ -361,48 +445,24 @@ Plug 'Yggdroot/indentLine'
 
 ### Adding New Language
 
-**1. Create language config:**
+**Quick add:**
 
 ```bash
-vim ~/.config/vim/langs/rust.vim
+vimx lang add rust
 ```
 
-**2. Add configuration:**
+This creates 3 files automatically:
+- `langs/rust.vim` — Language settings
+- `ftdetect/rust.vim` — Filetype detection
+- `syntax/rust.vim` — Syntax highlighting
 
-```vim
-" Rust configuration
+**Interactive scaffold:**
 
-" File type detection
-autocmd BufNewFile,BufRead *.rs set filetype=rust
-
-" Indentation
-autocmd FileType rust se.config tabstop=4 shiftwidth=4 expandtab
-
-" Key mappings
-autocmd FileType rust nnoremap <leader>rb :!cargo build<CR>
-autocmd FileType rust nnoremap <leader>rr :!cargo run<CR>
-autocmd FileType rust nnoremap <leader>rt :!cargo test<CR>
-autocmd FileType rust nnoremap <leader>rc :!cargo check<CR>
-
-" Formatting
-autocmd FileType rust nnoremap <leader>fmt :!rustfmt %<CR>
-
-" LSP
-" Install: :CocInstall coc-rust-analyzer
+```bash
+vimx lang scaffold rust
 ```
 
-**3. Load in init.vim:**
-
-```vim
-" Add to init.vim
-runtime! langs/rust.vim
-```
-
-**4. Install LSP:**
-
-```vim
-:CocInstall coc-rust-analyzer
-```
+This prompts for file extensions and comment style.
 
 ### Customize Existing Language
 
@@ -410,7 +470,7 @@ runtime! langs/rust.vim
 
 ```vim
 " Custom Python configuration
-autocmd FileType python se.config tabstop=2 shiftwidth=2
+autocmd FileType python se tabstop=4 shiftwidth=4
 
 " Custom JavaScript configuration
 autocmd FileType javascript,typescript nnoremap <leader>test :!npm test<CR>
@@ -483,11 +543,11 @@ set shiftwidth=4
 nnoremap <leader>t :!npm test<CR>
 ```
 
-Enable.config vimrc:
+Enable exrc:
 
 ```vim
 " In utils/custom.vim
-set exrc      " Enable.config vimrc
+set exrc      " Enable exrc
 set secure    " Restrict unsafe commands
 ```
 
@@ -617,7 +677,7 @@ VIM_PROFILE=webdev vim
 ```vim
 " ~/.config/vim/utils/custom.vim
 
-" Theme
+" Theme (auto-resolved by vimx theme manager)
 let g:airline_theme='gruvbox'
 
 " Sections
@@ -810,8 +870,8 @@ nnoremap <leader>Q :qa!<CR>
 nnoremap <leader>sw :call StripTrailingWhitespace()<CR>
 
 " Language Specific
-autocmd FileType python se.config tabstop=4 shiftwidth=4
-autocmd FileType go se.config tabstop=4 noexpandtab
+autocmd FileType python se tabstop=4 shiftwidth=4
+autocmd FileType go se tabstop=4 noexpandtab
 
 " Custom Functions
 function! StripTrailingWhitespace()

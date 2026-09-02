@@ -39,6 +39,23 @@ source ~/.bashrc
 :CocInstall coc-phpls
 ```
 
+
+### Vimx Language Setup
+
+```bash
+# Quick add with defaults
+vimx lang add php
+
+# Interactive scaffold (pick extensions, comment style)
+vimx lang scaffold php
+```
+
+This creates:
+- `langs/php.vim` — Indentation, keymaps
+- `ftdetect/php.vim` — Detects `.php` files
+- `syntax/php.vim` — Syntax highlighting
+
+
 ## 📝 PHP Basics
 
 ### Key Mappings

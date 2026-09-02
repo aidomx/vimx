@@ -73,6 +73,23 @@ go install github.com/go-delve/delve/cmd/dlv@latest
 :CocInstall coc-go
 ```
 
+
+### Vimx Language Setup
+
+```bash
+# Quick add with defaults
+vimx lang add go
+
+# Interactive scaffold (pick extensions, comment style)
+vimx lang scaffold go
+```
+
+This creates:
+- `langs/go.vim` — Indentation, keymaps
+- `ftdetect/go.vim` — Detects `.go` files
+- `syntax/go.vim` — Syntax highlighting
+
+
 ## 📝 Go Basics
 
 ### Features

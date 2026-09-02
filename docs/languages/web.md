@@ -52,6 +52,23 @@ npm install -g serve http-server
 :CocInstall coc-eslint coc-stylelintplus
 ```
 
+
+### Vimx Language Setup
+
+```bash
+# Quick add with defaults
+vimx lang add web
+
+# Interactive scaffold (pick extensions, comment style)
+vimx lang scaffold web
+```
+
+This creates:
+- `langs/web.vim` — Indentation, keymaps
+- `ftdetect/web.vim` — Detects `.js`, `.ts`, `.jsx`, `.tsx` files
+- `syntax/web.vim` — Syntax highlighting
+
+
 ### Project Initialization
 
 ```bash

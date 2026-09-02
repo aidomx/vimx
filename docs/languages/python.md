@@ -54,6 +54,23 @@ pip install virtualenv
 :CocInstall coc-pyright
 ```
 
+
+### Vimx Language Setup
+
+```bash
+# Quick add with defaults
+vimx lang add python
+
+# Interactive scaffold (pick extensions, comment style)
+vimx lang scaffold python
+```
+
+This creates:
+- `langs/python.vim` — Indentation, keymaps
+- `ftdetect/python.vim` — Detects `.py` files
+- `syntax/python.vim` — Syntax highlighting
+
+
 ### Virtual Environment Setup
 
 ```bash

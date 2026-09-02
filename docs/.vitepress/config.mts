@@ -20,6 +20,7 @@ export default defineConfig({
         items: [
           { text: 'JavaScript / TypeScript', link: '/languages/web' },
           { text: 'Python', link: '/languages/python' },
+          { text: 'Rust', link: '/languages/rust' },
           { text: 'C / C++', link: '/languages/c-cpp' },
           { text: 'Go', link: '/languages/go' },
           { text: 'PHP / Laravel', link: '/languages/php-laravel' },
@@ -64,6 +65,7 @@ export default defineConfig({
           items: [
             { text: 'JavaScript / TypeScript', link: '/languages/web' },
             { text: 'Python', link: '/languages/python' },
+            { text: 'Rust', link: '/languages/rust' },
             { text: 'C / C++', link: '/languages/c-cpp' },
             { text: 'Go', link: '/languages/go' },
             { text: 'PHP / Laravel', link: '/languages/php-laravel' },

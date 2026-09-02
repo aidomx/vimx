@@ -17,6 +17,7 @@ vimx_cmd_language() {
     info) info_language "$arg" ;;
     remove | -r) remove_language "$arg" ;;
     edit | -e) edit_language_file "$arg" ;;
+    scaffold) scaffold_language "$arg" ;;
     *) print_error "Unknown subcommand: $subcmd"; echo "Run 'vimx lang help' for usage"; return 1 ;;
     esac
     return 0

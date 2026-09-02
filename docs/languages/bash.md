@@ -21,6 +21,22 @@ sudo pacman -S shfmt shellcheck  # Arch
 sudo apt install shfmt shellcheck  # Ubuntu
 ```
 
+
+### Vimx Language Setup
+
+```bash
+# Quick add with defaults
+vimx lang add bash
+
+# Interactive scaffold (pick extensions, comment style)
+vimx lang scaffold bash
+```
+
+This creates:
+- `langs/bash.vim` — Indentation, keymaps
+- `ftdetect/bash.vim` — Detects `.sh`, `.bash` files
+- `syntax/bash.vim` — Syntax highlighting
+
 ## 📝 Bash Basics
 
 ### Key Mappings
