@@ -25,6 +25,7 @@ interactive_language() {
     info) info_language "$args" ;;
     remove | -r) remove_language "$args" ;;
     edit | -e) edit_language_file "$args" ;;
+    scaffold) scaffold_language "$args" ;;
     quit | q)
       print_info "Goodbye!"
       break
@@ -35,7 +36,7 @@ interactive_language() {
       ;;
     *)
       # Try to execute as direct command
-      if [[ "$command" =~ ^(add|disable|edit|enable|info|list|remove) ]]; then
+      if [[ "$command" =~ ^(add|disable|edit|enable|info|list|remove|scaffold) ]]; then
         eval "vimx_cmd_language $command"
       else
         print_error "Unknown command: $command"

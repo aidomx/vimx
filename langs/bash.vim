@@ -30,7 +30,7 @@ let g:neoformat_sh_shfmt = {
     \ }
 
 " Auto format shell scripts on save
-autocmd BufWritePre *.sh,*.bash Neoformat
+" autocmd BufWritePre *.sh,*.bash Neoformat
 
 " ShellCheck integration (install dengan: pkg install shellcheck)
 let g:ale_linters = get(g:, 'ale_linters', {})

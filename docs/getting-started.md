@@ -6,6 +6,31 @@ outline: deep
 
 Get up and running with vimx in under 5 minutes.
 
+## Prerequisites
+
+Before installing, make sure you have:
+
+```bash
+# Required
+node --version   # Node.js 14+
+git --version    # Git
+jq --version     # JSON processor
+bc --version     # Calculator
+```
+
+Install missing dependencies:
+
+```bash
+# Termux
+pkg install nodejs git jq bc
+
+# Arch
+sudo pacman -S nodejs npm git jq bc
+
+# Ubuntu/Debian
+sudo apt install nodejs npm git jq bc
+```
+
 ## One-Line Install
 
 ```bash

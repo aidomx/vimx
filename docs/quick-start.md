@@ -494,6 +494,10 @@ vim tests/Feature/UserTest.php
 # Install shell tools
 pkg install shfmt shellcheck  # Termux
 sudo pacman -S shfmt shellcheck  # Arch
+
+# Required by vimx CLI
+pkg install jq bc  # Termux
+sudo pacman -S jq bc  # Arch
 ```
 
 ### Shell Script

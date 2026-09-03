@@ -8,7 +8,7 @@ DEV_MODE="${VIMX_DEV_MODE:-0}"
 # Load libs (adjust path if script installed elsewhere)
 VIMX_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-if [ $DEV_MODE -eq 0 ] && command -v vimx >/dev/null 2>&1; then
+if [ "$DEV_MODE" -eq 0 ] && command -v vimx >/dev/null 2>&1; then
   VIMX_ROOT="$HOME/.config/vim"
 fi
 
@@ -23,7 +23,7 @@ source "${VIMX_ROOT}/lib/table.sh"
 
 # Source command implementations
 for f in "${VIMX_ROOT}/commands"/*.sh; do
-  source "$f"
+  source "${f}"
 done
 
 export VIMX_VERSION="1.1.0"

@@ -4,434 +4,244 @@ outline: deep
 
 # Prerequisites
 
-Required packages and dependencies for the Vim configuration.
+Required packages and dependencies for vimx.
 
-## 📋 Core Requirements
+## 📋 Requirements Overview
 
-### Essential Packages
+| Category | Tool | Purpose | Required? |
+|----------|------|---------|-----------|
+| Core | Vim/Neovim | Text editor | ✅ Required |
+| Core | Git | Version control | ✅ Required |
+| Core | Node.js + npm | Coc.nvim (LSP) | ✅ Required |
+| Core | curl/wget | Downloads, API | ✅ Required |
+| CLI | jq | JSON parsing | ✅ Required |
+| CLI | bc | Calculations | ✅ Required |
+| Formatter | shfmt | Shell formatting | ⚠️ Recommended |
+| Formatter | black/autopep8 | Python formatting | ⚠️ Recommended |
+| Formatter | gofmt | Go formatting | ⚠️ Recommended |
+| Formatter | clang-format | C/C++ formatting | ⚠️ Recommended |
+| Formatter | php-cs-fixer | PHP formatting | ⚠️ Recommended |
+| Formatter | prettier | JS/TS formatting | ⚠️ Recommended (via coc) |
+| Linter | shellcheck | Shell linting | ⚠️ Recommended |
+| Fallback | python3 | JSON fallback | 🔵 Optional |
 
-All platforms need these core packages:
+---
+
+## ✅ Required
+
+These **must** be installed for vimx to work properly.
+
+### Core Packages
 
 - **Vim** (8.2+) or **Neovim** (0.7+)
 - **Git** - Version control
 - **Node.js** (14+) and **npm** - Required for Coc.nvim
-- **Python 3** - Required for some plugins
-- **curl** or **wget** - For downloading
+- **curl** or **wget** - For downloading and API calls
 
-## 🖥️ Platform-Specific Installation
+### vimx CLI Dependencies
+
+- **jq** - JSON processor (used by `vimx theme`, `vimx search`)
+- **bc** - Calculator (used for file size calculations)
+
+---
+
+## ⚠️ Recommended
+
+These enhance the experience and are needed for specific features.
+
+### Formatters
+
+- **shfmt** - Shell script formatting (`:Neoformat` on .sh files)
+- **black** or **autopep8** - Python formatting
+- **gofmt** - Go formatting (included with Go)
+- **clang-format** - C/C++ formatting
+- **php-cs-fixer** - PHP formatting
+- **prettier** - JS/TS/HTML/CSS formatting (via coc-prettier)
+
+### Linters
+
+- **shellcheck** - Shell script linting
+
+---
+
+## 🔵 Optional
+
+Nice-to-have tools that improve the experience.
+
+- **python3** - Fallback JSON parsing when jq unavailable
+- **fzf** - Fuzzy finder
+- **ripgrep** - Better grep
+- **fd** - Better find
+- **bat** - Better cat
+
+---
+
+## 🖥️ Platform Installation
 
 ### Termux (Android)
 
 ```bash
-# Update package list
+# Required
 pkg update && pkg upgrade
+pkg install vim-python nodejs git curl jq bc
 
-# Install core packages
-pkg install vim-python nodejs git curl
-
-# Optional but recommended
-pkg install make clang python
+# Recommended
+pkg install shfmt shellcheck
 ```
 
 ### Arch Linux / proot-distro
 
 ```bash
-# Update system
+# Required
 sudo pacman -Syu
+sudo pacman -S vim neovim nodejs npm git curl jq bc
 
-# Install core packages
-sudo pacman -S vim neovim nodejs npm git curl base-devel
-
-# Optional but recommended
-sudo pacman -S python python-pip
+# Recommended
+sudo pacman -S shfmt shellcheck
 ```
 
 ### Ubuntu / Debian
 
 ```bash
-# Update system
+# Required
 sudo apt update && sudo apt upgrade
+sudo apt install vim neovim nodejs npm git curl jq bc
 
-# Install core packages
-sudo apt install vim neovim nodejs npm git curl build-essential
-
-# Install Python support
-sudo apt install python3 python3-pip python3-venv
-
-# Install Node.js (latest LTS)
-curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-sudo apt-get install -y nodejs
+# Recommended
+sudo apt install shfmt shellcheck
 ```
 
 ### Fedora / RHEL / CentOS
 
 ```bash
-# Update system
+# Required
 sudo dnf update
+sudo dnf install vim neovim nodejs npm git curl jq bc
 
-# Install core packages
-sudo dnf install vim neovim nodejs npm git curl
-
-# Development tools
-sudo dnf groupinstall "Development Tools"
-
-# Python
-sudo dnf install python3 python3-pip
+# Recommended
+sudo dnf install shfmt shellcheck
 ```
 
 ### macOS
 
 ```bash
-# Install Homebrew (if not installed)
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# Required
+brew install vim neovim node git jq bc
 
-# Install packages
-brew install vim neovim node git
-
-# Python (usually pre-installed)
-brew install python3
+# Recommended
+brew install shfmt shellcheck
 ```
+
+---
 
 ## 🛠️ Language-Specific Tools
 
 ### Web Development
 
-#### Node.js Packages
-
 ```bash
 # Global packages
 npm install -g typescript prettier eslint
-
-# Optional but useful
-npm install -g @vue/cli create-react-app
-npm install -g serve http-server
-```
-
-#### TypeScript
-
-```bash
-npm install -g typescript ts-node
 ```
 
 ### C/C++ Development
 
-#### Termux
+**Termux:** `pkg install clang gdb cmake make`
 
-```bash
-pkg install clang gdb cmake make
-```
+**Arch:** `sudo pacman -S clang gcc gdb cmake make`
 
-#### Arch Linux
+**Ubuntu:** `sudo apt install clang gcc gdb cmake build-essential`
 
-```bash
-sudo pacman -S clang gcc gdb cmake make
-```
-
-#### Ubuntu/Debian
-
-```bash
-sudo apt install clang gcc gdb cmake build-essential
-```
-
-#### Formatters
-
-```bash
-# Arch
-sudo pacman -S clang-format
-
-# Ubuntu/Debian
-sudo apt install clang-format
-
-# Termux
-pkg install clang
-```
+**Formatters:** `sudo apt install clang-format` or `pkg install clang`
 
 ### Python Development
 
-#### Python Tools
-
 ```bash
-# Install pip (if not installed)
-python3 -m ensurepip --upgrade
-
-# Install formatters and linters
 pip3 install black flake8 autopep8 pylint
-
-# Optional: virtual environment
-pip3 install virtualenv
-```
-
-#### Termux
-
-```bash
-pkg install python python-pip
-pip install black flake8 autopep8
-```
-
-#### Arch Linux
-
-```bash
-sudo pacman -S python-black python-flake8 python-autopep8 python-pylint
-```
-
-#### Ubuntu/Debian
-
-```bash
-pip3 install --user black flake8 autopep8 pylint
 ```
 
 ### Go Development
 
-#### Install Go
+**Termux:** `pkg install golang`
 
-**Termux:**
+**Arch:** `sudo pacman -S go`
 
-```bash
-pkg install golang
-```
+**Ubuntu:** [Download from go.dev](https://go.dev/dl/)
 
-**Arch Linux:**
-
-```bash
-sudo pacman -S go
-```
-
-**Ubuntu/Debian:**
-
-```bash
-# Download latest version
-wget https://go.dev/dl/go1.21.0.linux-amd64.tar.gz
-sudo tar -C /usr/local -xzf go1.21.0.linux-amd64.tar.gz
-
-# Add to PATH in ~/.bashrc
-echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
-source ~/.bashrc
-```
-
-**macOS:**
-
-```bash
-brew install go
-```
-
-#### Go Tools
-
-```bash
-# Install Go tools
-go install golang.org/x/tools/gopls@latest
-go install github.com/go-delve/delve/cmd/dlv@latest
-go install honnef.co/go/tools/cmd/staticcheck@latest
-```
+**Tools:** `go install golang.org/x/tools/gopls@latest`
 
 ### PHP/Laravel Development
 
-#### Install PHP
+**Termux:** `pkg install php composer`
 
-**Termux:**
+**Arch:** `sudo pacman -S php composer`
 
-```bash
-pkg install php composer
-```
+**Ubuntu:** `sudo apt install php php-cli php-mbstring php-xml composer`
 
-**Arch Linux:**
-
-```bash
-sudo pacman -S php composer
-```
-
-**Ubuntu/Debian:**
-
-```bash
-sudo apt install php php-cli php-mbstring php-xml composer
-```
-
-**macOS:**
-
-```bash
-brew install php composer
-```
-
-#### PHP Tools
-
-```bash
-# Install PHP Actor (LSP)
-composer global require phpactor/phpactor
-
-# Install PHP CS Fixer
-composer global require friendsofphp/php-cs-fixer
-
-# Install PHPStan
-composer global require phpstan/phpstan
-
-# Add to PATH
-echo 'export PATH="$HOME/.config/composer/vendor/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
-```
+**Tools:** `composer global require friendsofphp/php-cs-fixer phpstan/phpstan`
 
 ### Bash/Shell Development
 
-#### Shell Formatters & Linters
-
-**Termux:**
-
 ```bash
-pkg install shfmt shellcheck
+# Formatters & linters
+pkg install shfmt shellcheck     # Termux
+sudo pacman -S shfmt shellcheck  # Arch
+sudo apt install shfmt shellcheck  # Ubuntu
+brew install shfmt shellcheck    # macOS
 ```
 
-**Arch Linux:**
+---
 
-```bash
-sudo pacman -S shfmt shellcheck
-```
-
-**Ubuntu/Debian:**
-
-```bash
-sudo apt install shfmt shellcheck
-```
-
-**macOS:**
-
-```bash
-brew install shfmt shellcheck
-```
-
-## 🔧 Code Formatters & Linters
-
-### Universal Formatters
-
-| Tool         | Language       | Install Command                                     |
-| ------------ | -------------- | --------------------------------------------------- |
-| Prettier     | JS/TS/HTML/CSS | `npm install -g prettier`                           |
-| Black        | Python         | `pip install black`                                 |
-| clang-format | C/C++          | `pkg install clang` or `sudo pacman -S clang`       |
-| gofmt        | Go             | Included with Go                                    |
-| shfmt        | Bash           | `pkg install shfmt`                                 |
-| PHP CS Fixer | PHP            | `composer global require friendsofphp/php-cs-fixer` |
-
-### Linters
-
-| Tool          | Language   | Install Command                                                         |
-| ------------- | ---------- | ----------------------------------------------------------------------- |
-| ESLint        | JavaScript | `npm install -g eslint`                                                 |
-| flake8        | Python     | `pip install flake8`                                                    |
-| shellcheck    | Bash       | `pkg install shellcheck`                                                |
-| golangci-lint | Go         | `go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest` |
-| PHPStan       | PHP        | `composer global require phpstan/phpstan`                               |
-
-## 🎨 Fonts (Optional but Recommended)
+## 🎨 Fonts (Optional)
 
 For better visual experience, install a Nerd Font:
 
-### Termux
-
 ```bash
-# Install Termux:Styling from F-Droid
-# Choose a font with icons support
-```
-
-### Desktop Linux/macOS
-
-```bash
-# Download Nerd Fonts
+# Desktop Linux/macOS
 git clone --depth 1 https://github.com/ryanoasis/nerd-fonts.git
 cd nerd-fonts
-
-# Install specific font (e.g., FiraCode)
 ./install.sh FiraCode
-
-# Or install all fonts (takes time)
-./install.sh
 ```
 
 Recommended fonts:
-
 - FiraCode Nerd Font
 - JetBrains Mono Nerd Font
 - Hack Nerd Font
 
-## 🔍 Language Servers (LSP)
-
-Language servers are automatically managed by Coc.nvim, but you can install them manually:
-
-### Install via Coc
-
-```vim
-" In Vim, run:
-:CocInstall coc-tsserver coc-json coc-html coc-css
-:CocInstall coc-pyright coc-clangd coc-go coc-phpls
-```
-
-### Manual Installation
-
-#### clangd (C/C++)
-
-```bash
-# Arch
-sudo pacman -S clang
-
-# Ubuntu
-sudo apt install clangd
-
-# Termux
-pkg install clang
-```
-
-#### pyright (Python)
-
-```bash
-npm install -g pyright
-```
-
-#### gopls (Go)
-
-```bash
-go install golang.org/x/tools/gopls@latest
-```
+---
 
 ## ✅ Verification
 
-After installing prerequisites, verify everything is working:
+After installing, verify everything works:
 
 ```bash
-# Check Vim
+# Check core
 vim --version
-
-# Check Node.js
 node --version
-npm --version
-
-# Check Python
-python3 --version
-pip3 --version
-
-# Check Git
 git --version
 
-# Check formatters
+# Check vimx dependencies
+jq --version
+bc --version
+
+# Check formatters (if installed)
+shfmt --version
 prettier --version
 black --version
-clang-format --version
 ```
 
-### Run Health Check
-
-After installing the Vim configuration:
+### Health Check
 
 ```bash
-# Using vimx
 vimx doctor
-
-# Or in Vim
-:checkhealth
 ```
+
+---
 
 ## 🐛 Common Issues
 
 ### Node.js Version Too Old
 
 ```bash
-# Update Node.js to LTS version
 # Termux
 pkg upgrade nodejs
 
@@ -440,92 +250,46 @@ curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 sudo apt-get install -y nodejs
 ```
 
-### Python Not Found
-
-```bash
-# Create python symlink
-sudo ln -s /usr/bin/python3 /usr/bin/python
-```
-
-### Missing Build Tools
+### jq Not Found
 
 ```bash
 # Termux
-pkg install make clang
+pkg install jq
 
 # Arch
-sudo pacman -S base-devel
+sudo pacman -S jq
 
-# Ubuntu/Debian
-sudo apt install build-essential
-```
-
-### Permission Denied
-
-```bash
-# Fix npm permissions
-mkdir ~/.npm-global
-npm config set prefix '~/.npm-global'
-echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bashrc
-source ~/.bashrc
-```
-
-## 📦 Optional Enhancements
-
-### Ripgrep (Better Grep)
-
-```bash
-# Termux
-pkg install ripgrep
-
-# Arch
-sudo pacman -S ripgrep
-
-# Ubuntu/Debian
-sudo apt install ripgrep
+# Ubuntu
+sudo apt install jq
 
 # macOS
-brew install ripgrep
+brew install jq
 ```
 
-### fd (Better Find)
+### shfmt Not Found
 
 ```bash
 # Termux
-pkg install fd
+pkg install shfmt
 
 # Arch
-sudo pacman -S fd
+sudo pacman -S shfmt
 
-# Ubuntu/Debian
-sudo apt install fd-find
-
-# macOS
-brew install fd
-```
-
-### bat (Better Cat)
-
-```bash
-# Termux
-pkg install bat
-
-# Arch
-sudo pacman -S bat
-
-# Ubuntu/Debian
-sudo apt install bat
+# Ubuntu
+sudo apt install shfmt
 
 # macOS
-brew install bat
+brew install shfmt
 ```
+
+---
 
 ## 🔜 Next Steps
 
-After installing all prerequisites:
+After installing prerequisites:
 
 1. Proceed to [Installation Guide](installation.md)
-2. Or use quick install: `curl -fsSL https://raw.githubusercontent.com/aidomx/vimx/main/install.sh | bash`
+2. Or quick install: `curl -fsSL https://raw.githubusercontent.com/aidomx/vimx/main/install.sh | bash`
 
 ---
 

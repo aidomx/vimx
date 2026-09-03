@@ -15,10 +15,15 @@ Quick guide for Bash shell scripting.
 # Termux
 pkg install bash
 
-# Install tools
+# Install formatting/linting tools
 pkg install shfmt shellcheck  # Termux
 sudo pacman -S shfmt shellcheck  # Arch
 sudo apt install shfmt shellcheck  # Ubuntu
+
+# Required by vimx CLI
+pkg install jq bc  # Termux
+sudo pacman -S jq bc  # Arch
+sudo apt install jq bc  # Ubuntu
 ```
 
 
