@@ -27,8 +27,8 @@ sudo pacman -S nodejs npm  # Arch
 # Install global packages
 npm install -g typescript prettier eslint
 
-# Install Coc extensions
-vim -c 'CocInstall coc-tsserver coc-json coc-html coc-css coc-prettier' -c 'qa'
+# Install Coc extensions (formatting is handled by Neoformat)
+vim -c 'CocInstall coc-tsserver coc-json coc-html coc-css' -c 'qa'
 ```
 
 ### JavaScript/TypeScript Project
@@ -52,7 +52,7 @@ vim src/index.js
 | ---------------- | ------------- | ------------------------ |
 | Autocomplete     | `<Tab>`       | Smart completion         |
 | Go to definition | `gd`          | Jump to definition       |
-| Format code      | `<leader>fmt` | Format with Prettier     |
+| Format code      | `<leader>fmt` | Format with Neoformat/Prettier |
 | Find references  | `gr`          | Find all references      |
 | Rename symbol    | `<leader>rn`  | Rename variable/function |
 | Show docs        | `K`           | Show documentation       |
@@ -87,7 +87,7 @@ vim src/App.jsx
 | Shortcut     | Action               |
 | ------------ | -------------------- |
 | `<leader>nr` | Start dev server     |
-| `<leader>pd` | Format with Prettier |
+| `<leader>pd` | Format with Neoformat/Prettier |
 
 **3. JSX/TSX features:**
 

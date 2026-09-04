@@ -372,7 +372,7 @@ vimx disable coc.nvim
 
 ### Formatter Not Found
 
-**Symptoms:** `:Format` or `<leader>fmt` doesn't work
+**Symptoms:** `:Format`, `:Neoformat`, or `<leader>fmt` doesn't work
 
 **Solutions:**
 
@@ -384,7 +384,11 @@ which clang-format
 which shfmt
 
 # Install missing formatters
-# Prettier (JS/TS/HTML/CSS)
+# Prettier for Neoformat (JS/TS/HTML/CSS)
+# Prefer a project-local installation:
+npm install --save-dev prettier
+
+# Or install globally:
 npm install -g prettier
 
 # Black (Python)
@@ -400,6 +404,25 @@ sudo pacman -S clang
 # shfmt (Bash)
 pkg install shfmt  # Termux
 sudo pacman -S shfmt  # Arch
+```
+
+### Neoformat: no change necessary
+
+This message means Prettier exited successfully but produced the same content as
+the current buffer. It is informational, not an error. If the output is empty or
+formatting does not happen, check that Prettier is installed and run Neoformat
+with verbose logging:
+
+```vim
+:let g:neoformat_verbose = 1
+:Neoformat
+:messages
+```
+
+For project-local Prettier, install it from the project root:
+
+```bash
+npm install --save-dev prettier
 ```
 
 ### Wrong Format Applied
@@ -426,15 +449,18 @@ sudo pacman -S shfmt  # Arch
 **Solutions:**
 
 ```vim
-" 1. Check if enabled
-:echo g:format_on_save
-
-" 2. Enable it
-:let g:format_on_save = 1
-
-" 3. Check autocommand
+" 1. Check the Neoformat autocommands
 :autocmd BufWritePre
+
+" 2. Check the active filetype
+:set filetype?
+
+" 3. Try formatting manually
+:Neoformat
 ```
+
+The active configuration uses Neoformat for formatting and keeps Coc format-on-save
+disabled (`"coc.preferences.formatOnSave": false`) to prevent duplicate formatters.
 
 ## 📱 Termux-Specific Issues
 

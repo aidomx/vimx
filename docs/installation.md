@@ -78,11 +78,11 @@ Wait for all plugins to download and install.
 
 ### 6. Install Coc Extensions (Optional but Recommended)
 
-Install language server extensions:
+Install language server extensions. Formatting is handled separately by Neoformat:
 
 ```vim
 " Web Development
-:CocInstall coc-tsserver coc-json coc-html coc-css coc-prettier
+:CocInstall coc-tsserver coc-json coc-html coc-css
 :CocInstall coc-eslint coc-stylelintplus
 
 " Backend Development
@@ -90,6 +90,16 @@ Install language server extensions:
 
 " Utilities
 :CocInstall coc-snippets coc-git coc-lists
+```
+
+Install Prettier for Neoformat:
+
+```bash
+# Recommended for each project
+npm install --save-dev prettier
+
+# Or install globally
+npm install -g prettier
 ```
 
 ### 7. Install vimx Tool (Optional)

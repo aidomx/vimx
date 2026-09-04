@@ -118,8 +118,10 @@ let g:airline#extensions#tabline#enabled = 1
 **Installation:**
 
 ```vim
-:CocInstall coc-tsserver coc-json coc-html coc-css coc-prettier
+:CocInstall coc-tsserver coc-json coc-html coc-css
 :CocInstall coc-pyright coc-clangd coc-go coc-phpls
+
+" Formatting is handled by Neoformat, not Coc.nvim.
 ```
 
 **Shortcuts:**
@@ -562,11 +564,20 @@ Hello → ysiw] → [Hello]
 
 **Configuration:**
 
+Web files use Neoformat's built-in Prettier formatter. Prettier can be installed
+locally in a project (`npm install --save-dev prettier`) or globally.
+
 ```vim
-" Enable format on save
-let g:neoformat_enabled_python = ['black']
+" Use local project formatter binaries when available
+let g:neoformat_try_node_exe = 1
+
+" Enable formatters by filetype
 let g:neoformat_enabled_javascript = ['prettier']
+let g:neoformat_enabled_typescript = ['prettier']
+let g:neoformat_enabled_html = ['prettier']
 ```
+
+Coc format-on-save is disabled so Neoformat remains the only formatter.
 
 ---
 

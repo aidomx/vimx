@@ -2,29 +2,14 @@
 " Universal Formatting Configuration
 " ---------------------------
 
-" Check if coc-prettier extension is available
-function! s:HasPrettier()
-  try
-    let l:extensions = CocAction('listExtensions')
-    return index(l:extensions, 'coc-prettier') >= 0
-  catch
-    return 0
-  endtry
-endfunction
-
 function! FormatFile()
   let l:filetype = &filetype
-  let l:filename = expand('%')
 
-  " Prettier supported filetypes
-  if index(['javascript', 'typescript', 'javascriptreact', 'typescriptreact', 
-           \'html', 'css', 'json', 'markdown', 'yaml', 'yml'], l:filetype) >= 0
-    if s:HasPrettier()
-      call CocAction('runCommand', 'prettier.formatFile')
-    else
-      echo "coc-prettier not installed. Run: :CocInstall coc-prettier"
-    endif
-  
+  " Web files use Neoformat with the configured Prettier formatter.
+  if index(['javascript', 'typescript', 'javascriptreact', 'typescriptreact',
+           \ 'html', 'css', 'json', 'markdown', 'yaml', 'yml'], l:filetype) >= 0
+    execute 'Neoformat'
+
   " Shell scripts menggunakan shfmt
   elseif index(['sh', 'bash'], l:filetype) >= 0
     if executable('shfmt')
@@ -32,7 +17,7 @@ function! FormatFile()
     else
       echo "shfmt not installed. Run: pkg install shfmt"
     endif
-  
+
   " Python menggunakan black atau autopep8
   elseif l:filetype == 'python'
     if executable('black')
@@ -40,19 +25,19 @@ function! FormatFile()
     elseif executable('autopep8')
       execute '%!autopep8 -'
     endif
-  
+
   " Go menggunakan gofmt
   elseif l:filetype == 'go'
     if executable('gofmt')
       execute '%!gofmt'
     endif
-  
+
   " C/C++ menggunakan clang-format
   elseif index(['c', 'cpp'], l:filetype) >= 0
     if executable('clang-format')
       execute '%!clang-format -style=file'
     endif
-  
+
   " PHP menggunakan php-cs-fixer
   elseif l:filetype == 'php'
     if executable('php-cs-fixer')

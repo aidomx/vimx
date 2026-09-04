@@ -150,7 +150,7 @@ Web development configuration (JavaScript, TypeScript, HTML, CSS).
 
 - Syntax highlighting
 - JSX/TSX support
-- Prettier formatting
+- Neoformat formatting with Prettier
 - ESLint integration
 - React/Vue snippets
 - Emmet shortcuts
@@ -158,7 +158,7 @@ Web development configuration (JavaScript, TypeScript, HTML, CSS).
 **Key mappings:**
 
 - `<leader>nd` - Next.js dev server
-- `<leader>pd` - Prettier format
+- `<leader>pd` - Neoformat/Prettier format
 - `<leader>es` - ESLint fix
 
 ### langs/c.vim
@@ -315,7 +315,7 @@ Universal code formatting.
 
 **Supported formatters:**
 
-- Prettier (JS/TS/HTML/CSS)
+- Neoformat with Prettier (JS/TS/HTML/CSS)
 - Black (Python)
 - clang-format (C/C++)
 - gofmt (Go)
@@ -364,7 +364,7 @@ Coc.nvim and LSP configuration.
     "go": { ... },
     "python": { ... }
   },
-  "coc.preferences.formatOnSave": true
+  "coc.preferences.formatOnSave": false
 }
 ```
 

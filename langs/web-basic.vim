@@ -2,8 +2,7 @@
 " Web Development (JavaScript/TypeScript/HTML/CSS)
 " ---------------------------
 
-" Neoformat auto-formatting
-autocmd BufWritePre *.js,*.ts,*.jsx,*.tsx,*.html,*.css,*.json,*.md,*.yaml,*.yml Neoformat
+" Web files are formatted by utils/formatting.vim via Neoformat.
 
 " Filetype specific settings
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
@@ -29,18 +28,8 @@ let g:neoformat_enabled_json = ['prettier']
 let g:neoformat_enabled_markdown = ['prettier']
 let g:neoformat_enabled_yaml = ['prettier']
 
-" Prettier config for Neoformat
-let g:neoformat_javascript_prettier = {
-    \ 'exe': 'npx',
-    \ 'args': ['--no-install', 'prettier', '--stdin-filepath', '"%:p"', '--print-width', '80', '--jsx-bracket-same-line', 'false'],
-    \ 'stdin': 1,
-    \ }
-
-let g:neoformat_typescript_prettier = {
-    \ 'exe': 'npx', 
-    \ 'args': ['--no-install', 'prettier', '--stdin-filepath', '"%:p"', '--print-width', '80', '--jsx-bracket-same-line', 'false', '--parser', 'typescript'],
-    \ 'stdin': 1,
-    \ }
+" Use Neoformat's built-in Prettier definitions and resolve local project binaries.
+let g:neoformat_try_node_exe = 1
 
 " Manual Prettier command (backup)
 command! -nargs=0 Prettier :Neoformat

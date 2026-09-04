@@ -47,10 +47,27 @@ npm install -g serve http-server
 
 ### Coc Extensions
 
+Coc provides language-server features only; formatting is handled by Neoformat.
+
 ```vim
-:CocInstall coc-tsserver coc-json coc-html coc-css coc-prettier
+:CocInstall coc-tsserver coc-json coc-html coc-css
 :CocInstall coc-eslint coc-stylelintplus
 ```
+
+### Prettier for Neoformat
+
+Install Prettier locally in each project or globally:
+
+```bash
+# Recommended for a project
+npm install --save-dev prettier
+
+# Or install globally
+npm install -g prettier
+```
+
+Use `<leader>fmt` or `:Neoformat` to format the current web file. Neoformat
+uses its built-in Prettier definition and can resolve project-local binaries.
 
 
 ### Vimx Language Setup
@@ -110,7 +127,7 @@ cd my-vue-app
 | `gi`          | Go to implementation  |
 | `gr`          | Find references       |
 | `<leader>rn`  | Rename symbol         |
-| `<leader>fmt` | Format with Prettier  |
+| `<leader>fmt` | Format with Neoformat/Prettier |
 | `<leader>es`  | ESLint fix            |
 | `K`           | Show documentation    |
 
@@ -338,7 +355,7 @@ header+main+footer           → Creates header, main, footer
 | Shortcut      | Action                     |
 | ------------- | -------------------------- |
 | `<leader>nr`  | Start React dev server     |
-| `<leader>fmt` | Format with Prettier       |
+| `<leader>fmt` | Format with Neoformat/Prettier |
 | `gd`          | Go to component definition |
 
 ### React Component Example
@@ -903,32 +920,21 @@ If you need to share settings with VS Code users:
 
 ### Coc Settings for Web Dev
 
+Formatting is owned by Neoformat, so Coc format-on-save must remain disabled to
+avoid running two formatters on the same file.
+
 ```json
 {
   "typescript.preferences.importModuleSpecifier": "relative",
   "typescript.suggest.autoImports": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
-
-  "prettier.requireConfig": true,
-  "prettier.onlyUseLocalVersion": true,
-
+  "coc.preferences.formatOnSave": false,
   "eslint.autoFixOnSave": true,
   "eslint.filetypes": [
     "javascript",
     "typescript",
     "javascriptreact",
     "typescriptreact"
-  ],
-
-  "coc.preferences.formatOnSaveFiletypes": [
-    "javascript",
-    "typescript",
-    "javascriptreact",
-    "typescriptreact",
-    "json",
-    "html",
-    "css",
-    "scss"
   ]
 }
 ```

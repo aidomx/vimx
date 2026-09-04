@@ -421,8 +421,8 @@ Plug 'dense-analysis/ale'
 " EditorConfig support
 Plug 'editorconfig/editorconfig-vim'
 
-" Prettier formatting
-Plug 'prettier/vim-prettier'
+" Neoformat provides Prettier formatting
+Plug 'sbdchd/neoformat'
 ```
 
 #### UI Enhancements
@@ -568,14 +568,7 @@ set secure    " Restrict unsafe commands
   "suggest.enablePreview": true,
   "diagnostic.level": "warning",
   "diagnostic.enableMessage": "jump",
-  "coc.preferences.formatOnSaveFiletypes": [
-    "javascript",
-    "typescript",
-    "json",
-    "html",
-    "css",
-    "python"
-  ],
+  "coc.preferences.formatOnSave": false,
   "prettier.tabWidth": 2,
   "prettier.singleQuote": true,
   "python.formatting.provider": "black",
@@ -644,7 +637,6 @@ let g:web_dev_mode = 1
 " Enable specific plugins
 let g:coc_enabled_extensions = [
   \ 'coc-tsserver',
-  \ 'coc-prettier',
   \ 'coc-eslint'
   \ ]
 
@@ -723,8 +715,8 @@ autocmd BufWritePre *
   \   call mkdir(expand('<afile>:p:h'), 'p') |
   \ endif
 
-" Format on save for specific files
-autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx Prettier
+" Format on save for specific files using Neoformat
+autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx Neoformat
 
 " Highlight on yank
 autocmd TextYankPost * silent! lua vim.highlight.on_yank()

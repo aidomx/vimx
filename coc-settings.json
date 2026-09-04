@@ -13,7 +13,7 @@
   "diagnostic.checkCurrentLine": true,
   "diagnostic.displayByAle": false,
   "css.validate": true,
-  "coc.preferences.formatOnSave": true,
+  "coc.preferences.formatOnSave": false,
   "prettier.enable": true,
   "prettier.useEditorConfig": true,
   "prettier.semi": true,

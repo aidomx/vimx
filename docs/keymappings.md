@@ -133,7 +133,7 @@ All shortcuts using `<leader>` mean pressing Space first, then the key combinati
 | `<leader>ns` | Next.js start      | Start production server |
 | `<leader>nr` | React dev          | Start React dev server  |
 | `<leader>vd` | Vue dev            | Start Vue dev server    |
-| `<leader>pd` | Prettier format    | Format with Prettier    |
+| `<leader>pd` | Neoformat format  | Format with Neoformat/Prettier |
 
 ### PHP/Laravel
 

@@ -21,7 +21,7 @@ Required packages and dependencies for vimx.
 | Formatter | gofmt | Go formatting | ⚠️ Recommended |
 | Formatter | clang-format | C/C++ formatting | ⚠️ Recommended |
 | Formatter | php-cs-fixer | PHP formatting | ⚠️ Recommended |
-| Formatter | prettier | JS/TS formatting | ⚠️ Recommended (via coc) |
+| Formatter | prettier | JS/TS/HTML/CSS formatting via Neoformat | ⚠️ Recommended |
 | Linter | shellcheck | Shell linting | ⚠️ Recommended |
 | Fallback | python3 | JSON fallback | 🔵 Optional |
 
@@ -56,7 +56,7 @@ These enhance the experience and are needed for specific features.
 - **gofmt** - Go formatting (included with Go)
 - **clang-format** - C/C++ formatting
 - **php-cs-fixer** - PHP formatting
-- **prettier** - JS/TS/HTML/CSS formatting (via coc-prettier)
+- **prettier** - JS/TS/HTML/CSS formatting via Neoformat
 
 ### Linters
 
@@ -139,7 +139,7 @@ brew install shfmt shellcheck
 ### Web Development
 
 ```bash
-# Global packages
+# Global packages (Prettier can also be installed locally per project)
 npm install -g typescript prettier eslint
 ```
 
