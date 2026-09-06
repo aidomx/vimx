@@ -28,12 +28,17 @@ let g:ale_fixers = {
 \}
 let g:ale_c_clangformat_options = '-style=file'
 let g:ale_cpp_clangformat_options = '-style=file'
+let g:ale_fix_on_save = 1
 
 " Auto format on save for C/C++
-autocmd BufWritePre *.c,*.cpp,*.h,*.hpp :ALEFix
+"autocmd BufWritePre *.c,*.cpp,*.h,*.hpp :ALEFix
+
+" C headers are C in this project
+autocmd BufRead,BufNewFile *.h setlocal filetype=c
 
 " Filetype specific settings
 autocmd FileType c setlocal commentstring=//\ %s foldmethod=syntax
-autocmd FileType cpp setlocal commentstring=//\ %s foldmethod=syntax
 autocmd FileType c setlocal shiftwidth=2 tabstop=2
+
+autocmd FileType cpp setlocal commentstring=//\ %s foldmethod=syntax
 autocmd FileType cpp setlocal shiftwidth=2 tabstop=2
