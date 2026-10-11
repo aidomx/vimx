@@ -8,7 +8,7 @@ set smartindent
 set tabstop=2
 set shiftwidth=2
 set expandtab
-set foldmethod=syntax
+set foldmethod=manual
 set foldlevelstart=99
 set termguicolors
 syntax on
@@ -38,7 +38,8 @@ set hlsearch
 set hidden
 set autoread
 set confirm
-set backup
+set nobackup
+set writebackup
 set backupdir=~/.config/vim/backups/
 set directory=~/.config/vim/swaps/
 set undodir=~/.config/vim/undo/

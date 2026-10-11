@@ -7,7 +7,6 @@ print_info()    { echo -e "${BLUE}ℹ${NC} $*"; }
 
 print_header() {
   local title="$*"
-  echo -e "${CYAN}$(printf '=%.0s' {1..58})${NC}"
-  echo -e "${WHITE}${title}${NC}"
-  echo -e "${CYAN}$(printf '=%.0s' {1..58})${NC}"
+  echo ""
+  echo -e "${CYAN}┃${NC} ${WHITE}${title}${NC}"
 }

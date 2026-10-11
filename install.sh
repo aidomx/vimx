@@ -41,6 +41,10 @@ if [[ $IS_REMOTE -eq 1 ]]; then
 
   # Change to the temp directory and re-execute the script locally
   cd "$temp_dir"
+  # stdin masih pipe dari curl; sambungkan ke terminal agar prompt bisa dijawab
+  if { : < /dev/tty; } 2> /dev/null; then
+    exec bash "./install.sh" < /dev/tty
+  fi
   exec bash "./install.sh"
 fi
 
@@ -53,6 +57,7 @@ source "${VIMX_ROOT}/lib/fs.sh"
 source "${VIMX_ROOT}/lib/colors.sh"
 source "${VIMX_ROOT}/lib/logging.sh"
 source "${VIMX_ROOT}/lib/execs.sh"
+source "${VIMX_ROOT}/lib/prompt.sh"
 source "${VIMX_ROOT}/lib/progress.sh"
 
 # Source command implementations
@@ -79,6 +84,8 @@ main() {
   # Installation steps
   clone_repository
   setup_vimrc
+  setup_nvim_init
+  setup_coc_settings
   install_plugin_manager
   install_plugins
   install_vimx

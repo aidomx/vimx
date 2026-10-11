@@ -4,11 +4,12 @@
 
 " Better untuk touch screen
 set mouse=a
-set ttymouse=sgr
+if !g:is_neovim
+  set ttymouse=sgr
+endif
 
 " Scroll lebih smooth di mobile
 set lazyredraw
-set ttyfast
 
 " Backspace behavior
 set backspace=indent,eol,start

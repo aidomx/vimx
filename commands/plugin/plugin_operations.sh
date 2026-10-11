@@ -8,7 +8,7 @@ install_with_manager() {
 
   case "$manager" in
     "vim-plug")
-      (vim -c 'PlugInstall' -c 'qa!' > /dev/null 2>&1) &
+      (vimx_run_plug_cmd "" -c 'PlugInstall') &
       local pid=$!
       show_percentage_progress $pid "Installing with vim-plug"
       wait $pid 2> /dev/null || true
@@ -89,7 +89,7 @@ update_plugins() {
 
   case "$manager" in
     "vim-plug")
-      (vim -c 'PlugUpdate' -c 'qa!' > /dev/null 2>&1) &
+      (vimx_run_plug_cmd "" -c 'PlugUpdate') &
       local pid=$!
       show_percentage_progress $pid "Updating vim-plug plugins"
       wait $pid

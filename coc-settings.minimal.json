@@ -1,0 +1,20 @@
+{
+  "suggest.maxCompleteItemCount": 20,
+  "suggest.timeout": 500,
+  "suggest.minTriggerInputLength": 2,
+  "suggest.enablePreview": false,
+
+  "diagnostic.virtualText": false,
+  "diagnostic.refreshOnInsertMode": false,
+  "diagnostic.checkCurrentLine": true,
+  "diagnostic.displayByAle": false,
+  "codeLens.enable": false,
+
+  "workspace.maxFileSize": 2,
+  "coc.preferences.formatOnSave": false,
+
+  "prettier.enable": true,
+  "prettier.useEditorConfig": true,
+
+  "typescript.suggest.completeFunctionCalls": true
+}

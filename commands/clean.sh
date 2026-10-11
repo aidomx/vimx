@@ -26,7 +26,7 @@ clean_vimplug_plugins() {
   check_vim_config
   print_info "Removing unused plugins..."
 
-  vim -c 'PlugClean!' -c 'qa!' > /dev/null 2>&1 &
+  vimx_run_plug_cmd "" -c 'PlugClean!' &
   local vim_pid=$!
   show_percentage_progress $vim_pid "Cleaning vim-plug plugins"
   wait $vim_pid
@@ -59,8 +59,8 @@ clean_lazy_plugins() {
 cleanup_plugins() {
   if [[ $IS_REMOTE -eq 0 ]]; then
     # Hanya tanya konfirmasi jika bukan remote execution
-    read -p "Clean existing plugins for fresh installation? [y/N] " -n 1 -r
-    echo
+    local REPLY
+    REPLY=$(ask "Clean existing plugins for fresh installation? [y/N] ")
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
       print_info "Skipping plugin cleanup"
       return

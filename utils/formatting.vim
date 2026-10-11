@@ -47,7 +47,11 @@ function! FormatFile()
 endfunction
 
 " Auto format on save untuk semua filetypes yang didukung
-autocmd BufWritePre *.js,*.ts,*.jsx,*.tsx,*.html,*.css,*.json,*.md,*.yaml,*.yml,*.sh,*.bash,*.py,*.go,*.c,*.cpp,*.h,*.php call FormatFile()
+" Format saat save TIDAK berlaku untuk:
+"   - Markdown: Prettier via Neoformat berjalan sebagai proses Node tiap save.
+"               Format manual dengan <leader>fmt.
+"   - C/C++:    ALE (clang-format) di langs/c.vim sudah menangani saat save.
+autocmd BufWritePre *.js,*.ts,*.jsx,*.tsx,*.html,*.css,*.json,*.yaml,*.yml,*.sh,*.bash,*.py,*.go,*.php call FormatFile()
 
 " Manual formatting command
 command! -nargs=0 Format call FormatFile()

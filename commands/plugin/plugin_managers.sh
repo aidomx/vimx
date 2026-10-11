@@ -10,7 +10,7 @@ install_plugin_manager() {
 
   command -v nvim &> /dev/null && is_neovim=1
   command -v vim &> /dev/null && is_vim=1
-  [ -n "$TERMUX_VERSION" ] && is_termux=1
+  is_native_termux && is_termux=1
 
   # Deteksi existing managers
   local existing_managers=()
@@ -34,7 +34,7 @@ install_plugin_manager() {
   echo -e "  ${CYAN}4${NC}) Skip - use existing manager"
   echo ""
 
-  read -p "Choose plugin manager [1-4]: " choice
+  choice=$(ask "Choose plugin manager [1-4]: ")
 
   case $choice in
     1) install_vim_plug "$is_neovim" "$is_vim" "$is_termux" ;;

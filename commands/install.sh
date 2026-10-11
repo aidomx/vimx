@@ -51,7 +51,7 @@ check_existing_installation() {
     echo -e "  ${RED}3${NC}) Cancel installation"
     echo ""
 
-    read -p "Enter your choice [1-3]: " choice
+    choice=$(ask "Enter your choice [1-3]: ")
 
     case $choice in
     1)
@@ -74,12 +74,6 @@ check_existing_installation() {
   fi
 }
 
-copy_plugins_tmp() {
-  cat >"$HOME/.vimrc" <<EOF
-  $(cat ~/.config/vim/core/plugins.vim)
-EOF
-}
-
 install_plugins() {
   print_header "Installing Plugins"
 
@@ -90,12 +84,18 @@ install_plugins() {
   # Install berdasarkan plugin manager
   if [ -f "${HOME}/.vim/autoload/plug.vim" ] || [ -f "${HOME}/.local/share/nvim/site/autoload/plug.vim" ]; then
     print_info "Installing plugins via vim-plug..."
-    copy_plugins_tmp
-    vim -N -u "$HOME/.vimrc" -c 'PlugInstall --sync' -c 'qa!' >/dev/null 2>&1 &
+
+    # Pakai rc sementara supaya $HOME/.vimrc (pilihan user di setup_vimrc) tidak tertimpa
+    local tmp_rc
+    tmp_rc=$(mktemp "${TMPDIR:-/tmp}/vimx-plugins.XXXXXX.vim")
+    cp "${HOME}/.config/vim/core/plugins.vim" "$tmp_rc"
+
+    vimx_run_plug_cmd "$tmp_rc" -c 'PlugInstall --sync' &
     local vim_pid=$!
     progress "percent" $vim_pid "${CYAN}[PROGRESS]${NC} vim-plug plugins"
-    wait $vim_pid
-    local exit_code=$?
+    local exit_code=0
+    wait $vim_pid || exit_code=$?
+    rm -f "$tmp_rc"
 
     # Verifikasi instalasi - cek apakah ada plugin yang terinstall
     if [ $exit_code -eq 0 ]; then
@@ -104,12 +104,11 @@ install_plugins() {
 
       if [ $plugin_count -gt 0 ]; then
         print_success "Plugins installed via vim-plug (${plugin_count} plugins)"
-        create_clean_vimrc
       else
         print_warning "No plugins found. Check your plugins.vim configuration"
       fi
     else
-      print_warning "Plugin installation may have issues. Run manually: vim +PlugInstall"
+      print_warning "Plugin installation may have issues. Run manually: vim +PlugInstall (atau nvim +PlugInstall)"
     fi
 
   elif [ -d "${HOME}/.local/share/nvim/site/pack/packer/start/packer.nvim" ]; then
@@ -185,7 +184,6 @@ install_vimx() {
 
   # Verify installation
   if command -v vimx >/dev/null 2>&1; then
-    cp -f "$INSTALL_DIR/coc-settings.json" "$HOME/.vim/"
     print_success "vimx installed successfully"
     vimx --version
   else
@@ -193,34 +191,6 @@ install_vimx() {
     return 1
   fi
 
-}
-
-install_optional_packages() {
-  print_info "Installing optional packages..."
-
-  # Detect package manager and install
-  if [ -f /data/data/com.termux/files/usr/bin/pkg ]; then
-    # Termux
-    print_info "Detected Termux environment"
-    pkg install -y nodejs python
-    pip install black flake8 autopep8
-  elif command -v pacman &>/dev/null; then
-    # Arch Linux
-    print_info "Detected Arch Linux"
-    sudo pacman -S --noconfirm nodejs npm python-pip
-    pip install black flake8 autopep8
-  elif command -v apt-get &>/dev/null; then
-    # Debian/Ubuntu
-    print_info "Detected Debian/Ubuntu"
-    sudo apt-get update
-    sudo apt-get install -y nodejs npm python3-pip
-    pip3 install black flake8 autopep8
-  else
-    print_warning "Could not detect package manager"
-    print_info "Please install optional tools manually"
-  fi
-
-  print_success "Optional tools installed"
 }
 
 show_next_steps() {

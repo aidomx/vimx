@@ -48,6 +48,8 @@ time vim +qall
 :!less profile.log
 ```
 
+> **Catatan Neovim:** perintah `:profile` berasal dari Vim. Untuk Neovim, ukur startup dengan `nvim --startuptime startup.log`.
+
 ### Memory Usage
 
 ```vim

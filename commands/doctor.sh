@@ -44,11 +44,11 @@ vimx_cmd_doctor() {
   echo ""
 
   if [ $failed_checks -eq 0 ] && [ $warning_checks -eq 0 ]; then
-    print_success "🎉 Your Vim configuration is healthy!"
+    print_success "Your Vim configuration is healthy!"
   elif [ $failed_checks -eq 0 ]; then
-    print_warning "⚠️  Your configuration has some warnings but should work fine"
+    print_warning "Your configuration has some warnings but should work fine"
   else
-    print_error "❌ Your configuration has issues that need attention"
+    print_error "Your configuration has issues that need attention"
   fi
 
   # Show recommendations
@@ -59,10 +59,8 @@ vimx_cmd_doctor() {
 
 print_section() {
   local title=$1
-  echo -e "${CYAN}$(printf "━%.0s" {1..58})${NC}"
-  echo -e "${BOLD}${WHITE}$title${NC}"
-  echo -e "${CYAN}$(printf "━%.0s" {1..58})${NC}"
   echo ""
+  echo -e "${CYAN}┃${NC} ${BOLD}${WHITE}${title}${NC}"
 }
 
 check_vim_installation() {
@@ -135,7 +133,7 @@ check_plugin_managers() {
 }
 
 check_doctor_dependencies() {
-  local deps=("git" "curl" "wget")
+  local deps=("git" "curl")
 
   for dep in "${deps[@]}"; do
     total_checks=$((total_checks + 1))
@@ -150,7 +148,7 @@ check_doctor_dependencies() {
   done
 
   # Optional dependencies
-  local optional_deps=("node" "python3" "npm" "pip3" "jq")
+  local optional_deps=("node" "python3" "npm" "pip3" "jq" "wget")
 
   for dep in "${optional_deps[@]}"; do
     total_checks=$((total_checks + 1))
@@ -203,41 +201,58 @@ check_config_files() {
 
 check_vim_syntax() {
   local file=$1
-  local filename=$(basename "$file")
+  local filename
+  filename=$(basename "$file")
 
-  if command -v vim &> /dev/null; then
-    # Skip files yang complex (seperti init.vim utama)
-    case "$filename" in
-      "init.vim" | ".vimrc")
-        # File utama mungkin punya complex logic, skip detailed check
-        print_info "Syntax: $filename (basic check only)"
-        return 0
-        ;;
-    esac
+  local editor
+  editor=$(vimx_editor 2> /dev/null) || return 0
 
-    # Untuk file config modular, check syntax dengan method yang lebih safe
-    local syntax_check
-    syntax_check=$(timeout 5 vim -u NONE -i NONE -N -es -c "
-      try
-        source $file
-        echo 'VALID'
-      catch
-        echo 'ERROR: ' . v:exception
-      endtry
-      quit
-    " 2>&1 | grep -E "(VALID|ERROR:)") || true
+  case "$filename" in
+    "init.vim" | ".vimrc")
+      print_info "Syntax: $filename (basic check only)"
+      return 0
+      ;;
+  esac
 
-    if echo "$syntax_check" | grep -q "VALID"; then
-      print_success "Syntax: $filename valid"
+  # Skrip pemeriksa ditulis ke file: Vim tidak mengurai -c multi-baris dengan benar
+  local check_script
+  check_script=$(mktemp "${TMPDIR:-/tmp}/vimx-syntax.XXXXXX.vim")
+  cat > "$check_script" << EOF
+try
+  source ${file}
+  echo 'VALID'
+catch
+  echo 'ERROR: ' . v:exception
+endtry
+qall!
+EOF
+
+  local flags=(-u NONE -i NONE -es)
+  [ "$editor" = "vim" ] && flags+=(-N)
+
+  local out
+  out=$(timeout 10 "$editor" "${flags[@]}" -S "$check_script" < /dev/null 2>&1) || true
+  rm -f "$check_script"
+
+  if echo "$out" | grep -q "VALID"; then
+    print_success "Syntax: $filename valid"
+    passed_checks=$((passed_checks + 1))
+  elif echo "$out" | grep -q "ERROR:"; then
+    local msg
+    msg=$(echo "$out" | grep "ERROR:" | head -1 | sed 's/ERROR: *//')
+    # E117 (fungsi tidak ada), E492 (command tidak ada), E185 (colorscheme tidak ada):
+    # biasanya berarti plugin belum dimuat, bukan error sintaks
+    if echo "$msg" | grep -qE "E(117|121|185|492)"; then
+      print_info "Syntax: $filename dilewati (butuh plugin yang belum dimuat)"
       passed_checks=$((passed_checks + 1))
     else
-      local error_msg=$(echo "$syntax_check" | sed 's/ERROR: //')
       print_error "Syntax: $filename has issues"
-      if [ -n "$error_msg" ]; then
-        echo -e "       ${GRAY}${error_msg}${NC}"
-      fi
+      echo -e "       ${GRAY}${msg}${NC}"
       failed_checks=$((failed_checks + 1))
     fi
+  else
+    print_warning "Syntax: $filename tidak bisa diperiksa (timeout atau editor gagal)"
+    warning_checks=$((warning_checks + 1))
   fi
 }
 
@@ -336,27 +351,36 @@ check_lazy_health() {
 }
 
 check_performance() {
-  # Check Vim startup time
+  # Check editor startup time (tanpa terminal: tidak bisa menunggu input)
   total_checks=$((total_checks + 1))
-  if command -v vim &> /dev/null; then
-    local start_time=$(date +%s%3N)
-    timeout 10 vim --startuptime /tmp/vim_startup.log +q 2> /dev/null || true
-    local end_time=$(date +%s%3N)
-    local startup_time=$((end_time - start_time))
+  local editor
+  if editor=$(vimx_editor 2> /dev/null); then
+    local log start_time end_time startup_time
+    log=$(mktemp "${TMPDIR:-/tmp}/vimx-startup.XXXXXX.log")
+
+    start_time=$(date +%s%3N)
+    if [ "$editor" = "nvim" ]; then
+      timeout 10 nvim --headless --startuptime "$log" -c 'qa!' < /dev/null > /dev/null 2>&1 || true
+    else
+      timeout 10 vim -n --not-a-term --startuptime "$log" -c 'qa!' < /dev/null > /dev/null 2>&1 || true
+    fi
+    end_time=$(date +%s%3N)
+    startup_time=$((end_time - start_time))
+    DOCTOR_STARTUP_MS=$startup_time
 
     if [ $startup_time -lt 1000 ]; then
-      print_success "Performance: startup ${startup_time}ms (fast)"
+      print_success "Performance: $editor startup ${startup_time}ms (fast)"
       passed_checks=$((passed_checks + 1))
     elif [ $startup_time -lt 3000 ]; then
-      print_warning "Performance: startup ${startup_time}ms (moderate)"
+      print_warning "Performance: $editor startup ${startup_time}ms (moderate)"
       warning_checks=$((warning_checks + 1))
     else
-      print_error "Performance: startup ${startup_time}ms (slow)"
+      print_error "Performance: $editor startup ${startup_time}ms (slow)"
       failed_checks=$((failed_checks + 1))
     fi
-    rm -f /tmp/vim_startup.log
+    rm -f "$log"
   else
-    print_info "Performance: cannot test (Vim not installed)"
+    print_info "Performance: cannot test (Vim/Neovim not installed)"
   fi
 
   # Check disk space for plugins
@@ -368,10 +392,11 @@ check_performance() {
   )
 
   local total_size=0
+  local dir size
   for dir in "${plugin_dirs[@]}"; do
     if [ -d "$dir" ]; then
-      local size=$(du -s "$dir" 2> /dev/null | cut -f1)
-      total_size=$((total_size + size))
+      size=$(du -s "$dir" 2> /dev/null | cut -f1) || size=0
+      total_size=$((total_size + ${size:-0}))
     fi
   done
 
@@ -407,18 +432,10 @@ show_recommendations() {
     echo -e "  ${RED}•${NC} Install curl: ${CYAN}sudo apt install curl${NC} (Ubuntu/Debian)"
   fi
 
-  # Check if using slow startup time
-  if command -v vim &> /dev/null; then
-    local start_time=$(date +%s%3N)
-    timeout 10 vim --startuptime /tmp/vim_startup.log +q 2> /dev/null || true
-    local end_time=$(date +%s%3N)
-    local startup_time=$((end_time - start_time))
-
-    if [ $startup_time -gt 2000 ]; then
-      echo -e "  ${YELLOW}•${NC} Optimize startup time: ${CYAN}vimx disable slow_plugins${NC}"
-      echo -e "  ${YELLOW}•${NC} Check startup profile: ${CYAN}vim --startuptime startup.log${NC}"
-    fi
-    rm -f /tmp/vim_startup.log
+  # Pakai hasil pengukuran dari check_performance (jangan jalankan Vim lagi di sini)
+  if [ "${DOCTOR_STARTUP_MS:-0}" -gt 2000 ]; then
+    echo -e "  ${YELLOW}•${NC} Optimize startup time: ${CYAN}vimx disable slow_plugins${NC}"
+    echo -e "  ${YELLOW}•${NC} Check startup profile: ${CYAN}vim --startuptime startup.log${NC}"
   fi
 
   echo ""

@@ -67,7 +67,7 @@ _render_percentage() {
 }
 
 _render_spinner() {
-  local spinstr='⣷⣯⣟⡿⢿⣻⣽⣾'
+  local spinstr='|/-\'
   local idx=$((RANDOM % ${#spinstr}))
   local char="${spinstr:idx:1}"
   printf "\r${CYAN}${PROGRESS_MSG}${NC} [%s]" "$char"

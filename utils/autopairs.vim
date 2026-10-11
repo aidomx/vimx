@@ -26,7 +26,7 @@ augroup END
 
 " Quick toggle mapping
 " Press <leader>ap to toggle auto-pairs on/off
-nnoremap <leader>ap :call AutoPairsToggle()<CR>
+nnoremap <leader>ap :DelimitMateSwitch<CR>
 
 " Custom function to selectively disable quotes
 function! SmartQuotes()

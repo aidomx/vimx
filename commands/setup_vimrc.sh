@@ -17,7 +17,7 @@ setup_vimrc() {
     echo -e "  ${RED}3${NC}) Keep existing .vimrc (manual setup)"
     echo ""
 
-    read -p "Enter your choice [1-3]: " choice
+    choice=$(ask "Enter your choice [1-3]: ")
 
     case $choice in
       1)
@@ -66,4 +66,62 @@ append_to_vimrc() {
   echo "endif" >> "$VIMRC_PATH"
 
   print_success "Added source to existing .vimrc"
+}
+
+nvim_bridge_content() {
+  cat << 'EOF'
+" Neovim config - main config in ~/.config/vim/init.vim
+if filereadable(expand('~/.config/vim/init.vim'))
+  source ~/.config/vim/init.vim
+endif
+EOF
+}
+
+setup_nvim_init() {
+  # Hanya relevan jika Neovim terpasang
+  command -v nvim > /dev/null 2>&1 || return 0
+
+  local nvim_init="${HOME}/.config/nvim/init.vim"
+  mkdir -p "${HOME}/.config/nvim"
+
+  if [ ! -e "$nvim_init" ]; then
+    nvim_bridge_content > "$nvim_init"
+    print_success "Created Neovim config at $nvim_init"
+    return 0
+  fi
+
+  if grep -q "~/.config/vim/init.vim" "$nvim_init" 2> /dev/null; then
+    print_success "Neovim config already sources ~/.config/vim"
+    return 0
+  fi
+
+  local backup_path="${nvim_init}.backup.$(date +%Y%m%d_%H%M%S)"
+  cp "$nvim_init" "$backup_path"
+  print_success "Backed up existing init.vim to $backup_path"
+
+  echo ""
+  echo -e "Choose Neovim init.vim setup:"
+  echo -e "  ${GREEN}1${NC}) Replace with clean init.vim (recommended)"
+  echo -e "  ${YELLOW}2${NC}) Add source to existing init.vim"
+  echo -e "  ${RED}3${NC}) Keep existing init.vim (manual setup)"
+  echo ""
+
+  choice=$(ask "Enter your choice [1-3]: ")
+
+  case $choice in
+    1)
+      nvim_bridge_content > "$nvim_init"
+      print_success "Replaced init.vim"
+      ;;
+    2)
+      {
+        echo ""
+        nvim_bridge_content
+      } >> "$nvim_init"
+      print_success "Added source to existing init.vim"
+      ;;
+    *)
+      print_info "Keeping existing init.vim - source ~/.config/vim/init.vim manually"
+      ;;
+  esac
 }

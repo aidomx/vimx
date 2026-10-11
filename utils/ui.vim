@@ -12,6 +12,9 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_theme = 'gruvbox'
 
 " Git gutter (shows git changes in gutter)
+" Update hanya saat save / idle: menghindari `git diff` tiap perubahan teks
+let g:gitgutter_realtime = 0
+let g:gitgutter_eager = 0
 let g:gitgutter_sign_added = '│'
 let g:gitgutter_sign_modified = '│'
 let g:gitgutter_sign_removed = '│'

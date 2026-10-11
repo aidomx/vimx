@@ -1,4 +1,4 @@
-#!/use/bin/env bash
+#!/usr/bin/env bash
 
 vimx_banner() {
   echo -e "${CYAN}"
@@ -11,7 +11,6 @@ vimx_banner() {
                                           |___/
 EOF
   echo -e "${NC}"
-  echo -e "${WHITE}Full-Stack Development Environment${NC}"
-  echo -e "${CYAN}$(printf '━%.0s' {1..58})${NC}"
+  echo -e "${CYAN}┃${NC} ${WHITE}Full-Stack Development Environment${NC}"
   echo ""
 }

@@ -18,7 +18,13 @@ REPO_URL="https://github.com/aidomx/vimx.git"
 INSTALL_DIR="${VIM_CONFIG_DIR}"
 VIMRC_PATH="${HOME}/.vimrc"
 VIMX_BIN="/usr/bin/vimx"
-TERMUX_VERSION="0.119.0-beta.3"
+
+# Native Termux (app Android), bukan Linux di dalam proot-distro.
+#   - uname -o: "Android" di Termux, "GNU/Linux" di dalam proot
+#   - $PREFIX/bin/pkg: hanya ada di prefix Termux asli
+is_native_termux() {
+  [ "$(uname -o 2> /dev/null)" = "Android" ] && [ -x "${PREFIX:-/nonexistent}/bin/pkg" ]
+}
 
 check_vim_config() {
   if [ ! -d "$VIM_CONFIG_DIR" ]; then

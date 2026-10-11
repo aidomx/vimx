@@ -15,7 +15,7 @@ Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
 " Tools
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf.vim', { 'on': ['Files', 'Buffers', 'Rg'] }
 " Plug 'junegunn/vim-easy-align'
 " Plug 'fatih/vim-go', { 'tag': '*' }
 
@@ -39,7 +39,7 @@ Plug 'dense-analysis/ale'
 " Plug 'vim-python/python-syntax'
 
 " Tree / navigation / formatting
-Plug 'preservim/nerdtree'
+Plug 'preservim/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind', 'NERDTreeFocus'] }
 " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'preservim/nerdcommenter'
 Plug 'sbdchd/neoformat'

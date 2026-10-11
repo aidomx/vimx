@@ -6,7 +6,7 @@ check_dependencies() {
   local missing_deps=()
 
   # Essential dependencies
-  local deps=("git" "curl" "vim")
+  local deps=("git" "curl")
 
   for dep in "${deps[@]}"; do
     if command -v "$dep" &> /dev/null; then
@@ -19,6 +19,17 @@ check_dependencies() {
     fi
   done
 
+  # Editor: cukup salah satu dari vim atau nvim
+  echo -ne " "
+  if command -v vim &> /dev/null; then
+    print_success "vim is installed"
+  elif command -v nvim &> /dev/null; then
+    print_success "neovim is installed"
+  else
+    print_error "vim or neovim is not installed"
+    missing_deps+=("vim")
+  fi
+
   if [ ${#missing_deps[@]} -gt 0 ]; then
     echo ""
     print_error "Missing dependencies: ${missing_deps[*]}"
@@ -27,7 +38,7 @@ check_dependencies() {
     echo ""
 
     # Detect OS and show appropriate install command
-    if [ -f /data/data/com.termux/files/usr/bin/pkg ]; then
+    if is_native_termux; then
       echo -e "  ${CYAN}pkg install ${missing_deps[*]}${NC}"
     elif command -v pacman &> /dev/null; then
       echo -e "  ${CYAN}sudo pacman -S ${missing_deps[*]}${NC}"

@@ -17,28 +17,33 @@ let g:cpp_experimental_simple_template_highlight = 1
 let g:cpp_experimental_template_highlight = 1
 let g:cpp_concepts_highlight = 1
 
-" ALE for C/C++ linting
-let g:ale_linters = {
-\   'c': ['gcc', 'clangd'],
-\   'cpp': ['gcc', 'clangd'],
-\}
-let g:ale_fixers = {
-\   'c': ['clang-format'],
-\   'cpp': ['clang-format'],
-\}
+" ---------------------------
+" Linting & formatting (ALE)
+" Diagnostik C/C++ datang dari coc-clangd (LSP), jadi ALE tidak menjalankan
+" linter C sendiri (menghindari dua clangd dan gcc tiap jeda mengetik).
+" Formatting saat save hanya lewat ALE (clang-format), bukan FormatFile().
+" ---------------------------
+let g:ale_linters = get(g:, 'ale_linters', {})
+let g:ale_linters['c'] = []
+let g:ale_linters['cpp'] = []
+
+let g:ale_fixers = get(g:, 'ale_fixers', {})
+let g:ale_fixers['c'] = ['clang-format']
+let g:ale_fixers['cpp'] = ['clang-format']
 let g:ale_c_clangformat_options = '-style=file'
 let g:ale_cpp_clangformat_options = '-style=file'
 let g:ale_fix_on_save = 1
 
-" Auto format on save for C/C++
-"autocmd BufWritePre *.c,*.cpp,*.h,*.hpp :ALEFix
+" Linting saat mengetik dimatikan untuk semua filetype (ShellCheck tetap jalan saat save)
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_insert_leave = 0
 
 " C headers are C in this project
 autocmd BufRead,BufNewFile *.h setlocal filetype=c
 
 " Filetype specific settings
-autocmd FileType c setlocal commentstring=//\ %s foldmethod=syntax
+autocmd FileType c setlocal commentstring=//\ %s
 autocmd FileType c setlocal shiftwidth=2 tabstop=2
 
-autocmd FileType cpp setlocal commentstring=//\ %s foldmethod=syntax
+autocmd FileType cpp setlocal commentstring=//\ %s
 autocmd FileType cpp setlocal shiftwidth=2 tabstop=2
