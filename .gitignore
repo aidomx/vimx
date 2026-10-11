@@ -1,7 +1,12 @@
 backups/*
 !.gitkeep
-undo
-swaps
+
+undo/*
+!.gitkeep
+
+swaps/*
+!.gitkeep
+
 vimx-dev.sh
 lib/url.sh
 README-dev.md
@@ -9,11 +14,10 @@ README-dev.md
 *.swo
 *.backup
 1
-langs/*.vim
-ftdetect/rupa.*
-syntax/rupa.*
 
 # VitePress
 docs/.vitepress/cache
 docs/.vitepress/dist
 docs/node_modules
+
+RELEASE_NOTE.md
