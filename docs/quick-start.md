@@ -27,7 +27,7 @@ sudo pacman -S nodejs npm  # Arch
 # Install global packages
 npm install -g typescript prettier eslint
 
-# Install Coc extensions (formatting is handled by Neoformat)
+# Install Coc extensions (coc-clangd, coc-prettier, coc-sh, coc-tsserver are installed by default)
 vim -c 'CocInstall coc-tsserver coc-json coc-html coc-css' -c 'qa'
 ```
 
@@ -52,7 +52,7 @@ vim src/index.js
 | ---------------- | ------------- | ------------------------ |
 | Autocomplete     | `<Tab>`       | Smart completion         |
 | Go to definition | `gd`          | Jump to definition       |
-| Format code      | `<leader>fmt` | Format with Neoformat/Prettier |
+| Format code      | `<leader>fmt` | Format the current file (works for every language, including Markdown) |
 | Find references  | `gr`          | Find all references      |
 | Rename symbol    | `<leader>rn`  | Rename variable/function |
 | Show docs        | `K`           | Show documentation       |
@@ -87,7 +87,6 @@ vim src/App.jsx
 | Shortcut     | Action               |
 | ------------ | -------------------- |
 | `<leader>nr` | Start dev server     |
-| `<leader>pd` | Format with Neoformat/Prettier |
 
 **3. JSX/TSX features:**
 
@@ -599,7 +598,7 @@ K
 ## 💡 Pro Tips
 
 1. **Use fuzzy finder:** `pp` is faster than navigating directories
-2. **Format on save:** Already enabled for most languages
+2. **Format on save:** Runs for web, shell, Python, Go, PHP, and C/C++ (ALE). Markdown uses `<leader>fmt`.
 3. **Split windows:** `<leader>s` for horizontal, `<leader>v` for vertical
 4. **Quick save:** `<leader>w` instead of `:w<CR>`
 5. **Buffer navigation:** `bb` to switch between open files

@@ -70,18 +70,43 @@ time vim +qall
 # Comprehensive health and performance check
 vimx doctor
 
-# Output includes:
-# - Startup time
-# - Plugin count
-# - Memory usage
-# - Slow plugins
-# - Recommendations
+# Checks, in order:
+# - Editor installation (vim and nvim versions)
+# - Plugin manager and plugin count
+# - Dependencies (git, curl, node, python3, npm, pip3, jq, wget)
+# - Configuration files and syntax (see below)
+# - Editor startup time (measured without a terminal, so it never waits for input)
+# - Disk space used by plugins
+# - Recommendations (only when something needs attention)
 ```
+
+**Syntax checks** load each config file in a headless editor. An error that only
+means a plugin is not loaded yet (for example `E117: Unknown function: plug#begin`)
+is reported as skipped, not as a failure.
+
+## ⚙️ Defaults vimx Already Applies
+
+These settings are in the shipped configuration, so you do not need to add them:
+
+| Area | Setting | Why |
+|------|---------|-----|
+| C/C++ diagnostics | coc-clangd only | ALE does not run `gcc` or a second `clangd` while you type |
+| C/C++ format | ALE with `clang-format`, on save | One formatter, not two |
+| Markdown format | Manual, `<leader>fmt` | Prettier starts a Node process on every save |
+| Folding | `foldmethod=manual` | Syntax folding is recalculated after every change |
+| Git signs | GitGutter updates on save (`gitgutter_realtime = 0`) | No `git diff` on every keystroke |
+| Backups | `nobackup`, `writebackup` | No backup copy written on every save |
+| Linting while typing | Off (`ale_lint_on_text_changed = 'never'`, `ale_lint_on_insert_leave = 0`) | Linters run on save only |
+| Plugins | NERDTree and fzf.vim lazy-loaded | Less work at startup |
+
+If you turn any of these back on, expect the editor to slow down on large files.
 
 ## 🚀 Startup Time Optimization
 
 ### Lazy Loading Plugins
 
+vimx already lazy-loads two plugins in `core/plugins.vim`: NERDTree (on its
+commands) and fzf.vim (on `Files`, `Buffers`, and `Rg`). Add more the same way.
 Edit `~/.config/vim/core/plugins.vim`:
 
 ```vim
@@ -206,7 +231,7 @@ vimx list | wc -l
 ### Optimize Coc.nvim
 
 ```json
-// ~/.config/vim/coc-settings.json
+// ~/.vim/coc-settings.json  (Neovim: ~/.config/nvim/coc-settings.json)
 {
   // Reduce completion items
   "suggest.maxCompleteItemCount": 20,
@@ -364,7 +389,6 @@ set diffopt+=internal,algorithm:patience
 ```vim
 " Faster rendering
 set lazyredraw
-set ttyfast
 
 " Reduce history
 set history=100  " Default is 10000

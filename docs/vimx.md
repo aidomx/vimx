@@ -17,8 +17,8 @@ vimx is automatically installed with the main configuration. To install manually
 
 ```bash
 # Copy to system PATH
-sudo cp ~/.config/vim/vimx.sh /usr/sbin/vimx
-sudo chmod +x /usr/sbin/vimx
+sudo cp ~/.config/vim/vimx.sh /usr/bin/vimx
+sudo chmod +x /usr/bin/vimx
 ```
 
 ## 📖 Command Reference

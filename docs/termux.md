@@ -253,7 +253,6 @@ nnoremap <leader>oe :OpenExternal<CR>
 
 " Faster rendering
 set lazyredraw
-set ttyfast
 
 " Reduce resource usage
 set updatetime=1000
@@ -285,7 +284,7 @@ vimx disable nerdcommenter
 ### Optimize Coc for Mobile
 
 ```json
-// ~/.config/vim/coc-settings.json
+// ~/.vim/coc-settings.json  (Neovim: ~/.config/nvim/coc-settings.json)
 {
   "suggest.maxCompleteItemCount": 15,
   "suggest.timeout": 800,
@@ -484,7 +483,6 @@ Solution:
 
 ```vim
 set lazyredraw
-set ttyfast
 ```
 
 ### Performance Issues

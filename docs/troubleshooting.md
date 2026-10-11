@@ -71,10 +71,10 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 # Fix permissions
 chmod -R u+w ~/.vim
 chmod -R u+w ~/.config/vim
-chmod +x ~/.config/vim/bin/vimx
+chmod +x ~/.config/vim/vimx.sh
 
 # For system-wide vimx
-sudo chown $USER /usr/sbin/vimx
+sudo chmod +x /usr/bin/vimx
 ```
 
 ### Git Clone Failed
@@ -459,8 +459,63 @@ npm install --save-dev prettier
 :Neoformat
 ```
 
-The active configuration uses Neoformat for formatting and keeps Coc format-on-save
-disabled (`"coc.preferences.formatOnSave": false`) to prevent duplicate formatters.
+Save-time formatting is set by filetype (see `utils/formatting.vim`):
+
+- **On save:** JavaScript, TypeScript, HTML, CSS, JSON, YAML (Neoformat with Prettier), shell (`shfmt`), Python (`black` or `autopep8`), Go (`gofmt`), PHP (`php-cs-fixer`), and C/C++ through ALE (`clang-format`).
+- **Not on save:** Markdown. Format it manually with `<leader>fmt`.
+
+Coc format-on-save stays disabled (`"coc.preferences.formatOnSave": false`) so only one formatter runs.
+
+## 🔧 Installer and vimx Doctor
+
+### The Installer Stops Right After a Question
+
+**Symptoms:** The installer prints a prompt (for example `Install optional tools? [y/N]:`), you answer, and nothing else appears.
+
+**Cause:** The installer was started through a pipe, and an older version read its answers from the pipe. The current version reads answers from `/dev/tty` and uses the default when there is no answer.
+
+**Solutions:**
+
+```bash
+# 1. Make sure the code you run is current. curl installs the main branch.
+#    Run the installer from a local copy instead:
+cd ~/vimx-src && bash install.sh
+
+# 2. Clean up the partial install, then try again
+rm -rf ~/.config/vim
+```
+
+### Optional Tool Install Looks Stuck
+
+**Symptoms:** A package shows a spinner for a long time.
+
+**Solutions:**
+
+- Each package shows a spinner while it runs. A slow mirror or a large download can take minutes.
+- A package that fails shows the last three lines of its log, then the installer moves on.
+- For `apt` and `pacman`, the installer asks for your sudo password before it starts installing, not during.
+- Check the package name for your distribution. For example, `shellcheck` and `shfmt` names differ between some distributions.
+
+### Syntax Check Reports "has issues" for a Valid File
+
+**Symptoms:** `vimx doctor` marks `plugins.vim`, `settings.vim`, or `mappings.vim` with `✗`.
+
+**Cause:** Only a real syntax error counts as a failure. Missing functions, commands, or colorschemes (`E117`, `E492`, `E185`) mean a plugin is not loaded yet, and the doctor reports those as skipped.
+
+**Solutions:**
+
+1. Read the grey line below the `✗`. It shows the exact Vim error.
+2. Run the file directly to see the error with its line number:
+
+   ```bash
+   vim -Nu NONE -es -c 'source ~/.config/vim/core/mappings.vim' -c 'qa!'
+   ```
+
+### Doctor Stops in the Performance Section
+
+**Cause:** Older versions started Vim as an interactive editor to measure startup. Vim could wait for a key press. The current version starts Vim with no terminal and `-c 'qa!'`, so it cannot wait for input.
+
+**Solution:** Update to the current version, then run `vimx doctor` again.
 
 ## 📱 Termux-Specific Issues
 

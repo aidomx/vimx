@@ -4,75 +4,71 @@ outline: deep
 
 # Prerequisites
 
-Required packages and dependencies for vimx.
+Packages vimx needs, and what each one is used for.
 
 ## 📋 Requirements Overview
 
-| Category | Tool | Purpose | Required? |
-|----------|------|---------|-----------|
-| Core | Vim/Neovim | Text editor | ✅ Required |
-| Core | Git | Version control | ✅ Required |
-| Core | Node.js + npm | Coc.nvim (LSP) | ✅ Required |
-| Core | curl/wget | Downloads, API | ✅ Required |
-| CLI | jq | JSON parsing | ✅ Required |
-| CLI | bc | Calculations | ✅ Required |
-| Formatter | shfmt | Shell formatting | ⚠️ Recommended |
-| Formatter | black/autopep8 | Python formatting | ⚠️ Recommended |
-| Formatter | gofmt | Go formatting | ⚠️ Recommended |
-| Formatter | clang-format | C/C++ formatting | ⚠️ Recommended |
-| Formatter | php-cs-fixer | PHP formatting | ⚠️ Recommended |
-| Formatter | prettier | JS/TS/HTML/CSS formatting via Neoformat | ⚠️ Recommended |
-| Linter | shellcheck | Shell linting | ⚠️ Recommended |
-| Fallback | python3 | JSON fallback | 🔵 Optional |
+| Category | Tool | Needed for | Required? |
+|----------|------|------------|-----------|
+| Core | Vim or Neovim | The editor | ✅ One of them |
+| Core | Git | Cloning the repo, plugins | ✅ Required |
+| Core | curl | Downloading vim-plug, the installer | ✅ Required |
+| Core | Node.js + npm | coc.nvim (LSP), prettier | ⚠️ Recommended |
+| Optional | jq | `vimx theme`, `vimx search` | 🔵 Optional |
+| Optional | bc | File sizes in `vimx coc` | 🔵 Optional |
+| Tools | clang, clangd, clang-format | C/C++ diagnostics and formatting | 🔵 Optional |
+| Tools | shellcheck, shfmt | Shell linting and formatting | 🔵 Optional |
+| Tools | ripgrep | `:Rg` and the `gg` mapping | 🔵 Optional |
+| Tools | black, flake8, autopep8 | Python formatting and linting | 🔵 Optional |
+| Tools | Go | Go development | 🔵 Optional |
+| Tools | cmake, ninja | Build tools | 🔵 Optional |
+| Tools | rbot | C build tool (see [Installation](installation.md#rbot)) | 🔵 Optional |
+
+The installer checks only for **git, curl, and vim or nvim**. Everything else is
+optional, and the installer offers the Tools rows as a menu (see
+[Installation](installation.md#optional-tools)).
 
 ---
 
 ## ✅ Required
 
-These **must** be installed for vimx to work properly.
+### Editor
+
+- **Vim** 8.2 or newer, or **Neovim** 0.7 or newer. One is enough.
 
 ### Core Packages
 
-- **Vim** (8.2+) or **Neovim** (0.7+)
-- **Git** - Version control
-- **Node.js** (14+) and **npm** - Required for Coc.nvim
-- **curl** or **wget** - For downloading and API calls
+- **Git**
+- **curl**
 
-### vimx CLI Dependencies
+### Node.js
 
-- **jq** - JSON processor (used by `vimx theme`, `vimx search`)
-- **bc** - Calculator (used for file size calculations)
-
----
-
-## ⚠️ Recommended
-
-These enhance the experience and are needed for specific features.
-
-### Formatters
-
-- **shfmt** - Shell script formatting (`:Neoformat` on .sh files)
-- **black** or **autopep8** - Python formatting
-- **gofmt** - Go formatting (included with Go)
-- **clang-format** - C/C++ formatting
-- **php-cs-fixer** - PHP formatting
-- **prettier** - JS/TS/HTML/CSS formatting via Neoformat
-
-### Linters
-
-- **shellcheck** - Shell script linting
+- **Node.js and npm.** coc.nvim (the language server client) needs Node.js at
+  runtime, and prettier is installed through npm. Without Node.js, the editor
+  still opens, but LSP and prettier-based formatting do not work.
 
 ---
 
-## 🔵 Optional
+## 🧰 Optional
 
-Nice-to-have tools that improve the experience.
+### vimx CLI
 
-- **python3** - Fallback JSON parsing when jq unavailable
-- **fzf** - Fuzzy finder
-- **ripgrep** - Better grep
-- **fd** - Better find
-- **bat** - Better cat
+- **jq**: JSON parsing for `vimx theme` and `vimx search`
+- **bc**: calculator for file sizes in `vimx coc`
+
+### Language Tools
+
+- **clang, clangd, clang-format**: C/C++ diagnostics (coc-clangd) and save-time
+  formatting (ALE with clang-format)
+- **shellcheck, shfmt**: shell diagnostics and `:Format`
+- **black, flake8, autopep8**: Python
+- **Go**: Go development (`gofmt` ships with Go)
+- **cmake, ninja**: build tools
+
+### Search
+
+- **ripgrep**: used by `:Rg` (the `gg` mapping). Without it, `gg` does not work.
+- **fzf**: used by `:Files`, `:Buffers`, and `:Rg`. It is installed through its vim-plug plugin.
 
 ---
 

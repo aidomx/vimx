@@ -42,15 +42,15 @@ cmake --version
 ### Development Tools
 
 ```bash
-# Formatters
+# Compiler, language server, and formatter
 # Termux
-pkg install clang
+pkg install clang clangd
 
 # Arch
-sudo pacman -S clang
+sudo pacman -S clang clang-tools-extra
 
 # Ubuntu
-sudo apt install clang-format
+sudo apt install clang clangd clang-format
 
 # Additional tools
 # Termux/Arch/Ubuntu
@@ -59,9 +59,15 @@ pkg install valgrind  # Memory checker (Termux may not have this)
 
 ### Coc Extension
 
+`coc-clangd` is already listed in `core/coc.vim`, so coc installs it on its own.
+To install it by hand:
+
 ```vim
 :CocInstall coc-clangd
 ```
+
+Diagnostics while you type come only from clangd. ALE does not run `gcc` or a
+second `clangd`, so errors appear once.
 
 
 ### Vimx Language Setup
@@ -105,21 +111,24 @@ clangd --version
 - Auto-completion
 - Go to definition
 - Find references
-- Error detection
-- Auto-formatting
+- Error detection (clangd)
+- Auto-formatting on save (ALE with `clang-format`, using your `.clang-format` if present)
 
 ### Key Mappings
 
-| Shortcut      | Action                   |
-| ------------- | ------------------------ |
-| `<leader>cc`  | Compile C file           |
-| `<leader>cr`  | Compile and run          |
-| `<leader>cd`  | Debug with GDB           |
-| `<leader>cm`  | Run make                 |
-| `gd`          | Go to definition         |
-| `gr`          | Find references          |
-| `<leader>fmt` | Format with clang-format |
-| `K`           | Show documentation       |
+| Shortcut      | Action                                          |
+| ------------- | ----------------------------------------------- |
+| `<leader>cc`  | Compile C file (`gcc -Wall -g`)                 |
+| `<leader>cr`  | Run the compiled C program                      |
+| `<leader>cpp` | Compile C++ file (`g++ -std=c++17 -Wall -g`)    |
+| `<leader>cpr` | Run the compiled C++ program                    |
+| `gd`          | Go to definition                                |
+| `gr`          | Find references                                 |
+| `<leader>fmt` | Format the buffer with clang-format (on demand) |
+| `K`           | Show documentation                              |
+
+Debugging with GDB and `make` shortcuts are not mapped by default. Run them from the
+command line (`gdb ./program`, `make`), or add mappings in your own config.
 
 ### Basic C Program
 

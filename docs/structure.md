@@ -9,38 +9,48 @@ Understanding the Vim configuration directory structure and organization.
 ## 📁 Directory Overview
 
 ```
-~/.config/vim/
-├── init.vim                 # Main entry point
-├── core/                    # Core configuration
-│   ├── settings.vim        # Editor settings
-│   ├── mappings.vim        # Key mappings
-│   └── plugins.vim         # Plugin declarations
-├── langs/                   # Language-specific configs
-│   ├── web.vim             # JavaScript/TypeScript/HTML/CSS
-│   ├── c.vim               # C/C++ development
-│   ├── php.vim             # PHP/Laravel
-│   ├── python.vim          # Python
-│   ├── go.vim              # Go
-│   └── bash.vim            # Shell scripting
-├── frameworks/              # Framework-specific configs
-│   ├── laravel.vim         # Laravel configuration
-│   └── nextjs.vim          # Next.js configuration
-├── utils/                   # Utility configurations
-│   ├── termux.vim          # Termux optimizations
-│   ├── completion.vim      # Coc completion config
-│   ├── formatting.vim      # Universal formatting
-│   ├── ui.vim              # Themes and UI
-│   └── autopairs.vim       # Auto-pairs config
-├── docs/                    # Documentation
-│   ├── installation.md
-│   ├── keymappings.md
-│   ├── vimx.md
-│   └── ...
-├── coc-settings.json       # Coc.nvim configuration
-├── .gitignore              # Git ignore rules
-├── LICENSE                 # MIT License
-└── README.md               # Main documentation
+~/.config/vim/                       # repository root
+├── init.vim                         # main entry point
+├── vimx.sh                          # the vimx command (copied to /usr/bin/vimx)
+├── install.sh                       # installer
+├── coc-settings.json                # coc.nvim settings, full
+├── coc-settings.minimal.json        # coc.nvim settings, minimal (installer default)
+├── core/                            # core configuration
+│   ├── settings.vim                 # editor settings
+│   ├── mappings.vim                 # key mappings
+│   ├── plugins.vim                  # plugin declarations (vim-plug)
+│   ├── coc.vim                      # coc.nvim extensions
+│   ├── nvim.vim                     # Neovim-only settings
+│   └── theme.vim, fonts.vim, vim.vim
+├── langs/                           # language modules
+│   ├── bash.vim, c.vim, go.vim, python.vim, php.vim
+│   ├── web-basic.vim, web.vim, web-auto.vim, js.vim, ts.vim
+│   └── android.vim
+├── frameworks/                      # framework modules
+│   ├── laravel.vim
+│   └── nextjs.vim
+├── utils/                           # utility modules
+│   ├── completion.vim               # coc completion and LSP mappings
+│   ├── formatting.vim               # FormatFile() and format-on-save
+│   ├── ui.vim                       # statusline, NERDTree, GitGutter
+│   ├── termux.vim                   # Termux-only settings
+│   └── autopairs.vim                # delimitMate settings and toggle
+├── commands/                        # vimx subcommands (sourced by vimx.sh and install.sh)
+│   ├── install.sh, optional.sh, setup_vimrc.sh, setup_coc.sh, clone.sh, ...
+│   ├── doctor.sh, plugin/, coc/, backup/, language/, help/
+├── lib/                             # shared shell helpers
+│   ├── prompt.sh                    # ask(): reads answers from /dev/tty
+│   ├── execs.sh                     # vimx_editor(), vimx_run_plug_cmd()
+│   ├── progress.sh                  # spinner and progress bar
+│   ├── logging.sh, colors.sh, fs.sh, paths.sh, table.sh
+├── backups/                         # backup archives (kept by you, ignored when empty)
+├── syntax/                          # custom syntax files (for example rupa.vim)
+├── ftdetect/                        # filetype detection for custom languages
+├── LICENSE, README.md, SECURITY.md, CONTRIBUTING.md, .gitignore
 ```
+
+The documentation site source lives in a separate `docs/` archive, not in this
+tree. See [Installation](installation.md) for how the files are installed.
 
 ## 🔧 Core Files
 
@@ -77,7 +87,7 @@ Basic Vim editor settings and behaviors.
 - Line numbers and relative numbers
 - Indentation settings (tabs, spaces)
 - Search settings (highlighting, ignore case)
-- Backup and swap file configuration
+- Backup, undo, and swap file configuration (`nobackup` with `writebackup`, so no backup copy is made on every save)
 - Clipboard integration
 - Mouse support
 - File encoding
@@ -158,7 +168,7 @@ Web development configuration (JavaScript, TypeScript, HTML, CSS).
 **Key mappings:**
 
 - `<leader>nd` - Next.js dev server
-- `<leader>pd` - Neoformat/Prettier format
+- `<leader>fmt` - format the current file
 - `<leader>es` - ESLint fix
 
 ### langs/c.vim
@@ -348,53 +358,29 @@ Auto-pairs plugin configuration.
 
 ## 🔧 Configuration Files
 
-### coc-settings.json
+### coc-settings.json and coc-settings.minimal.json
 
-Coc.nvim and LSP configuration.
+Coc.nvim settings. The installer asks which one to use:
 
-**Location:** `~/.config/vim/coc-settings.json`
+- **`coc-settings.minimal.json`** (installer default): suggestion tuning, diagnostics,
+  file size limit, Prettier, and TypeScript completion. Lightweight, suited to phones.
+- **`coc-settings.json`** (full): the same settings plus the long Tailwind/Headwind
+  class lists.
 
-**Contains:**
+The chosen file is copied to:
 
-```json
-{
-  "diagnostic.level": "warning",
-  "suggest.maxCompleteItemCount": 50,
-  "languageserver": {
-    "go": { ... },
-    "python": { ... }
-  },
-  "coc.preferences.formatOnSave": false
-}
-```
+- `~/.vim/coc-settings.json` for Vim
+- `~/.config/nvim/coc-settings.json` for Neovim (only if Neovim is installed)
 
-### .gitignore
+An existing file at the destination is backed up first. Edit that copy to change
+settings, or run `:CocConfig` inside the editor.
 
-Git ignore patterns.
+## 📦 The vimx Command
 
-**Ignores:**
+### /usr/bin/vimx
 
-- Plugin directory (`plugged/`)
-- Swap files (`*.swp`)
-- Backup files (`*~`)
-- Log files
-- OS-specific files
-
-## 📦 Binary Directory
-
-### bin/vimx
-
-Configuration management tool.
-
-**Location:** `~/.config/vim/bin/vimx`
-
-**Features:**
-
-- Plugin management
-- System updates
-- Health checks
-- Key mapping editor
-- Configuration profiles
+The `vimx` command is a copy of `vimx.sh`. The installer places it at `/usr/bin/vimx`
+(or `$PREFIX/bin/vimx` on Termux) and uses `sudo` when needed.
 
 **Usage:**
 
@@ -403,24 +389,14 @@ vimx install
 vimx update
 vimx add <plugin>
 vimx doctor
+vimx version
 ```
 
-## 📚 Documentation Directory
+## 📚 Documentation
 
-### docs/
-
-Comprehensive documentation files.
-
-**Files:**
-
-- `installation.md` - Installation guide
-- `keymappings.md` - Keyboard shortcuts
-- `vimx.md` - vimx tool documentation
-- `prerequisites.md` - Required packages
-- `troubleshooting.md` - Problem solving
-- `structure.md` - This file
-- `customization.md` - Customization guide
-- `languages/` - Language-specific guides
+Documentation is published as a separate `docs/` archive and on the project site.
+It is not loaded by the editor or the installer, so it can be updated without a
+code release.
 
 ## 🔄 Loading Order
 
